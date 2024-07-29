@@ -1,3 +1,4 @@
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -89,4 +90,32 @@ button:hover {
 .ingredient .input-group {
     flex: 1;
     min-width: 150px;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background-color: white;
+    }
+
+    header, form, #add-ingredient, #calculate, #print-recipe {
+        display: none;
+    }
+
+    .container {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+    }
+
+    #scaled-recipe {
+        margin-top: 0;
+        padding: 0;
+        box-shadow: none;
+    }
+
+    h2 {
+        color: black;
+        margin-bottom: 0.5em;
+    }
 }
