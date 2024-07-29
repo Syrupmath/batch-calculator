@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batched Cocktail App</title>
+    <title>Batched Cocktail Calculator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main>
         <div class="container">
             <header>
-                <h1>Batched Cocktail App</h1>
+                <h1>Batched Cocktail Calculator</h1>
             </header>
             <section id="recipe-input">
-                <h2>Enter Your Recipe</h2>
+                <h2>Step 1: Enter Your Recipe</h2>
                 <form>
                     <div class="input-group">
                         <label for="recipe-name">Recipe Name:</label>
@@ -45,7 +45,7 @@
             </section>
             
             <section id="batch-size-input">
-                <h2>Batch Size</h2>
+                <h2>Step 2: Determine Your Batch Size</h2>
                 <form>
                     <div class="input-group">
                         <label for="num-servings">Number of Servings:</label>
@@ -59,14 +59,24 @@
                             <option value="liters">Liters</option>
                         </select>
                     </div>
+                </form>
+            </section>
+
+            <section id="dilution-input">
+                <h2>Step 3: Choose Dilution</h2>
+                <form>
                     <div class="input-group">
                         <label for="dilution">Include Dilution:</label>
                         <input type="checkbox" id="dilution" name="dilution">
                     </div>
-                    <button type="button" id="calculate" onclick="calculateRecipe()">Calculate</button>
                 </form>
             </section>
             
+            <section id="calculate-totals">
+                <h2>Step 4: Calculate Totals</h2>
+                <button type="button" id="calculate" onclick="calculateRecipe()">Calculate</button>
+            </section>
+
             <section id="output">
                 <div id="original-recipe">
                     <h2>Original Recipe</h2>
