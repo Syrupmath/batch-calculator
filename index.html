@@ -77,7 +77,7 @@
                 <button type="button" id="calculate" onclick="calculateRecipe()">Calculate</button>
             </section>
 
-            <section id="output">
+            <section id="output" style="display: none;">
                 <div id="original-recipe">
                     <h2>Original Recipe</h2>
                     <!-- Original recipe will be displayed here -->
@@ -146,7 +146,7 @@
             }
 
             originalRecipe += '</ul>';
-            document.getElementById('original-recipe').innerHTML += originalRecipe;
+            document.getElementById('original-recipe').innerHTML = originalRecipe;
 
             let waterVolume = 0;
             if (includeDilution) {
@@ -174,7 +174,10 @@
             }
 
             scaledRecipe += '</ul>';
-            document.getElementById('scaled-recipe').innerHTML += scaledRecipe;
+            document.getElementById('scaled-recipe').innerHTML = scaledRecipe;
+
+            // Show the output section
+            document.getElementById('output').style.display = 'block';
         }
 
         function convertToMilliliters(quantity, unit) {
