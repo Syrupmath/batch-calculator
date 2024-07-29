@@ -43,6 +43,11 @@
                 
                 <label for="total-volume">Total Volume:</label>
                 <input type="number" id="total-volume" name="total-volume">
+                <select id="total-volume-unit" name="total-volume-unit">
+                    <option value="ounces">Ounces</option>
+                    <option value="milliliters">Milliliters</option>
+                    <option value="liters">Liters</option>
+                </select>
                 
                 <label for="dilution">Include Dilution:</label>
                 <input type="checkbox" id="dilution" name="dilution">
@@ -83,10 +88,11 @@
         }
 
         function calculateRecipe() {
-            const numServings = document.getElementById('num-servings').value;
-            const totalVolume = document.getElementById('total-volume').value;
+            const numServings = parseFloat(document.getElementById('num-servings').value) || 1;
+            const totalVolume = parseFloat(document.getElementById('total-volume').value);
+            const totalVolumeUnit = document.getElementById('total-volume-unit').value;
             const includeDilution = document.getElementById('dilution').checked;
-            
+
             const ingredientsDiv = document.getElementById('ingredients');
             const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
 
@@ -94,27 +100,33 @@
 
             for (let i = 0; i < ingredients.length; i++) {
                 const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
-                const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value);
+                const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
                 const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
 
-                let scaledQuantity;
+                let scaledQuantity = quantity * numServings;
 
-                if (numServings) {
-                    scaledQuantity = quantity * numServings; // Simple scaling logic for demonstration
-                } else if (totalVolume) {
-                    // Add logic to scale by total volume if needed
-                }
-
-                // Adjust for dilution if necessary (placeholder logic)
                 if (includeDilution) {
                     scaledQuantity *= 1.2; // Assuming a 20% dilution
                 }
 
-                scaledRecipe += `<li>${name}: ${scaledQuantity.toFixed(2)} ${unit}</li>`;
+                if (totalVolume) {
+                    scaledQuantity = convertUnits(scaledQuantity, unit, totalVolumeUnit);
+                }
+
+                scaledRecipe += `<li>${name}: ${scaledQuantity.toFixed(2)} ${totalVolume ? totalVolumeUnit : unit}</li>`;
             }
 
             scaledRecipe += '</ul>';
             document.getElementById('scaled-recipe').innerHTML = scaledRecipe;
+        }
+
+        function convertUnits(quantity, fromUnit, toUnit) {
+            const conversionRates = {
+                ounces: { ounces: 1, milliliters: 29.5735, liters: 0.0295735 },
+                milliliters: { ounces: 0.033814, milliliters: 1, liters: 0.001 },
+                liters: { ounces: 33.814, milliliters: 1000, liters: 1 }
+            };
+            return quantity * conversionRates[fromUnit][toUnit];
         }
     </script>
 </body>
