@@ -21,16 +21,17 @@ h2 {
 }
 
 label {
-    display: block;
+    display: inline-block;
     margin-top: 0.5em;
 }
 
 input, select, button {
-    display: block;
+    display: inline-block;
     margin-top: 0.5em;
     padding: 0.5em;
-    width: 100%;
-    max-width: 400px;
+    width: auto;
+    max-width: 200px;
+    margin-right: 10px;
 }
 
 button {
@@ -60,4 +61,21 @@ footer {
     padding: 1em;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.ingredient {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 1em;
+}
+
+.ingredient label, .ingredient input, .ingredient select {
+    flex: 1;
+    min-width: 100px;
+    margin-right: 10px;
+}
+
+.ingredient input, .ingredient select {
+    max-width: 150px;
 }
