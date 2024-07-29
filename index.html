@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 
-                <button type="button" id="add-ingredient">Add Ingredient</button>
+                <button type="button" id="add-ingredient" onclick="addIngredient()">Add Ingredient</button>
             </form>
         </section>
         
@@ -49,7 +49,7 @@
                 <label for="dilution">Include Dilution:</label>
                 <input type="checkbox" id="dilution" name="dilution">
                 
-                <button type="button" id="calculate">Calculate</button>
+                <button type="button" id="calculate" onclick="calculateRecipe()">Calculate</button>
             </form>
         </section>
         
@@ -58,13 +58,66 @@
             <div id="scaled-recipe">
                 <!-- Scaled recipe will be displayed here -->
             </div>
-            <button type="button" id="print-recipe">Print Recipe</button>
+            <button type="button" id="print-recipe" onclick="window.print()">Print Recipe</button>
         </section>
     </main>
     <footer>
         <p>&copy; 2024 Batched Cocktail App</p>
     </footer>
-    
-    <script src="script.js"></script>
+    <script>
+        function addIngredient() {
+            const ingredientsDiv = document.getElementById('ingredients');
+            const ingredientCount = ingredientsDiv.children.length + 1;
+            const newIngredient = document.createElement('div');
+            newIngredient.classList.add('ingredient');
+            newIngredient.innerHTML = `
+                <label for="ingredient-name-${ingredientCount}">Ingredient Name:</label>
+                <input type="text" id="ingredient-name-${ingredientCount}" name="ingredient-name-${ingredientCount}">
+                <label for="ingredient-quantity-${ingredientCount}">Quantity:</label>
+                <input type="number" id="ingredient-quantity-${ingredientCount}" name="ingredient-quantity-${ingredientCount}">
+                <label for="ingredient-unit-${ingredientCount}">Unit:</label>
+                <select id="ingredient-unit-${ingredientCount}" name="ingredient-unit-${ingredientCount}">
+                    <option value="ounces">Ounces</option>
+                    <option value="milliliters">Milliliters</option>
+                </select>
+            `;
+            ingredientsDiv.appendChild(newIngredient);
+        }
+
+        function calculateRecipe() {
+            const numServings = document.getElementById('num-servings').value;
+            const totalVolume = document.getElementById('total-volume').value;
+            const includeDilution = document.getElementById('dilution').checked;
+            
+            const ingredientsDiv = document.getElementById('ingredients');
+            const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
+
+            let scaledRecipe = '<h3>Scaled Recipe:</h3><ul>';
+
+            for (let i = 0; i < ingredients.length; i++) {
+                const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
+                const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value);
+                const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
+
+                let scaledQuantity;
+
+                if (numServings) {
+                    scaledQuantity = quantity * numServings; // Simple scaling logic for demonstration
+                } else if (totalVolume) {
+                    // Add logic to scale by total volume if needed
+                }
+
+                // Adjust for dilution if necessary (placeholder logic)
+                if (includeDilution) {
+                    scaledQuantity *= 1.2; // Assuming a 20% dilution
+                }
+
+                scaledRecipe += `<li>${name}: ${scaledQuantity.toFixed(2)} ${unit}</li>`;
+            }
+
+            scaledRecipe += '</ul>';
+            document.getElementById('scaled-recipe').innerHTML = scaledRecipe;
+        }
+    </script>
 </body>
 </html>
