@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Batched Cocktail App</h1>
-    </header>
     <main>
         <div class="container">
+            <header>
+                <h1>Batched Cocktail App</h1>
+            </header>
             <section id="recipe-input">
                 <h2>Enter Your Recipe</h2>
                 <form>
@@ -76,5 +76,104 @@
             </section>
         </div>
     </main>
+    <script>
+        function addIngredient() {
+            const ingredientsDiv = document.getElementById('ingredients');
+            const ingredientCount = ingredientsDiv.children.length + 1;
+            const newIngredient = document.createElement('div');
+            newIngredient.classList.add('ingredient');
+            newIngredient.id = `ingredient-${ingredientCount}`;
+            newIngredient.innerHTML = `
+                <div class="input-group">
+                    <label for="ingredient-name-${ingredientCount}">Ingredient Name:</label>
+                    <input type="text" id="ingredient-name-${ingredientCount}" name="ingredient-name-${ingredientCount}" placeholder="E.g., Rye">
+                </div>
+                <div class="input-group">
+                    <label for="ingredient-quantity-${ingredientCount}">Quantity:</label>
+                    <input type="number" id="ingredient-quantity-${ingredientCount}" name="ingredient-quantity-${ingredientCount}" placeholder="E.g., 2">
+                </div>
+                <div class="input-group">
+                    <label for="ingredient-unit-${ingredientCount}">Unit:</label>
+                    <select id="ingredient-unit-${ingredientCount}" name="ingredient-unit-${ingredientCount}">
+                        <option value="ounces">Ounces</option>
+                        <option value="milliliters">Milliliters</option>
+                    </select>
+                </div>
+            `;
+            ingredientsDiv.appendChild(newIngredient);
+        }
+
+        function calculateRecipe() {
+            let totalVolume = parseFloat(document.getElementById('total-volume').value);
+            const totalVolumeUnit = document.getElementById('total-volume-unit').value;
+            const includeDilution = document.getElementById('dilution').checked;
+
+            if (totalVolumeUnit === 'liters') {
+                totalVolume *= 1000; // Convert liters to milliliters
+            }
+
+            const ingredientsDiv = document.getElementById('ingredients');
+            const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
+
+            let totalIngredientVolume = 0;
+            let ingredientVolumes = [];
+
+            for (let i = 0; i < ingredients.length; i++) {
+                const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
+                const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
+                const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
+
+                let volumeInMilliliters = convertToMilliliters(quantity, unit);
+                totalIngredientVolume += volumeInMilliliters;
+                ingredientVolumes.push({ name, volumeInMilliliters });
+            }
+
+            let waterVolume = 0;
+            if (includeDilution) {
+                const dilutionVolume = totalIngredientVolume * 0.2; // 20% of total ingredient volume
+                totalIngredientVolume += dilutionVolume;
+                waterVolume = dilutionVolume;
+            }
+
+            let scaledRecipe = '<h3>Scaled Recipe:</h3><ul>';
+
+            if (totalIngredientVolume > totalVolume) {
+                alert('Total volume is less than the volume of ingredients. Please increase the total volume.');
+                return;
+            }
+
+            const scalingFactor = totalVolume / totalIngredientVolume;
+            ingredientVolumes.forEach(ingredient => {
+                let scaledQuantity = ingredient.volumeInMilliliters * scalingFactor;
+                scaledRecipe += `<li>${ingredient.name}: ${convertFromMilliliters(scaledQuantity, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
+            });
+
+            if (includeDilution && waterVolume > 0) {
+                let scaledWaterVolume = waterVolume * scalingFactor;
+                scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
+            }
+
+            scaledRecipe += '</ul>';
+            document.getElementById('scaled-recipe').innerHTML = scaledRecipe;
+        }
+
+        function convertToMilliliters(quantity, unit) {
+            const conversionRates = {
+                ounces: 29.5735,
+                milliliters: 1,
+                liters: 1000
+            };
+            return quantity * conversionRates[unit];
+        }
+
+        function convertFromMilliliters(quantity, unit) {
+            const conversionRates = {
+                ounces: 1 / 29.5735,
+                milliliters: 1,
+                liters: 1 / 1000
+            };
+            return quantity * conversionRates[unit];
+        }
+    </script>
 </body>
 </html>
