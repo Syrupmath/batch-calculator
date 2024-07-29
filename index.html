@@ -122,13 +122,10 @@
         }
 
         function calculateRecipe() {
-            let totalVolume = parseFloat(document.getElementById('total-volume').value);
+            const numServings = parseFloat(document.getElementById('num-servings').value);
+            const totalVolumeInput = parseFloat(document.getElementById('total-volume').value);
             const totalVolumeUnit = document.getElementById('total-volume-unit').value;
             const dilution = parseFloat(document.getElementById('dilution').value) / 100;
-
-            if (totalVolumeUnit === 'liters') {
-                totalVolume *= 1000; // Convert liters to milliliters
-            }
 
             const ingredientsDiv = document.getElementById('ingredients');
             const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
@@ -136,11 +133,16 @@
             let totalIngredientVolume = 0;
             let ingredientVolumes = [];
             let originalRecipe = '<ul>';
+            let inputUnit = '';
 
             for (let i = 0; i < ingredients.length; i++) {
                 const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
                 const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
                 const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
+
+                if (inputUnit === '') {
+                    inputUnit = unit;
+                }
 
                 originalRecipe += `<li>${name}: ${quantity} ${unit}</li>`;
 
@@ -153,23 +155,37 @@
             document.getElementById('original-recipe').innerHTML = originalRecipe;
 
             let waterVolume = totalIngredientVolume * dilution;
+            let totalVolume;
 
-            let scaledRecipe = '<ul>';
+            if (numServings) {
+                totalVolume = (totalIngredientVolume + waterVolume) * numServings;
+            } else if (totalVolumeInput) {
+                if (totalVolumeUnit === 'liters') {
+                    totalVolume = totalVolumeInput * 1000; // Convert liters to milliliters
+                } else {
+                    totalVolume = totalVolumeInput;
+                }
+            } else {
+                alert('Please enter either the number of servings or the total volume.');
+                return;
+            }
 
-            if (totalIngredientVolume + waterVolume > totalVolume) {
+            if (totalVolume < totalIngredientVolume + waterVolume) {
                 alert('Total volume is less than the volume of ingredients plus dilution. Please increase the total volume.');
                 return;
             }
 
+            let scaledRecipe = '<ul>';
             const scalingFactor = totalVolume / (totalIngredientVolume + waterVolume);
+
             ingredientVolumes.forEach(ingredient => {
                 let scaledQuantity = ingredient.volumeInMilliliters * scalingFactor;
-                scaledRecipe += `<li>${ingredient.name}: ${convertFromMilliliters(scaledQuantity, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
+                scaledRecipe += `<li>${ingredient.name}: ${convertFromMilliliters(scaledQuantity, inputUnit).toFixed(2)} ${inputUnit}</li>`;
             });
 
             if (waterVolume > 0) {
                 let scaledWaterVolume = waterVolume * scalingFactor;
-                scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
+                scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, inputUnit).toFixed(2)} ${inputUnit}</li>`;
             }
 
             scaledRecipe += '</ul>';
@@ -191,11 +207,10 @@
         function convertFromMilliliters(quantity, unit) {
             const conversionRates = {
                 ounces: 1 / 29.5735,
-                milliliters: 1,
-                liters: 1 / 1000
-            };
-            return quantity * conversionRates[unit];
-        }
-    </script>
-</body>
+                milliliters: 1,liters: 1 / 1000
+};
+return quantity * conversionRates[unit];
+}
+        </body>
 </html>
+               
