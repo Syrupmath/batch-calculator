@@ -43,6 +43,7 @@
                     <button type="button" id="add-ingredient" onclick="addIngredient()">Add Ingredient</button>
                 </form>
             </section>
+            
             <section id="batch-size-input">
                 <h2>Batch Size</h2>
                 <form>
@@ -71,35 +72,7 @@
                 <div id="original-recipe">
                     <!-- Original recipe will be displayed here -->
                 </div>
-                            <section id="batch-size-input">
-                <h2>Batch Size</h2>
-                <form>
-                    <div class="input-group">
-                        <label for="num-servings">Number of Servings:</label>
-                        <input type="number" id="num-servings" name="num-servings" placeholder="E.g., 10">
-                    </div>
-                    <div class="input-group">
-                        <label for="total-volume">Total Volume:</label>
-                        <input type="number" id="total-volume" name="total-volume" placeholder="E.g., 750">
-                        <select id="total-volume-unit" name="total-volume-unit">
-                            <option value="milliliters">Milliliters</option>
-                            <option value="liters">Liters</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="dilution">Include Dilution:</label>
-                        <input type="checkbox" id="dilution" name="dilution">
-                    </div>
-                    <button type="button" id="calculate" onclick="calculateRecipe()">Calculate</button>
-                </form>
-            </section>
-            
-            <section id="output">
-                <h2>Original Recipe</h2>
-                <div id="original-recipe">
-                    <!-- Original recipe will be displayed here -->
-                </div>
-                                <h2>Scaled Recipe</h2>
+                <h2>Scaled Recipe</h2>
                 <div id="scaled-recipe">
                     <!-- Scaled recipe will be displayed here -->
                 </div>
