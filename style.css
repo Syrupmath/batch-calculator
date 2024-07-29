@@ -98,24 +98,48 @@ button:hover {
         background-color: white;
     }
 
-    header, form, #add-ingredient, #calculate, #print-recipe {
-        display: none;
+    header {
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        padding: 1em 0;
+        border-radius: 0;
+        margin-bottom: 1em;
     }
 
     .container {
+        max-width: 100%;
+        padding: 0;
         box-shadow: none;
         border-radius: 0;
-        padding: 0;
+    }
+
+    form, #add-ingredient, #calculate, #print-recipe {
+        display: none;
     }
 
     #scaled-recipe {
-        margin-top: 0;
-        padding: 0;
-        box-shadow: none;
+        margin-top: 1em;
+        padding: 1em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
     }
 
     h2 {
-        color: black;
+        color: #333;
+        margin-bottom: 0.5em;
+    }
+
+    #original-recipe, #scaled-recipe {
+        margin-bottom: 2em;
+    }
+
+    #original-recipe ul, #scaled-recipe ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    #original-recipe li, #scaled-recipe li {
         margin-bottom: 0.5em;
     }
 }
