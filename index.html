@@ -66,8 +66,12 @@
                 <h2>Step 3: Choose Dilution</h2>
                 <form>
                     <div class="input-group">
-                        <label for="dilution">Include Dilution:</label>
-                        <input type="checkbox" id="dilution" name="dilution">
+                        <label for="dilution">Dilution:</label>
+                        <select id="dilution" name="dilution">
+                            <option value="0">0% - No Dilution</option>
+                            <option value="18">18% - Best for Stirred Cocktails</option>
+                            <option value="25">25% - Best for Shaken Cocktails</option>
+                        </select>
                     </div>
                 </form>
             </section>
@@ -120,7 +124,7 @@
         function calculateRecipe() {
             let totalVolume = parseFloat(document.getElementById('total-volume').value);
             const totalVolumeUnit = document.getElementById('total-volume-unit').value;
-            const includeDilution = document.getElementById('dilution').checked;
+            const dilution = parseFloat(document.getElementById('dilution').value) / 100;
 
             if (totalVolumeUnit === 'liters') {
                 totalVolume *= 1000; // Convert liters to milliliters
@@ -148,27 +152,22 @@
             originalRecipe += '</ul>';
             document.getElementById('original-recipe').innerHTML = originalRecipe;
 
-            let waterVolume = 0;
-            if (includeDilution) {
-                const dilutionVolume = totalIngredientVolume * 0.2; // 20% of total ingredient volume
-                totalIngredientVolume += dilutionVolume;
-                waterVolume = dilutionVolume;
-            }
+            let waterVolume = totalIngredientVolume * dilution;
 
             let scaledRecipe = '<ul>';
 
-            if (totalIngredientVolume > totalVolume) {
-                alert('Total volume is less than the volume of ingredients. Please increase the total volume.');
+            if (totalIngredientVolume + waterVolume > totalVolume) {
+                alert('Total volume is less than the volume of ingredients plus dilution. Please increase the total volume.');
                 return;
             }
 
-            const scalingFactor = totalVolume / totalIngredientVolume;
+            const scalingFactor = totalVolume / (totalIngredientVolume + waterVolume);
             ingredientVolumes.forEach(ingredient => {
                 let scaledQuantity = ingredient.volumeInMilliliters * scalingFactor;
                 scaledRecipe += `<li>${ingredient.name}: ${convertFromMilliliters(scaledQuantity, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
             });
 
-            if (includeDilution && waterVolume > 0) {
+            if (waterVolume > 0) {
                 let scaledWaterVolume = waterVolume * scalingFactor;
                 scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
             }
