@@ -68,12 +68,12 @@
             </section>
             
             <section id="output">
-                <h2>Original Recipe</h2>
                 <div id="original-recipe">
+                    <h2>Original Recipe</h2>
                     <!-- Original recipe will be displayed here -->
                 </div>
-                <h2>Scaled Recipe</h2>
                 <div id="scaled-recipe">
+                    <h2>Scaled Recipe</h2>
                     <!-- Scaled recipe will be displayed here -->
                 </div>
                 <button type="button" id="print-recipe" onclick="window.print()">Print Recipe</button>
@@ -121,7 +121,7 @@
 
             let totalIngredientVolume = 0;
             let ingredientVolumes = [];
-            let originalRecipe = '<h3>Original Recipe:</h3><ul>';
+            let originalRecipe = '<ul>';
 
             for (let i = 0; i < ingredients.length; i++) {
                 const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
@@ -136,7 +136,7 @@
             }
 
             originalRecipe += '</ul>';
-            document.getElementById('original-recipe').innerHTML = originalRecipe;
+            document.getElementById('original-recipe').innerHTML += originalRecipe;
 
             let waterVolume = 0;
             if (includeDilution) {
@@ -145,7 +145,7 @@
                 waterVolume = dilutionVolume;
             }
 
-            let scaledRecipe = '<h3>Scaled Recipe:</h3><ul>';
+            let scaledRecipe = '<ul>';
 
             if (totalIngredientVolume > totalVolume) {
                 alert('Total volume is less than the volume of ingredients. Please increase the total volume.');
@@ -164,7 +164,7 @@
             }
 
             scaledRecipe += '</ul>';
-            document.getElementById('scaled-recipe').innerHTML = scaledRecipe;
+            document.getElementById('scaled-recipe').innerHTML += scaledRecipe;
         }
 
         function convertToMilliliters(quantity, unit) {
