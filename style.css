@@ -10,6 +10,7 @@ header {
     color: white;
     text-align: center;
     padding: 1em 0;
+    border-radius: 10px 10px 0 0;
 }
 
 main {
