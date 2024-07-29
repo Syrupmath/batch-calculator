@@ -44,7 +44,6 @@
                 <label for="total-volume">Total Volume:</label>
                 <input type="number" id="total-volume" name="total-volume" oninput="saveValue(this)">
                 <select id="total-volume-unit" name="total-volume-unit" onchange="saveValue(this)">
-                    <option value="ounces">Ounces</option>
                     <option value="milliliters">Milliliters</option>
                     <option value="liters">Liters</option>
                 </select>
@@ -95,31 +94,49 @@
         }
 
         function calculateRecipe() {
-            const totalVolume = parseFloat(document.getElementById('total-volume').value);
+            let totalVolume = parseFloat(document.getElementById('total-volume').value);
             const totalVolumeUnit = document.getElementById('total-volume-unit').value;
             const includeDilution = document.getElementById('dilution').checked;
+
+            if (totalVolumeUnit === 'liters') {
+                totalVolume *= 1000; // Convert liters to milliliters
+            }
 
             const ingredientsDiv = document.getElementById('ingredients');
             const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
 
-            let scaledRecipe = '<h3>Scaled Recipe:</h3><ul>';
+            let totalIngredientVolume = 0;
+            let ingredientVolumes = [];
 
             for (let i = 0; i < ingredients.length; i++) {
                 const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
                 const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
                 const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
 
-                let scaledQuantity = convertToMilliliters(quantity, unit);
-                
-                if (totalVolume) {
-                    scaledQuantity *= totalVolume / getOriginalTotalVolume();
-                }
+                let volumeInMilliliters = convertToMilliliters(quantity, unit);
+                totalIngredientVolume += volumeInMilliliters;
+                ingredientVolumes.push({ name, volumeInMilliliters });
+            }
 
-                if (includeDilution) {
-                    scaledQuantity *= 1.2; // Assuming a 20% dilution
-                }
+            if (includeDilution) {
+                totalIngredientVolume *= 1.2; // Adjust for 20% dilution
+            }
 
-                scaledRecipe += `<li>${name}: ${convertFromMilliliters(scaledQuantity, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
+            let scaledRecipe = '<h3>Scaled Recipe:</h3><ul>';
+            let waterVolume = totalVolume - totalIngredientVolume;
+
+            if (waterVolume < 0) {
+                alert('Total volume is less than the volume of ingredients. Please increase the total volume.');
+                return;
+            }
+
+            ingredientVolumes.forEach(ingredient => {
+                let scaledQuantity = ingredient.volumeInMilliliters * (totalVolume / totalIngredientVolume);
+                scaledRecipe += `<li>${ingredient.name}: ${convertFromMilliliters(scaledQuantity, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
+            });
+
+            if (includeDilution && waterVolume > 0) {
+                scaledRecipe += `<li>Water: ${convertFromMilliliters(waterVolume, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
             }
 
             scaledRecipe += '</ul>';
@@ -142,20 +159,6 @@
                 liters: 1 / 1000
             };
             return quantity * conversionRates[unit];
-        }
-
-        function getOriginalTotalVolume() {
-            const ingredientsDiv = document.getElementById('ingredients');
-            const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
-            let totalVolume = 0;
-
-            for (let i = 0; i < ingredients.length; i++) {
-                const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
-                const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
-                totalVolume += convertToMilliliters(quantity, unit);
-            }
-
-            return totalVolume;
         }
 
         // Save input values to localStorage
