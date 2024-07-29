@@ -118,25 +118,29 @@
                 ingredientVolumes.push({ name, volumeInMilliliters });
             }
 
+            let waterVolume = 0;
             if (includeDilution) {
-                totalIngredientVolume *= 1.2; // Adjust for 20% dilution
+                const dilutionVolume = totalIngredientVolume * 0.2; // 20% of total ingredient volume
+                totalIngredientVolume += dilutionVolume;
+                waterVolume = dilutionVolume;
             }
 
             let scaledRecipe = '<h3>Scaled Recipe:</h3><ul>';
-            let waterVolume = totalVolume - totalIngredientVolume;
 
-            if (waterVolume < 0) {
+            if (totalIngredientVolume > totalVolume) {
                 alert('Total volume is less than the volume of ingredients. Please increase the total volume.');
                 return;
             }
 
+            const scalingFactor = totalVolume / totalIngredientVolume;
             ingredientVolumes.forEach(ingredient => {
-                let scaledQuantity = ingredient.volumeInMilliliters * (totalVolume / totalIngredientVolume);
+                let scaledQuantity = ingredient.volumeInMilliliters * scalingFactor;
                 scaledRecipe += `<li>${ingredient.name}: ${convertFromMilliliters(scaledQuantity, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
             });
 
             if (includeDilution && waterVolume > 0) {
-                scaledRecipe += `<li>Water: ${convertFromMilliliters(waterVolume, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
+                let scaledWaterVolume = waterVolume * scalingFactor;
+                scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
             }
 
             scaledRecipe += '</ul>';
