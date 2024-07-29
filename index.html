@@ -88,7 +88,6 @@
         }
 
         function calculateRecipe() {
-            const numServings = parseFloat(document.getElementById('num-servings').value) || 1;
             const totalVolume = parseFloat(document.getElementById('total-volume').value);
             const totalVolumeUnit = document.getElementById('total-volume-unit').value;
             const includeDilution = document.getElementById('dilution').checked;
@@ -103,30 +102,53 @@
                 const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
                 const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
 
-                let scaledQuantity = quantity * numServings;
+                let scaledQuantity = convertToMilliliters(quantity, unit);
+                
+                if (totalVolume) {
+                    scaledQuantity *= totalVolume / getOriginalTotalVolume();
+                }
 
                 if (includeDilution) {
                     scaledQuantity *= 1.2; // Assuming a 20% dilution
                 }
 
-                if (totalVolume) {
-                    scaledQuantity = convertUnits(scaledQuantity, unit, totalVolumeUnit);
-                }
-
-                scaledRecipe += `<li>${name}: ${scaledQuantity.toFixed(2)} ${totalVolume ? totalVolumeUnit : unit}</li>`;
+                scaledRecipe += `<li>${name}: ${convertFromMilliliters(scaledQuantity, totalVolumeUnit).toFixed(2)} ${totalVolumeUnit}</li>`;
             }
 
             scaledRecipe += '</ul>';
             document.getElementById('scaled-recipe').innerHTML = scaledRecipe;
         }
 
-        function convertUnits(quantity, fromUnit, toUnit) {
+        function convertToMilliliters(quantity, unit) {
             const conversionRates = {
-                ounces: { ounces: 1, milliliters: 29.5735, liters: 0.0295735 },
-                milliliters: { ounces: 0.033814, milliliters: 1, liters: 0.001 },
-                liters: { ounces: 33.814, milliliters: 1000, liters: 1 }
+                ounces: 29.5735,
+                milliliters: 1,
+                liters: 1000
             };
-            return quantity * conversionRates[fromUnit][toUnit];
+            return quantity * conversionRates[unit];
+        }
+
+        function convertFromMilliliters(quantity, unit) {
+            const conversionRates = {
+                ounces: 1 / 29.5735,
+                milliliters: 1,
+                liters: 1 / 1000
+            };
+            return quantity * conversionRates[unit];
+        }
+
+        function getOriginalTotalVolume() {
+            const ingredientsDiv = document.getElementById('ingredients');
+            const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
+            let totalVolume = 0;
+
+            for (let i = 0; i < ingredients.length; i++) {
+                const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
+                const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
+                totalVolume += convertToMilliliters(quantity, unit);
+            }
+
+            return totalVolume;
         }
     </script>
 </body>
