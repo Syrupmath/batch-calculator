@@ -43,7 +43,6 @@
                     <button type="button" id="add-ingredient" onclick="addIngredient()">Add Ingredient</button>
                 </form>
             </section>
-            
             <section id="batch-size-input">
                 <h2>Step 2: Determine Your Batch Size</h2>
                 <form>
@@ -82,13 +81,17 @@
             </section>
 
             <section id="output" style="display: none;">
-                <div id="original-recipe">
+                <div id="original-recipe-container">
                     <h2>Original Recipe</h2>
-                    <!-- Original recipe will be displayed here -->
+                    <div id="original-recipe">
+                        <!-- Original recipe will be displayed here -->
+                    </div>
                 </div>
-                <div id="scaled-recipe">
+                <div id="scaled-recipe-container">
                     <h2>Scaled Recipe</h2>
-                    <!-- Scaled recipe will be displayed here -->
+                    <div id="scaled-recipe">
+                        <!-- Scaled recipe will be displayed here -->
+                    </div>
                 </div>
                 <button type="button" id="print-recipe" onclick="window.print()">Print Recipe</button>
             </section>
@@ -175,7 +178,7 @@
                 return;
             }
 
-            let scaledRecipe = '<ul>';
+                    let scaledRecipe = '<ul>';
             const scalingFactor = totalVolume / (totalIngredientVolume + waterVolume);
 
             ingredientVolumes.forEach(ingredient => {
@@ -202,16 +205,15 @@
                 liters: 1000
             };
             return quantity * conversionRates[unit];
-        }
-
-        function convertFromMilliliters(quantity, unit) {
-            const conversionRates = {
-                ounces: 1 / 29.5735,
-                milliliters: 1,
-                liters: 1 / 1000
-            };
-            return quantity * conversionRates[unit];
-        }
-    </script>
+}
+            function convertFromMilliliters(quantity, unit) {
+        const conversionRates = {
+            ounces: 1 / 29.5735,
+            milliliters: 1,
+            liters: 1 / 1000
+        };
+        return quantity * conversionRates[unit];
+    }
+</script>
 </body>
 </html>
