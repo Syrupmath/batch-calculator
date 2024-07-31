@@ -43,7 +43,6 @@
                     <button type="button" id="add-ingredient" onclick="addIngredient()">Add Ingredient</button>
                 </form>
             </section>
-            
             <section id="batch-size-input" class="step">
                 <h2>Step 2: Determine Your Batch Size</h2>
                 <form>
@@ -80,7 +79,6 @@
                 <h2>Step 4: Calculate Totals</h2>
                 <button type="button" id="calculate" onclick="calculateRecipe()">Calculate</button>
             </section>
-
             <section id="output" style="display: none;">
                 <div id="original-recipe-container">
                     <h2>Original Recipe</h2>
@@ -124,7 +122,6 @@
             `;
             ingredientsDiv.appendChild(newIngredient);
         }
-
         function calculateRecipe() {
             const numServings = parseFloat(document.getElementById('num-servings').value);
             const totalVolumeInput = parseFloat(document.getElementById('total-volume').value);
@@ -188,7 +185,7 @@
             });
 
             if (waterVolume > 0) {
-                let scaledWaterVolume = waterVolume * scalingFactor;
+                let scaledWaterVolume = waterVolume * scalFactor;
                 scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, inputUnit).toFixed(2)} ${inputUnit}</li>`;
             }
 
@@ -203,18 +200,20 @@
             const conversionRates = {
                 ounces: 29.5735,
                 milliliters: 1,
-                liters: 1000
+                                liters: 1000
             };
             return quantity * conversionRates[unit];
         }
 
         function convertFromMilliliters(quantity, unit) {
-            constconversionRates = {
-ounces: 1 / 29.5735,
-milliliters: 1,
-liters: 1 / 1000
-};
-return quantity * conversionRates[unit];
-}
-        </body>
+            const conversionRates = {
+                ounces: 1 / 29.5735,
+                milliliters: 1,
+                liters: 1 / 1000
+            };
+            return quantity * conversionRates[unit];
+        }
+    </script>
+</body>
 </html>
+
