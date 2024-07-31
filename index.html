@@ -80,7 +80,8 @@
                 <h2>Step 4: Calculate Totals</h2>
                 <button type="button" id="calculate" onclick="calculateRecipe()">Calculate</button>
             </section>
-                        <section id="output" style="display: none;">
+
+            <section id="output" style="display: none;">
                 <div id="original-recipe-container">
                     <h2>Original Recipe</h2>
                     <div id="original-recipe">
@@ -117,66 +118,67 @@
                     <label for="ingredient-unit-${ingredientCount}">Unit:</label>
                     <select id="ingredient-unit-${ingredientCount}" name="ingredient-unit-${ingredientCount}">
                         <option value="ounces">Ounces</option>
-                        <option value=“milliliters”>Milliliters;
-ingredientsDiv.appendChild(newIngredient);
-}
-       function calculateRecipe() {
-        const numServings = parseFloat(document.getElementById('num-servings').value);
-        const totalVolumeInput = parseFloat(document.getElementById('total-volume').value);
-        const totalVolumeUnit = document.getElementById('total-volume-unit').value;
-        const dilution = parseFloat(document.getElementById('dilution').value) / 100;
-
-        const ingredientsDiv = document.getElementById('ingredients');
-        const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
-
-        let totalIngredientVolume = 0;
-        let ingredientVolumes = [];
-        let originalRecipe = '<ul>';
-        let inputUnit = '';
-
-        for (let i = 0; i < ingredients.length; i++) {
-            const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
-            const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
-            const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
-
-            if (inputUnit === '') {
-                inputUnit = unit;
-            }
-
-            originalRecipe += `<li>${name}: ${quantity} ${unit}</li>`;
-
-            let volumeInMilliliters = convertToMilliliters(quantity, unit);
-            totalIngredientVolume += volumeInMilliliters;
-            ingredientVolumes.push({ name, volumeInMilliliters });
+                        <option value="milliliters">Milliliters</option>
+                    </select>
+                </div>
+            `;
+            ingredientsDiv.appendChild(newIngredient);
         }
 
-        originalRecipe += '</ul>';
-        document.getElementById('original-recipe').innerHTML = originalRecipe;
+        function calculateRecipe() {
+            const numServings = parseFloat(document.getElementById('num-servings').value);
+            const totalVolumeInput = parseFloat(document.getElementById('total-volume').value);
+            const totalVolumeUnit = document.getElementById('total-volume-unit').value;
+            const dilution = parseFloat(document.getElementById('dilution').value) / 100;
 
-        let waterVolume = totalIngredientVolume * dilution;
-        let totalVolume;
+            const ingredientsDiv = document.getElementById('ingredients');
+            const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
 
-        if (numServings) {
-            totalVolume = (totalIngredientVolume + waterVolume) * numServings;
-        } else if (totalVolumeInput) {
-            if (totalVolumeUnit === 'liters') {
-                totalVolume = totalVolumeInput * 1000; // Convert liters to milliliters
+            let totalIngredientVolume = 0;
+            let ingredientVolumes = [];
+            let originalRecipe = '<ul>';
+            let inputUnit = '';
+
+            for (let i = 0; i < ingredients.length; i++) {
+                const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
+                const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
+                const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
+
+                if (inputUnit === '') {
+                    inputUnit = unit;
+                }
+
+                originalRecipe += `<li>${name}: ${quantity} ${unit}</li>`;
+
+                let volumeInMilliliters = convertToMilliliters(quantity, unit);
+                totalIngredientVolume += volumeInMilliliters;
+                ingredientVolumes.push({ name, volumeInMilliliters });
+            }
+
+            originalRecipe += '</ul>';
+            document.getElementById('original-recipe').innerHTML = originalRecipe;
+
+            let waterVolume = totalIngredientVolume * dilution;
+            let totalVolume;
+
+            if (numServings) {
+                totalVolume = (totalIngredientVolume + waterVolume) * numServings;
+            } else if (totalVolumeInput) {
+                if (totalVolumeUnit === 'liters') {
+                    totalVolume = totalVolumeInput * 1000; // Convert liters to milliliters
+                } else {
+                    totalVolume = totalVolumeInput;
+                }
             } else {
-                totalVolume = totalVolumeInput;
+                alert('Please enter either the number of servings or the total volume.');
+                return;
             }
-        } else {
-            alert('Please enter either the number of servings or the total volume.');
-            return;
-        }
 
-        if (totalVolume < totalIngredientVolume + waterVolume) {
-            alert('Total volume is less than the volume of ingredients plus dilution. Please increase the total volume.');
-            return;
-        }
+            if (totalVolume < totalIngredientVolume + waterVolume) {
+                alert('Total volume is less than the volume of ingredients plus dilution. Please increase the total volume.');
+                return;
+            }
 
-        ### Updated HTML (index.html) - Conclusion
-
-```html
             let scaledRecipe = '<ul>';
             const scalingFactor = totalVolume / (totalIngredientVolume + waterVolume);
 
@@ -207,13 +209,12 @@ ingredientsDiv.appendChild(newIngredient);
         }
 
         function convertFromMilliliters(quantity, unit) {
-            const conversionRates = {
-                ounces: 1 / 29.5735,
-                milliliters: 1,
-                liters: 1 / 1000
-            };
-            return quantity * conversionRates[unit];
-        }
-    </script>
-</body>
+            constconversionRates = {
+ounces: 1 / 29.5735,
+milliliters: 1,
+liters: 1 / 1000
+};
+return quantity * conversionRates[unit];
+}
+        </body>
 </html>
