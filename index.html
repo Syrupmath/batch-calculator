@@ -184,10 +184,10 @@
                 scaledRecipe += `<li>${ingredient.name}: ${convertFromMilliliters(scaledQuantity, inputUnit).toFixed(2)} ${inputUnit}</li>`;
             });
 
-            if (waterVolume > 0) {
-                let scaledWaterVolume = waterVolume * scalFactor;
-                scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, inputUnit).toFixed(2)} ${inputUnit}</li>`;
-            }
+          if (waterVolume > 0) {
+    let scaledWaterVolume = waterVolume * scalingFactor;
+    scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, inputUnit).toFixed(2)} ${inputUnit}</li>`;
+}
 
             scaledRecipe += '</ul>';
             document.getElementById('scaled-recipe').innerHTML = scaledRecipe;
@@ -200,7 +200,7 @@
             const conversionRates = {
                 ounces: 29.5735,
                 milliliters: 1,
-                                liters: 1000
+                liters: 1000
             };
             return quantity * conversionRates[unit];
         }
