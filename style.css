@@ -84,6 +84,15 @@ button:hover {
     min-width: 150px;
 }
 
+.remove-ingredient {
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 1.5em;
+    cursor: pointer;
+    align-self: center;
+}
+
 /* Print Styles */
 @media print {
     body {
