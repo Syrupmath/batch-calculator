@@ -8,10 +8,12 @@ function addIngredient() {
         <div class="input-group">
             <label for="ingredient-name-${ingredientCount}">Ingredient Name:</label>
             <input type="text" id="ingredient-name-${ingredientCount}" name="ingredient-name-${ingredientCount}" placeholder="E.g., Rye">
+            <span class="error-message ingredient-name-error"></span>
         </div>
         <div class="input-group">
             <label for="ingredient-quantity-${ingredientCount}">Quantity:</label>
             <input type="number" id="ingredient-quantity-${ingredientCount}" name="ingredient-quantity-${ingredientCount}" placeholder="E.g., 2">
+            <span class="error-message ingredient-quantity-error"></span>
         </div>
         <div class="input-group">
             <label for="ingredient-unit-${ingredientCount}">Unit:</label>
@@ -19,12 +21,16 @@ function addIngredient() {
                 <option value="ounces">Ounces</option>
                 <option value="milliliters">Milliliters</option>
             </select>
+            <span class="error-message ingredient-unit-error"></span>
         </div>
     `;
     ingredientsDiv.appendChild(newIngredient);
 }
 
 function calculateRecipe() {
+    // Clear previous error messages
+    clearErrorMessages();
+
     const numServings = parseFloat(document.getElementById('num-servings').value);
     const totalVolumeInput = parseFloat(document.getElementById('total-volume').value);
     const totalVolumeUnit = document.getElementById('total-volume-unit').value;
@@ -37,6 +43,7 @@ function calculateRecipe() {
     let ingredientVolumes = [];
     let originalRecipe = '<ul>';
     let inputUnit = '';
+    let hasError = false;
 
     for (let i = 0; i < ingredients.length; i++) {
         const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
@@ -47,11 +54,25 @@ function calculateRecipe() {
             inputUnit = unit;
         }
 
+        if (!name) {
+            ingredients[i].querySelector('.ingredient-name-error').innerText = 'Ingredient name is required.';
+            hasError = true;
+        }
+
+        if (quantity <= 0) {
+            ingredients[i].querySelector('.ingredient-quantity-error').innerText = 'Quantity must be greater than zero.';
+            hasError = true;
+        }
+
         originalRecipe += `<li>${name}: ${quantity} ${unit}</li>`;
 
         let volumeInMilliliters = convertToMilliliters(quantity, unit);
         totalIngredientVolume += volumeInMilliliters;
         ingredientVolumes.push({ name, volumeInMilliliters });
+    }
+
+    if (hasError) {
+        return;
     }
 
     originalRecipe += '</ul>';
@@ -69,12 +90,12 @@ function calculateRecipe() {
             totalVolume = totalVolumeInput;
         }
     } else {
-        alert('Please enter either the number of servings or the total volume.');
+        document.getElementById('calculate-error').innerText = 'Please enter either the number of servings or the total volume.';
         return;
     }
 
     if (totalVolume < totalIngredientVolume + waterVolume) {
-        alert('Total volume is less than the volume of ingredients plus dilution. Please increase the total volume.');
+        document.getElementById('calculate-error').innerText = 'Total volume is less than the volume of ingredients plus dilution. Please increase the total volume.';
         return;
     }
 
@@ -114,4 +135,11 @@ function convertFromMilliliters(quantity, unit) {
         liters: 1 / 1000
     };
     return quantity * conversionRates[unit];
+}
+
+function clearErrorMessages() {
+    const errorMessages = document.querySelectorAll('.error-message');
+    errorMessages.forEach(error => {
+        error.innerText = '';
+    });
 }
