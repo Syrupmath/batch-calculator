@@ -31,6 +31,7 @@ function calculateRecipe() {
     // Clear previous error messages
     clearErrorMessages();
 
+    const recipeName = document.getElementById('recipe-name').value;
     const numServings = parseFloat(document.getElementById('num-servings').value);
     const totalVolumeInput = parseFloat(document.getElementById('total-volume').value);
     const totalVolumeUnit = document.getElementById('total-volume-unit').value;
@@ -44,6 +45,11 @@ function calculateRecipe() {
     let originalRecipe = '<ul>';
     let inputUnit = '';
     let hasError = false;
+
+    if (!recipeName) {
+        document.getElementById('recipe-name-error').innerText = 'Recipe name is required.';
+        hasError = true;
+    }
 
     for (let i = 0; i < ingredients.length; i++) {
         const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
@@ -77,6 +83,7 @@ function calculateRecipe() {
 
     originalRecipe += '</ul>';
     document.getElementById('original-recipe').innerHTML = originalRecipe;
+    document.getElementById('output-recipe-name').innerText = recipeName;
 
     let waterVolume = totalIngredientVolume * dilution;
     let totalVolume;
