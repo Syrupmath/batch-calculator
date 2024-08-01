@@ -11,6 +11,7 @@ body {
 
 header {
     text-align: center;
+    margin-bottom: 20px;
 }
 
 h1 {
@@ -22,10 +23,8 @@ h1 {
 }
 
 .container {
-    width: 90%;
-    max-width: 500px;
+    max-width: 800px;
     padding: 20px;
-    padding-top: 10px;
     margin: 10px auto;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -39,73 +38,13 @@ h2 {
     font-size: 1.5em;
 }
 
-form {
-    margin-bottom: 2em;
-}
-
-.input-group {
-    display: flex;
-    align-items: flex-start;
-    gap: 5px;
-    margin-bottom: 15px;
-}
-
-.input-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.input-group input,
-.input-group select {
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.input-group .ingredient-name {
-    flex: 3;
-}
-
-.input-group .ingredient-quantity {
-    flex: 1;
-    max-width: 60px;
-}
-
-.input-group .ingredient-unit {
-    flex: 1;
-}
-
-.remove-ingredient {
-    background-color: transparent;
-    border: none;
-    color: red;
-    font-size: 1.2em;
-    cursor: pointer;
-    align-self: center;
-    padding: 0;
-    margin-left: 5px;
-}
-
 button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
     font-size: 16px;
     font-weight: bold;
 }
 
-button:hover {
-    background-color: #218838;
-}
-
-.error-message {
+.invalid-feedback {
+    display: none;
     color: red;
     font-size: 0.9em;
 }
@@ -114,50 +53,6 @@ button:hover {
     margin-top: 20px;
     font-size: 1em;
     color: #555;
-}
-
-@media (max-width: 768px) {
-    .container {
-        width: 90%;
-        max-width: none;
-        padding: 10px;
-        border: none;
-        margin: 10px auto;
-        border-radius: 0;
-    }
-
-    h1 {
-        font-size: 1.5em;
-    }
-
-    p {
-        font-size: 0.9em;
-    }
-
-    button {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .input-group {
-        flex-direction: column;
-    }
-
-    .input-group label,
-    .input-group input,
-    .input-group select,
-    .remove-ingredient {
-        flex: none;
-        margin-bottom: 5px;
-    }
-}
-
-#scaled-recipe-container, #scaled-recipe {
-    background: none;
-    padding: 0;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
 }
 
 @media print {
@@ -176,7 +71,7 @@ button:hover {
         border-radius: 0;
     }
 
-    main, .container {
+    .container {
         max-width: 100%;
         padding: 0;
         box-shadow: none;
