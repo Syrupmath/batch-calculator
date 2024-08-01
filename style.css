@@ -1,17 +1,21 @@
-/* General Styles */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f8f8f8;
+    background-color: #f5ec9a; /* Background color from syrupmath.com */
+    color: #333;
+    line-height: 1.6;
 }
 
 header {
-    background-color: #4CAF50;
-    color: white;
     text-align: center;
-    padding: 1em 0;
-    border-radius: 10px 10px 0 0;
+    font-size: 2.5em;
+    line-height: 1.2;
+    margin-bottom: 0.2em;
+    font-weight: 700;
+    color: #333;
 }
 
 main {
@@ -21,17 +25,21 @@ main {
 }
 
 .container {
-    max-width: 800px;
-    width: 100%;
-    background-color: white;
-    padding: 2em;
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    padding-top: 10px;
+    margin: 10px auto;
+    border: 1px solid #ccc;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
     color: #333;
     margin-bottom: 1em;
+    font-size: 1.5em;
 }
 
 form {
@@ -39,49 +47,39 @@ form {
 }
 
 .input-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1em;
+    margin-bottom: 15px;
 }
 
-.input-group label {
-    margin-bottom: 0.5em;
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
-.input-group input, 
-.input-group select {
-    padding: 0.5em;
-    font-size: 1em;
+input, select {
     width: 100%;
-    max-width: 300px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
 button {
-    background-color: #4CAF50;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
     color: white;
     border: none;
-    padding: 0.75em 1.5em;
-    font-size: 1em;
-    cursor: pointer;
     border-radius: 5px;
-    margin-top: 1em;
-    max-width: 200px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 button:hover {
-    background-color: #45a049;
-}
-
-.ingredient {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1em;
-    margin-bottom: 1em;
-}
-
-.ingredient .input-group {
-    flex: 1;
-    min-width: 150px;
+    background-color: #218838;
 }
 
 .remove-ingredient {
@@ -95,7 +93,49 @@ button:hover {
     margin-left: 1em;
 }
 
-/* Print Styles */
+.error-message {
+    color: red;
+    font-size: 0.9em;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 1em;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        max-width: none;
+        padding: 10px;
+        border: none;
+        margin: 10px auto;
+        border-radius: 0;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: 0.9em;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+#scaled-recipe-container, #scaled-recipe {
+    background: none;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+}
+
 @media print {
     body {
         background-color: white;
@@ -142,13 +182,4 @@ button:hover {
         margin-bottom: 0.5em;
         font-size: 1.2em;
     }
-}
-
-/* Explicitly remove the container style from scaled recipe */
-#scaled-recipe-container, #scaled-recipe {
-    background: none;
-    padding: 0;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
 }
