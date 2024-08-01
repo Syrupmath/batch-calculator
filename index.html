@@ -1,219 +1,142 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batched Cocktail Calculator</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <main>
-        <div class="container">
-            <header>
-                <h1>Batched Cocktail Calculator</h1>
-            </header>
-            <section id="recipe-input" class="step">
-                <h2>Step 1: Enter Your Recipe</h2>
-                <form>
-                    <div class="input-group">
-                        <label for="recipe-name">Recipe Name:</label>
-                        <input type="text" id="recipe-name" name="recipe-name" placeholder="E.g., Manhattan">
-                    </div>
-                    
-                    <div id="ingredients">
-                        <div class="ingredient" id="ingredient-1">
-                            <div class="input-group">
-                                <label for="ingredient-name-1">Ingredient Name:</label>
-                                <input type="text" id="ingredient-name-1" name="ingredient-name-1" placeholder="E.g., Rye">
-                            </div>
-                            <div class="input-group">
-                                <label for="ingredient-quantity-1">Quantity:</label>
-                                <input type="number" id="ingredient-quantity-1" name="ingredient-quantity-1" placeholder="E.g., 2">
-                            </div>
-                            <div class="input-group">
-                                <label for="ingredient-unit-1">Unit:</label>
-                                <select id="ingredient-unit-1" name="ingredient-unit-1">
-                                    <option value="ounces">Ounces</option>
-                                    <option value="milliliters">Milliliters</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button type="button" id="add-ingredient" onclick="addIngredient()">Add Ingredient</button>
-                </form>
-            </section>
-            <section id="batch-size-input" class="step">
-                <h2>Step 2: Determine Your Batch Size</h2>
-                <form>
-                    <div class="input-group">
-                        <label for="num-servings">Number of Servings:</label>
-                        <input type="number" id="num-servings" name="num-servings" placeholder="E.g., 10">
-                    </div>
-                    <div class="input-group">
-                        <label for="total-volume">Total Volume:</label>
-                        <input type="number" id="total-volume" name="total-volume" placeholder="E.g., 750">
-                        <select id="total-volume-unit" name="total-volume-unit">
-                            <option value="milliliters">Milliliters</option>
-                            <option value="liters">Liters</option>
-                        </select>
-                    </div>
-                </form>
-            </section>
-
-            <section id="dilution-input" class="step">
-                <h2>Step 3: Choose Dilution</h2>
-                <form>
-                    <div class="input-group">
-                        <label for="dilution">Dilution:</label>
-                        <select id="dilution" name="dilution">
-                            <option value="0">0% - No Dilution</option>
-                            <option value="18">18% - Best for Stirred Cocktails</option>
-                            <option value="25">25% - Best for Shaken Cocktails</option>
-                        </select>
-                    </div>
-                </form>
-            </section>
-            
-            <section id="calculate-totals" class="step">
-                <h2>Step 4: Calculate Totals</h2>
-                <button type="button" id="calculate" onclick="calculateRecipe()">Calculate</button>
-            </section>
-            <section id="output" style="display: none;">
-                <div id="original-recipe-container">
-                    <h2>Original Recipe</h2>
-                    <div id="original-recipe">
-                        <!-- Original recipe will be displayed here -->
-                    </div>
-                </div>
-                <div id="scaled-recipe-container">
-                    <h2>Scaled Recipe</h2>
-                    <div id="scaled-recipe">
-                        <!-- Scaled recipe will be displayed here -->
-                    </div>
-                </div>
-                <button type="button" id="print-recipe" onclick="window.print()">Print Recipe</button>
-            </section>
-        </div>
-    </main>
-    <script>
-        function addIngredient() {
-            const ingredientsDiv = document.getElementById('ingredients');
-            const ingredientCount = ingredientsDiv.children.length + 1;
-            const newIngredient = document.createElement('div');
-            newIngredient.classList.add('ingredient');
-            newIngredient.id = `ingredient-${ingredientCount}`;
-            newIngredient.innerHTML = `
-                <div class="input-group">
-                    <label for="ingredient-name-${ingredientCount}">Ingredient Name:</label>
-                    <input type="text" id="ingredient-name-${ingredientCount}" name="ingredient-name-${ingredientCount}" placeholder="E.g., Rye">
-                </div>
-                <div class="input-group">
-                    <label for="ingredient-quantity-${ingredientCount}">Quantity:</label>
-                    <input type="number" id="ingredient-quantity-${ingredientCount}" name="ingredient-quantity-${ingredientCount}" placeholder="E.g., 2">
-                </div>
-                <div class="input-group">
-                    <label for="ingredient-unit-${ingredientCount}">Unit:</label>
-                    <select id="ingredient-unit-${ingredientCount}" name="ingredient-unit-${ingredientCount}">
-                        <option value="ounces">Ounces</option>
-                        <option value="milliliters">Milliliters</option>
-                    </select>
-                </div>
-            `;
-            ingredientsDiv.appendChild(newIngredient);
-        }
-        function calculateRecipe() {
-            const numServings = parseFloat(document.getElementById('num-servings').value);
-            const totalVolumeInput = parseFloat(document.getElementById('total-volume').value);
-            const totalVolumeUnit = document.getElementById('total-volume-unit').value;
-            const dilution = parseFloat(document.getElementById('dilution').value) / 100;
-
-            const ingredientsDiv = document.getElementById('ingredients');
-            const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
-
-            let totalIngredientVolume = 0;
-            let ingredientVolumes = [];
-            let originalRecipe = '<ul>';
-            let inputUnit = '';
-
-            for (let i = 0; i < ingredients.length; i++) {
-                const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
-                const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
-                const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
-
-                if (inputUnit === '') {
-                    inputUnit = unit;
-                }
-
-                originalRecipe += `<li>${name}: ${quantity} ${unit}</li>`;
-
-                let volumeInMilliliters = convertToMilliliters(quantity, unit);
-                totalIngredientVolume += volumeInMilliliters;
-                ingredientVolumes.push({ name, volumeInMilliliters });
-            }
-
-            originalRecipe += '</ul>';
-            document.getElementById('original-recipe').innerHTML = originalRecipe;
-
-            let waterVolume = totalIngredientVolume * dilution;
-            let totalVolume;
-
-            if (numServings) {
-                totalVolume = (totalIngredientVolume + waterVolume) * numServings;
-            } else if (totalVolumeInput) {
-                if (totalVolumeUnit === 'liters') {
-                    totalVolume = totalVolumeInput * 1000; // Convert liters to milliliters
-                } else {
-                    totalVolume = totalVolumeInput;
-                }
-            } else {
-                alert('Please enter either the number of servings or the total volume.');
-                return;
-            }
-
-            if (totalVolume < totalIngredientVolume + waterVolume) {
-                alert('Total volume is less than the volume of ingredients plus dilution. Please increase the total volume.');
-                return;
-            }
-
-            let scaledRecipe = '<ul>';
-            const scalingFactor = totalVolume / (totalIngredientVolume + waterVolume);
-
-            ingredientVolumes.forEach(ingredient => {
-                let scaledQuantity = ingredient.volumeInMilliliters * scalingFactor;
-                scaledRecipe += `<li>${ingredient.name}: ${convertFromMilliliters(scaledQuantity, inputUnit).toFixed(2)} ${inputUnit}</li>`;
-            });
-
-          if (waterVolume > 0) {
-              let scaledWaterVolume = waterVolume * scalingFactor;
-              scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, inputUnit).toFixed(2)} ${inputUnit}</li>`;
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
 }
 
-            scaledRecipe += '</ul>';
-            document.getElementById('scaled-recipe').innerHTML = scaledRecipe;
+header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    border-radius: 10px 10px 0 0;
+}
 
-            // Show the output section
-            document.getElementById('output').style.display = 'block';
-        }
+main {
+    display: flex;
+    justify-content: center;
+    padding: 2em;
+}
 
-        function convertToMilliliters(quantity, unit) {
-            const conversionRates = {
-                ounces: 29.5735,
-                milliliters: 1,
-                liters: 1000
-            };
-            return quantity * conversionRates[unit];
-        }
+.container {
+    max-width: 800px;
+    width: 100%;
+    background-color: white;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
-        function convertFromMilliliters(quantity, unit) {
-            const conversionRates = {
-                ounces: 1 / 29.5735,
-                milliliters: 1,
-                liters: 1 / 1000
-            };
-            return quantity * conversionRates[unit];
-        }
-    </script>
-</body>
-</html>
+h2 {
+    color: #333;
+    margin-bottom: 1em;
+}
 
+form {
+    margin-bottom: 2em;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.input-group label {
+    margin-bottom: 0.5em;
+}
+
+.input-group input, 
+.input-group select {
+    padding: 0.5em;
+    font-size: 1em;
+    width: 100%;
+    max-width: 300px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.75em 1.5em;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 1em;
+    max-width: 200px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.ingredient {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin-bottom: 1em;
+}
+
+.ingredient .input-group {
+    flex: 1;
+    min-width: 150px;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background-color: white;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        padding: 1em 0;
+        margin-bottom: 1em;
+        border-radius: 0;
+    }
+
+    main, .container {
+        max-width: 100%;
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    form, #add-ingredient, #calculate, #print-recipe, .step {
+        display: none;
+    }
+
+    #original-recipe-container, #scaled-recipe-container {
+        margin-bottom: 2em;
+    }
+
+    #original-recipe-container h2, #scaled-recipe-container h2 {
+        font-size: 1.5em;
+        margin-bottom: 0.5em;
+        color: #4CAF50;
+    }
+
+    #original-recipe ul, #scaled-recipe ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    #original-recipe li, #scaled-recipe li {
+        margin-bottom: 0.5em;
+        font-size: 1.2em;
+    }
+}
+
+/* Remove the container style from scaled recipe */
+#scaled-recipe-container {
+    background: none;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+}
