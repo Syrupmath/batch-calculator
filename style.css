@@ -133,10 +133,11 @@ button:hover {
     }
 }
 
-/* Remove the container style from scaled recipe */
-#scaled-recipe-container {
+/* Explicitly remove the container style from scaled recipe */
+#scaled-recipe-container, #scaled-recipe {
     background: none;
     padding: 0;
     box-shadow: none;
+    border: none;
     border-radius: 0;
 }
