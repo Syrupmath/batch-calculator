@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Batched Cocktail Calculator</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,55 +16,51 @@
                 <h2>Step 1: Enter Your Recipe</h2>
                 <form>
                     <div id="ingredients">
-                        <div class="ingredient mb-3" id="ingredient-1">
-                            <div class="row g-3">
-                                <div class="col-md-6 form-floating">
-                                    <input type="text" class="form-control" id="ingredient-name-1" name="ingredient-name-1" placeholder="Ingredient Name">
-                                    <label for="ingredient-name-1">Ingredient Name</label>
-                                    <div class="invalid-feedback ingredient-name-error"></div>
+                        <div class="ingredient" id="ingredient-1">
+                            <div class="input-group">
+                                <div>
+                                    <label for="ingredient-name-1">Ingredient Name:</label>
+                                    <input type="text" class="ingredient-name" id="ingredient-name-1" name="ingredient-name-1" placeholder="E.g., Rye">
+                                    <span class="error-message ingredient-name-error"></span>
                                 </div>
-                                <div class="col-md-2 form-floating">
-                                    <input type="number" class="form-control" id="ingredient-quantity-1" name="ingredient-quantity-1" placeholder="Quantity">
-                                    <label for="ingredient-quantity-1">Quantity</label>
-                                    <div class="invalid-feedback ingredient-quantity-error"></div>
+                                <div>
+                                    <label for="ingredient-quantity-1">Quantity:</label>
+                                    <input type="number" class="ingredient-quantity" id="ingredient-quantity-1" name="ingredient-quantity-1" placeholder="E.g., 2">
+                                    <span class="error-message ingredient-quantity-error"></span>
                                 </div>
-                                <div class="col-md-3 form-floating">
-                                    <select class="form-select" id="ingredient-unit-1" name="ingredient-unit-1" aria-label="Unit">
+                                <div>
+                                    <label for="ingredient-unit-1">Unit:</label>
+                                    <select class="ingredient-unit" id="ingredient-unit-1" name="ingredient-unit-1">
                                         <option value="ounces">Ounces</option>
                                         <option value="milliliters">Milliliters</option>
                                     </select>
-                                    <label for="ingredient-unit-1">Unit</label>
-                                    <div class="invalid-feedback ingredient-unit-error"></div>
+                                    <span class="error-message ingredient-unit-error"></span>
                                 </div>
-                                <div class="col-md-1 d-flex align-items-center">
-                                    <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-1')">×</button>
-                                </div>
+                                <button type="button" class="remove-ingredient" onclick="removeIngredient('ingredient-1')">×</button>
                             </div>
                         </div>
                     </div>
                     
-                    <button type="button" class="btn btn-primary mb-3" id="add-ingredient" onclick="addIngredient()">Add Ingredient</button>
+                    <button type="button" id="add-ingredient" onclick="addIngredient()">Add Ingredient</button>
                 </form>
             </section>
             
             <section id="batch-size-input" class="step">
                 <h2>Step 2: Determine Your Batch Size</h2>
                 <form>
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6 form-floating">
-                            <input type="number" class="form-control" id="num-servings" name="num-servings" placeholder="Number of Servings">
-                            <label for="num-servings">Number of Servings</label>
-                            <div class="invalid-feedback" id="num-servings-error"></div>
-                        </div>
-                        <div class="col-md-6 form-floating">
-                            <input type="number" class="form-control" id="total-volume" name="total-volume" placeholder="Total Volume">
-                            <label for="total-volume">Total Volume</label>
-                            <select class="form-select mt-2" id="total-volume-unit" name="total-volume-unit" aria-label="Unit">
-                                <option value="milliliters">Milliliters</option>
-                                <option value="liters">Liters</option>
-                            </select>
-                            <div class="invalid-feedback" id="total-volume-error"></div>
-                        </div>
+                    <div class="input-group">
+                        <label for="num-servings">Number of Servings:</label>
+                        <input type="number" id="num-servings" name="num-servings" placeholder="E.g., 10">
+                        <span id="num-servings-error" class="error-message"></span>
+                    </div>
+                    <div class="input-group">
+                        <label for="total-volume">Total Volume:</label>
+                        <input type="number" id="total-volume" name="total-volume" placeholder="E.g., 750">
+                        <select id="total-volume-unit" name="total-volume-unit">
+                            <option value="milliliters">Milliliters</option>
+                            <option value="liters">Liters</option>
+                        </select>
+                        <span id="total-volume-error" class="error-message"></span>
                     </div>
                 </form>
             </section>
@@ -73,22 +68,22 @@
             <section id="dilution-input" class="step">
                 <h2>Step 3: Choose Dilution</h2>
                 <form>
-                    <div class="form-floating mb-3">
-                        <select class="form-select" id="dilution" name="dilution" aria-label="Dilution">
+                    <div class="input-group">
+                        <label for="dilution">Dilution:</label>
+                        <select id="dilution" name="dilution">
                             <option value="0">0% - No Dilution</option>
                             <option value="18">18% - Best for Stirred Cocktails</option>
                             <option value="25">25% - Best for Shaken Cocktails</option>
                         </select>
-                        <label for="dilution">Dilution</label>
-                        <div class="invalid-feedback" id="dilution-error"></div>
+                        <span id="dilution-error" class="error-message"></span>
                     </div>
                 </form>
             </section>
             
             <section id="calculate-totals" class="step">
                 <h2>Step 4: Calculate Totals</h2>
-                <button type="button" class="btn btn-success mb-3" id="calculate" onclick="calculateRecipe()">Calculate</button>
-                <div class="invalid-feedback" id="calculate-error"></div>
+                <button type="button" id="calculate" onclick="calculateRecipe()">Calculate</button>
+                <span id="calculate-error" class="error-message"></span>
             </section>
             
             <section id="output" style="display: none;">
@@ -107,11 +102,10 @@
                         <!-- Scaled recipe will be displayed here -->
                     </div>
                 </div>
-                <button type="button" class="btn btn-secondary" id="print-recipe" onclick="window.print()">Print Recipe</button>
+                <button type="button" id="print-recipe" onclick="window.print()">Print Recipe</button>
             </section>
         </div>
     </main>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
