@@ -18,6 +18,7 @@
                     <div class="input-group">
                         <label for="recipe-name">Recipe Name:</label>
                         <input type="text" id="recipe-name" name="recipe-name" placeholder="E.g., Manhattan">
+                        <span id="recipe-name-error" class="error-message"></span>
                     </div>
                     
                     <div id="ingredients">
@@ -25,10 +26,12 @@
                             <div class="input-group">
                                 <label for="ingredient-name-1">Ingredient Name:</label>
                                 <input type="text" id="ingredient-name-1" name="ingredient-name-1" placeholder="E.g., Rye">
+                                <span class="error-message ingredient-name-error"></span>
                             </div>
                             <div class="input-group">
                                 <label for="ingredient-quantity-1">Quantity:</label>
                                 <input type="number" id="ingredient-quantity-1" name="ingredient-quantity-1" placeholder="E.g., 2">
+                                <span class="error-message ingredient-quantity-error"></span>
                             </div>
                             <div class="input-group">
                                 <label for="ingredient-unit-1">Unit:</label>
@@ -36,6 +39,7 @@
                                     <option value="ounces">Ounces</option>
                                     <option value="milliliters">Milliliters</option>
                                 </select>
+                                <span class="error-message ingredient-unit-error"></span>
                             </div>
                         </div>
                     </div>
@@ -50,6 +54,7 @@
                     <div class="input-group">
                         <label for="num-servings">Number of Servings:</label>
                         <input type="number" id="num-servings" name="num-servings" placeholder="E.g., 10">
+                        <span id="num-servings-error" class="error-message"></span>
                     </div>
                     <div class="input-group">
                         <label for="total-volume">Total Volume:</label>
@@ -58,6 +63,7 @@
                             <option value="milliliters">Milliliters</option>
                             <option value="liters">Liters</option>
                         </select>
+                        <span id="total-volume-error" class="error-message"></span>
                     </div>
                 </form>
             </section>
@@ -72,6 +78,7 @@
                             <option value="18">18% - Best for Stirred Cocktails</option>
                             <option value="25">25% - Best for Shaken Cocktails</option>
                         </select>
+                        <span id="dilution-error" class="error-message"></span>
                     </div>
                 </form>
             </section>
@@ -79,6 +86,7 @@
             <section id="calculate-totals" class="step">
                 <h2>Step 4: Calculate Totals</h2>
                 <button type="button" id="calculate" onclick="calculateRecipe()">Calculate</button>
+                <span id="calculate-error" class="error-message"></span>
             </section>
             
             <section id="output" style="display: none;">
