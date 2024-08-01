@@ -15,31 +15,27 @@
             <section id="recipe-input" class="step">
                 <h2>Step 1: Enter Your Recipe</h2>
                 <form>
-                    <div class="input-group">
-                        <label for="recipe-name">Recipe Name:</label>
-                        <input type="text" id="recipe-name" name="recipe-name" placeholder="E.g., Manhattan">
-                        <span id="recipe-name-error" class="error-message"></span>
-                    </div>
-                    
                     <div id="ingredients">
                         <div class="ingredient" id="ingredient-1">
                             <div class="input-group">
-                                <label for="ingredient-name-1">Ingredient Name:</label>
-                                <input type="text" class="ingredient-name" id="ingredient-name-1" name="ingredient-name-1" placeholder="E.g., Rye">
-                                <span class="error-message ingredient-name-error"></span>
-                            </div>
-                            <div class="input-group">
-                                <label for="ingredient-quantity-1">Quantity:</label>
-                                <input type="number" class="ingredient-quantity" id="ingredient-quantity-1" name="ingredient-quantity-1" placeholder="E.g., 2">
-                                <span class="error-message ingredient-quantity-error"></span>
-                            </div>
-                            <div class="input-group">
-                                <label for="ingredient-unit-1">Unit:</label>
-                                <select class="ingredient-unit" id="ingredient-unit-1" name="ingredient-unit-1">
-                                    <option value="ounces">Ounces</option>
-                                    <option value="milliliters">Milliliters</option>
-                                </select>
-                                <span class="error-message ingredient-unit-error"></span>
+                                <div>
+                                    <label for="ingredient-name-1">Ingredient Name:</label>
+                                    <input type="text" class="ingredient-name" id="ingredient-name-1" name="ingredient-name-1" placeholder="E.g., Rye">
+                                    <span class="error-message ingredient-name-error"></span>
+                                </div>
+                                <div>
+                                    <label for="ingredient-quantity-1">Quantity:</label>
+                                    <input type="number" class="ingredient-quantity" id="ingredient-quantity-1" name="ingredient-quantity-1" placeholder="E.g., 2">
+                                    <span class="error-message ingredient-quantity-error"></span>
+                                </div>
+                                <div>
+                                    <label for="ingredient-unit-1">Unit:</label>
+                                    <select class="ingredient-unit" id="ingredient-unit-1" name="ingredient-unit-1">
+                                        <option value="ounces">Ounces</option>
+                                        <option value="milliliters">Milliliters</option>
+                                    </select>
+                                    <span class="error-message ingredient-unit-error"></span>
+                                </div>
                                 <button type="button" class="remove-ingredient" onclick="removeIngredient('ingredient-1')">×</button>
                             </div>
                         </div>
