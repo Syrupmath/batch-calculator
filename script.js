@@ -1,30 +1,38 @@
+let ingredientCounter = 1;
+
 function addIngredient() {
+    ingredientCounter++;
     const ingredientsDiv = document.getElementById('ingredients');
-    const ingredientCount = ingredientsDiv.children.length + 1;
     const newIngredient = document.createElement('div');
     newIngredient.classList.add('ingredient');
-    newIngredient.id = `ingredient-${ingredientCount}`;
+    newIngredient.id = `ingredient-${ingredientCounter}`;
     newIngredient.innerHTML = `
         <div class="input-group">
-            <label for="ingredient-name-${ingredientCount}">Ingredient Name:</label>
-            <input type="text" id="ingredient-name-${ingredientCount}" name="ingredient-name-${ingredientCount}" placeholder="E.g., Rye">
+            <label for="ingredient-name-${ingredientCounter}">Ingredient Name:</label>
+            <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" placeholder="E.g., Rye">
             <span class="error-message ingredient-name-error"></span>
         </div>
         <div class="input-group">
-            <label for="ingredient-quantity-${ingredientCount}">Quantity:</label>
-            <input type="number" id="ingredient-quantity-${ingredientCount}" name="ingredient-quantity-${ingredientCount}" placeholder="E.g., 2">
+            <label for="ingredient-quantity-${ingredientCounter}">Quantity:</label>
+            <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" placeholder="E.g., 2">
             <span class="error-message ingredient-quantity-error"></span>
         </div>
         <div class="input-group">
-            <label for="ingredient-unit-${ingredientCount}">Unit:</label>
-            <select id="ingredient-unit-${ingredientCount}" name="ingredient-unit-${ingredientCount}">
+            <label for="ingredient-unit-${ingredientCounter}">Unit:</label>
+            <select id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}">
                 <option value="ounces">Ounces</option>
                 <option value="milliliters">Milliliters</option>
             </select>
             <span class="error-message ingredient-unit-error"></span>
         </div>
+        <button type="button" class="remove-ingredient" onclick="removeIngredient('ingredient-${ingredientCounter}')">Remove</button>
     `;
     ingredientsDiv.appendChild(newIngredient);
+}
+
+function removeIngredient(id) {
+    const ingredient = document.getElementById(id);
+    ingredient.parentNode.removeChild(ingredient);
 }
 
 function calculateRecipe() {
