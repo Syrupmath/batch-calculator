@@ -44,42 +44,38 @@ form {
 }
 
 .input-group {
-    margin-bottom: 15px;
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
+    gap: 5px;
+    margin-bottom: 15px;
 }
 
 .input-group label {
-    width: 100%;
-    margin-bottom: 5px;
+    display: block;
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
-.input-group input, 
+.input-group input,
 .input-group select {
     padding: 10px;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    margin-bottom: 5px;
 }
 
 .input-group .ingredient-name {
     flex: 3;
-    margin-right: 5px;
 }
 
 .input-group .ingredient-quantity {
     flex: 1;
-    margin-right: 5px;
-    max-width: 60px; /* Smaller width for quantity */
+    max-width: 60px;
 }
 
 .input-group .ingredient-unit {
     flex: 1;
-    margin-right: 5px;
 }
 
 .remove-ingredient {
@@ -90,7 +86,7 @@ form {
     cursor: pointer;
     align-self: center;
     padding: 0;
-    margin-left: 1em;
+    margin-left: 5px;
 }
 
 button {
