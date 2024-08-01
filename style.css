@@ -72,14 +72,6 @@ button:hover {
     background-color: #45a049;
 }
 
-#scaled-recipe {
-    margin-top: 1em;
-    background-color: white;
-    padding: 1em;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
 .ingredient {
     display: flex;
     flex-wrap: wrap;
@@ -139,4 +131,12 @@ button:hover {
         margin-bottom: 0.5em;
         font-size: 1.2em;
     }
+}
+
+/* Remove the container style from scaled recipe */
+#scaled-recipe-container {
+    background: none;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
 }
