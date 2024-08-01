@@ -25,7 +25,7 @@ function addIngredient() {
             </select>
             <span class="error-message ingredient-unit-error"></span>
         </div>
-        <button type="button" class="remove-ingredient" onclick="removeIngredient('ingredient-${ingredientCounter}')">Remove</button>
+        <button type="button" class="remove-ingredient" onclick="removeIngredient('ingredient-${ingredientCounter}')">×</button>
     `;
     ingredientsDiv.appendChild(newIngredient);
 }
