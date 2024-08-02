@@ -89,7 +89,7 @@ form {
 
 .ingredient {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
     margin-bottom: 15px;
 }
@@ -98,6 +98,14 @@ form {
     flex: 1;
     position: relative;
     margin-bottom: 0;
+}
+
+.ingredient .ingredient-quantity {
+    max-width: 60px;
+}
+
+.ingredient .ingredient-unit {
+    max-width: 120px;
 }
 
 .remove-ingredient {
