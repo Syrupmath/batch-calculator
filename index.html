@@ -32,10 +32,13 @@
                                 <span class="error-message ingredient-quantity-error"></span>
                             </div>
                             <div class="input-group">
-                                <select id="ingredient-unit-1" name="ingredient-unit-1">
-                                    <option value="ounces">Ounces</option>
-                                    <option value="milliliters">Milliliters</option>
-                                </select>
+                                <label>Unit:</label>
+                                <label for="ounces-${ingredientCounter}">
+                                    <input type="radio" id="ounces-1" name="ingredient-unit-1" value="ounces" checked> Ounces
+                                </label>
+                                <label for="milliliters-${ingredientCounter}">
+                                    <input type="radio" id="milliliters-1" name="ingredient-unit-1" value="milliliters"> Milliliters
+                                </label>
                                 <span class="error-message ingredient-unit-error"></span>
                             </div>
                             <button type="button" class="remove-ingredient" onclick="removeIngredient('ingredient-1')">×</button>
