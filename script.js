@@ -15,10 +15,11 @@ function addIngredient() {
             <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" placeholder="Quantity">
             <span class="error-message ingredient-quantity-error"></span>
         </div>
-        <div class="input-group unit-group">
-            <span>Unit:</span>
-            <label><input type="radio" name="ingredient-unit-${ingredientCounter}" value="ounces" checked> Ounces</label>
-            <label><input type="radio" name="ingredient-unit-${ingredientCounter}" value="milliliters"> Milliliters</label>
+        <div class="input-group">
+            <select id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}">
+                <option value="ounces">Ounces</option>
+                <option value="milliliters">Milliliters</option>
+            </select>
             <span class="error-message ingredient-unit-error"></span>
         </div>
         <button type="button" class="remove-ingredient" onclick="removeIngredient('ingredient-${ingredientCounter}')">×</button>
@@ -58,7 +59,7 @@ function calculateRecipe() {
     for (let i = 0; i < ingredients.length; i++) {
         const name = ingredients[i].querySelector(`[name="ingredient-name-${i + 1}"]`).value;
         const quantity = parseFloat(ingredients[i].querySelector(`[name="ingredient-quantity-${i + 1}"]`).value) || 0;
-        const unit = ingredients[i].querySelector(`input[name="ingredient-unit-${i + 1}"]:checked`).value;
+        const unit = ingredients[i].querySelector(`[name="ingredient-unit-${i + 1}"]`).value;
 
         if (inputUnit === '') {
             inputUnit = unit;
