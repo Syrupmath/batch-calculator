@@ -22,28 +22,32 @@
                     </div>
                     
                     <div id="ingredients">
-                        <div class="ingredient" id="ingredient-1">
-                            <div class="input-group ingredient-name">
-                                <input type="text" class="ingredient-name" id="ingredient-name-1" name="ingredient-name-1" placeholder=" " required>
-                                <label for="ingredient-name-1">Ingredient Name</label>
-                                <span class="error-message ingredient-name-error"></span>
-                            </div>
-                            <div class="input-group ingredient-quantity">
-                                <input type="number" class="ingredient-quantity" id="ingredient-quantity-1" name="ingredient-quantity-1" placeholder=" " required>
-                                <label for="ingredient-quantity-1">Quantity</label>
-                                <span class="error-message ingredient-quantity-error"></span>
-                            </div>
-                            <div class="input-group ingredient-unit">
-                                <select class="ingredient-unit" id="ingredient-unit-1" name="ingredient-unit-1" required>
-                                    <option value="" disabled selected hidden></option>
-                                    <option value="ounces">Ounces</option>
-                                    <option value="milliliters">Milliliters</option>
-                                </select>
-                                <label for="ingredient-unit-1">Unit</label>
-                                <span class="error-message ingredient-unit-error"></span>
-                            </div>
-                            <button type="button" class="remove-ingredient" onclick="removeIngredient('ingredient-1')">×</button>
-                        </div>
+                        <table class="ingredient-table">
+                            <tr id="ingredient-1">
+                                <td class="input-group ingredient-name">
+                                    <input type="text" class="ingredient-name" id="ingredient-name-1" name="ingredient-name-1" placeholder=" " required>
+                                    <label for="ingredient-name-1">Ingredient Name</label>
+                                    <span class="error-message ingredient-name-error"></span>
+                                </td>
+                                <td class="input-group ingredient-quantity">
+                                    <input type="number" class="ingredient-quantity" id="ingredient-quantity-1" name="ingredient-quantity-1" placeholder=" " required>
+                                    <label for="ingredient-quantity-1">Quantity</label>
+                                    <span class="error-message ingredient-quantity-error"></span>
+                                </td>
+                                <td class="input-group ingredient-unit">
+                                    <select class="ingredient-unit" id="ingredient-unit-1" name="ingredient-unit-1" required>
+                                        <option value="" disabled selected hidden></option>
+                                        <option value="ounces">Ounces</option>
+                                        <option value="milliliters">Milliliters</option>
+                                    </select>
+                                    <label for="ingredient-unit-1">Unit</label>
+                                    <span class="error-message ingredient-unit-error"></span>
+                                </td>
+                                <td>
+                                    <button type="button" class="remove-ingredient" onclick="removeIngredient('ingredient-1')">×</button>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                     
                     <button type="button" id="add-ingredient" onclick="addIngredient()">Add Ingredient</button>
