@@ -73,6 +73,8 @@ form {
     color: #666;
     transition: all 0.3s ease;
     pointer-events: none;
+    background-color: white;
+    padding: 0 5px;
 }
 
 .input-group input:focus + label,
@@ -83,8 +85,6 @@ form {
     left: 10px;
     font-size: 12px;
     color: #007BFF;
-    background-color: white;
-    padding: 0 5px;
 }
 
 .remove-ingredient {
@@ -146,6 +146,10 @@ button:hover {
     button {
         font-size: 14px;
         padding: 10px;
+    }
+
+    .input-group {
+        flex-direction: column;
     }
 }
 
