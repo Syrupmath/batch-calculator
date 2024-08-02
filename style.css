@@ -95,16 +95,22 @@ form {
 }
 
 .ingredient .input-group {
-    flex: 1;
+    position: relative;
     margin-bottom: 0;
 }
 
+.ingredient .ingredient-name {
+    flex: 3;
+}
+
 .ingredient .ingredient-quantity {
-    max-width: 60px;
+    flex: 1;
+    max-width: 80px;
 }
 
 .ingredient .ingredient-unit {
-    max-width: 120px;
+    flex: 1;
+    max-width: 100px;
 }
 
 .remove-ingredient {
@@ -114,6 +120,8 @@ form {
     font-size: 1.2em;
     cursor: pointer;
     padding: 0;
+    align-self: flex-start;
+    margin-top: 15px;
 }
 
 button {
