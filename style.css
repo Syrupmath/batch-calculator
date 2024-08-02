@@ -1,43 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
+/* General Styles */
 body {
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5ec9a;
-    color: #333;
-    line-height: 1.6;
+    background-color: #f8f8f8;
 }
 
 header {
+    background-color: #4CAF50;
+    color: white;
     text-align: center;
+    padding: 1em 0;
+    border-radius: 10px 10px 0 0;
 }
 
-h1 {
-    font-size: 2.5em;
-    line-height: 1.2;
-    margin-bottom: 0.2em;
-    font-weight: 700;
-    color: #333;
+main {
+    display: flex;
+    justify-content: center;
+    padding: 2em;
 }
 
 .container {
-    width: 90%;
-    max-width: 500px;
-    padding: 20px;
-    padding-top: 10px;
-    margin: 10px auto;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    max-width: 800px;
+    width: 100%;
     background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 h2 {
     color: #333;
     margin-bottom: 1em;
-    font-size: 1.5em;
 }
 
 form {
@@ -45,69 +39,49 @@ form {
 }
 
 .input-group {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.input-group input,
-.input-group select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: transparent;
-    transition: border-color 0.3s ease;
-}
-
-.input-group input:focus,
-.input-group select:focus {
-    border-color: #007BFF;
-    outline: none;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
 }
 
 .input-group label {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 16px;
-    color: #666;
-    transition: all 0.3s ease;
-    pointer-events: none;
-    background-color: white;
-    padding: 0 5px;
+    margin-bottom: 0.5em;
 }
 
-.input-group input:focus + label,
-.input-group input:not(:placeholder-shown) + label,
-.input-group select:focus + label,
-.input-group select:not(:placeholder-shown) + label {
-    top: -10px;
-    left: 10px;
-    font-size: 12px;
-    color: #007BFF;
-}
-
-.ingredient-table {
+.input-group input, 
+.input-group select {
+    padding: 0.5em;
+    font-size: 1em;
     width: 100%;
-    margin-bottom: 15px;
-    table-layout: fixed;
+    max-width: 300px;
 }
 
-.ingredient-table td {
-    padding: 5px;
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0.75em 1.5em;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 1em;
+    max-width: 200px;
 }
 
-.ingredient-name {
-    width: 60%;
+button:hover {
+    background-color: #45a049;
 }
 
-.ingredient-quantity {
-    width: 15%;
+.ingredient {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    margin-bottom: 1em;
 }
 
-.ingredient-unit {
-    width: 15%;
+.ingredient .input-group {
+    flex: 1;
+    min-width: 150px;
 }
 
 .remove-ingredient {
@@ -116,36 +90,12 @@ form {
     color: red;
     font-size: 1.2em;
     cursor: pointer;
+    align-self: center;
     padding: 0;
+    margin-left: 1em;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-.error-message {
-    color: red;
-    font-size: 0.9em;
-}
-
-.result {
-    margin-top: 20px;
-    font-size: 1em;
-    color: #555;
-}
-
+/* Print Styles */
 @media print {
     body {
         background-color: white;
@@ -159,11 +109,14 @@ button:hover {
         text-align: center;
         padding: 1em 0;
         margin-bottom: 1em;
+        border-radius: 0;
     }
 
     main, .container {
         max-width: 100%;
         padding: 0;
+        box-shadow: none;
+        border-radius: 0;
     }
 
     form, #add-ingredient, #calculate, #print-recipe, .step {
@@ -189,4 +142,13 @@ button:hover {
         margin-bottom: 0.5em;
         font-size: 1.2em;
     }
+}
+
+/* Explicitly remove the container style from scaled recipe */
+#scaled-recipe-container, #scaled-recipe {
+    background: none;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
 }
