@@ -4,7 +4,7 @@ body {
     font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5ec9a; /* Background color from syrupmath.com */
+    background-color: #f5ec9a;
     color: #333;
     line-height: 1.6;
 }
@@ -14,10 +14,10 @@ header {
 }
 
 h1 {
-    font-size: 2.5em; /* Font size from syrupmath.com's H1 */
-    line-height: 1.2; /* Line height from syrupmath.com's H1 */
-    margin-bottom: 0.2em; /* Margin bottom from syrupmath.com's H1 */
-    font-weight: 700; /* Font weight from syrupmath.com's H1 */
+    font-size: 2.5em;
+    line-height: 1.2;
+    margin-bottom: 0.2em;
+    font-weight: 700;
     color: #333;
 }
 
@@ -96,7 +96,6 @@ form {
 
 .ingredient .input-group {
     flex: 1;
-    position: relative;
     margin-bottom: 0;
 }
 
@@ -114,7 +113,6 @@ form {
     color: red;
     font-size: 1.2em;
     cursor: pointer;
-    align-self: center;
     padding: 0;
 }
 
@@ -147,20 +145,12 @@ button:hover {
 
 @media (max-width: 768px) {
     .container {
-        width: 90%;
-        max-width: none;
         padding: 10px;
-        border: none;
         margin: 10px auto;
-        border-radius: 0;
     }
 
     h1 {
         font-size: 1.5em;
-    }
-
-    p {
-        font-size: 0.9em;
     }
 
     button {
@@ -177,14 +167,6 @@ button:hover {
     }
 }
 
-#scaled-recipe-container, #scaled-recipe {
-    background: none;
-    padding: 0;
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
-}
-
 @media print {
     body {
         background-color: white;
@@ -198,14 +180,11 @@ button:hover {
         text-align: center;
         padding: 1em 0;
         margin-bottom: 1em;
-        border-radius: 0;
     }
 
     main, .container {
         max-width: 100%;
         padding: 0;
-        box-shadow: none;
-        border-radius: 0;
     }
 
     form, #add-ingredient, #calculate, #print-recipe, .step {
