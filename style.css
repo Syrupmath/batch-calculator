@@ -88,28 +88,25 @@ form {
     color: #007BFF;
 }
 
-.ingredient {
-    display: flex;
-    gap: 10px;
+.ingredient-table {
+    width: 100%;
     margin-bottom: 15px;
 }
 
-.ingredient .input-group {
-    margin-bottom: 0;
+.ingredient-table td {
+    padding: 5px;
 }
 
 .ingredient-name {
-    flex: 3;
+    width: 60%;
 }
 
 .ingredient-quantity {
-    flex: 1;
-    max-width: 80px;
+    width: 15%;
 }
 
 .ingredient-unit {
-    flex: 1;
-    max-width: 100px;
+    width: 15%;
 }
 
 .remove-ingredient {
@@ -119,7 +116,6 @@ form {
     font-size: 1.2em;
     cursor: pointer;
     padding: 0;
-    align-self: center;
 }
 
 button {
@@ -147,40 +143,6 @@ button:hover {
     margin-top: 20px;
     font-size: 1em;
     color: #555;
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-        margin: 10px auto;
-        width: 100%;
-    }
-
-    h1 {
-        font-size: 1.5em;
-    }
-
-    button {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .input-group {
-        flex-direction: column;
-    }
-
-    .ingredient {
-        flex-direction: column;
-    }
-
-    .ingredient .input-group {
-        width: 100%;
-    }
-
-    .ingredient .remove-ingredient {
-        margin-top: 0;
-        align-self: center;
-    }
 }
 
 @media print {
