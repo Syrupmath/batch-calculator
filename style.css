@@ -91,6 +91,7 @@ form {
 .ingredient-table {
     width: 100%;
     margin-bottom: 15px;
+    table-layout: fixed;
 }
 
 .ingredient-table td {
