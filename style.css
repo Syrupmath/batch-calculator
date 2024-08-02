@@ -74,7 +74,7 @@ button:hover {
 
 .ingredient {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 1em;
     margin-bottom: 1em;
 }
@@ -90,7 +90,6 @@ button:hover {
     color: red;
     font-size: 1.2em;
     cursor: pointer;
-    align-self: center;
     padding: 0;
     margin-left: 1em;
 }
