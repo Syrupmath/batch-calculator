@@ -96,13 +96,13 @@ form {
 }
 
 .ingredient .input-group {
-    position: relative;
+    flex: 1;
     margin-bottom: 0;
 }
 
 .ingredient .ingredient-name {
     flex: 3;
-    min-width: 150px;
+    min-width: 120px;
 }
 
 .ingredient .ingredient-quantity {
@@ -122,8 +122,7 @@ form {
     font-size: 1.2em;
     cursor: pointer;
     padding: 0;
-    align-self: flex-start;
-    margin-top: 15px;
+    align-self: center;
 }
 
 button {
