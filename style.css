@@ -96,13 +96,13 @@ form {
 }
 
 .ingredient .input-group {
-    position: relative;
+    flex: 1;
     margin-bottom: 0;
 }
 
 .ingredient .ingredient-name {
     flex: 3;
-    min-width: 150px;
+    min-width: 0;
 }
 
 .ingredient .ingredient-quantity {
