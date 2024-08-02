@@ -90,29 +90,26 @@ form {
 
 .ingredient {
     display: flex;
-    align-items: center;
     gap: 10px;
     margin-bottom: 15px;
 }
 
 .ingredient .input-group {
-    flex: 1;
     margin-bottom: 0;
 }
 
-.ingredient .ingredient-name {
+.ingredient-name {
     flex: 3;
-    min-width: 0;
 }
 
-.ingredient .ingredient-quantity {
-    flex: 1;
-    max-width: 60px;
-}
-
-.ingredient .ingredient-unit {
+.ingredient-quantity {
     flex: 1;
     max-width: 80px;
+}
+
+.ingredient-unit {
+    flex: 1;
+    max-width: 100px;
 }
 
 .remove-ingredient {
