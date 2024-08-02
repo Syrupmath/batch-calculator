@@ -87,6 +87,19 @@ form {
     color: #007BFF;
 }
 
+.ingredient {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.ingredient .input-group {
+    flex: 1;
+    position: relative;
+    margin-bottom: 0;
+}
+
 .remove-ingredient {
     background-color: transparent;
     border: none;
@@ -95,7 +108,6 @@ form {
     cursor: pointer;
     align-self: center;
     padding: 0;
-    margin-left: 5px;
 }
 
 button {
@@ -149,6 +161,10 @@ button:hover {
     }
 
     .input-group {
+        flex-direction: column;
+    }
+
+    .ingredient {
         flex-direction: column;
     }
 }
