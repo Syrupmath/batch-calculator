@@ -8,17 +8,14 @@ function addIngredient() {
     newIngredient.id = `ingredient-${ingredientCounter}`;
     newIngredient.innerHTML = `
         <div class="input-group">
-            <label for="ingredient-name-${ingredientCounter}">Ingredient Name:</label>
-            <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" placeholder="E.g., Rye">
+            <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" placeholder="Ingredient Name">
             <span class="error-message ingredient-name-error"></span>
         </div>
         <div class="input-group">
-            <label for="ingredient-quantity-${ingredientCounter}">Quantity:</label>
-            <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" placeholder="E.g., 2">
+            <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" placeholder="Quantity">
             <span class="error-message ingredient-quantity-error"></span>
         </div>
         <div class="input-group">
-            <label for="ingredient-unit-${ingredientCounter}">Unit:</label>
             <select id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}">
                 <option value="ounces">Ounces</option>
                 <option value="milliliters">Milliliters</option>
