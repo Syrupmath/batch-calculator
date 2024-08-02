@@ -31,6 +31,7 @@ h1 {
     border-radius: 10px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 h2 {
@@ -101,6 +102,7 @@ form {
 
 .ingredient .ingredient-name {
     flex: 3;
+    min-width: 150px;
 }
 
 .ingredient .ingredient-quantity {
@@ -155,6 +157,7 @@ button:hover {
     .container {
         padding: 10px;
         margin: 10px auto;
+        width: 100%;
     }
 
     h1 {
@@ -172,6 +175,15 @@ button:hover {
 
     .ingredient {
         flex-direction: column;
+    }
+
+    .ingredient .input-group {
+        width: 100%;
+    }
+
+    .ingredient .remove-ingredient {
+        margin-top: 0;
+        align-self: center;
     }
 }
 
