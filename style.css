@@ -96,23 +96,23 @@ form {
 }
 
 .ingredient .input-group {
-    flex: 1;
+    position: relative;
     margin-bottom: 0;
 }
 
 .ingredient .ingredient-name {
     flex: 3;
-    min-width: 120px;
+    min-width: 150px;
 }
 
 .ingredient .ingredient-quantity {
     flex: 1;
-    max-width: 80px;
+    max-width: 60px;
 }
 
 .ingredient .ingredient-unit {
     flex: 1;
-    max-width: 100px;
+    max-width: 80px;
 }
 
 .remove-ingredient {
