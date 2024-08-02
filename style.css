@@ -92,6 +92,10 @@ button:hover {
     cursor: pointer;
     padding: 0;
     margin-left: 1em;
+    height: 2.5em; /* Adjust this to match the height of the text boxes */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Print Styles */
