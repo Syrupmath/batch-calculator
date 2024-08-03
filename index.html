@@ -18,14 +18,14 @@
                 <form>
                     <div class="form-group mb-4">
                         <label for="recipe-name">Recipe Name:</label>
-                        <input type="text" id="recipe-name" name="recipe-name" class="form-control" placeholder="E.g., Manhattan">
+                        <input type="text" id="recipe-name" name="recipe-name" class="form-control" placeholder="E.g., Manhattan" required>
                         <span id="recipe-name-error" class="text-danger"></span>
                     </div>
                     
                     <div id="ingredients">
                         <div class="input-group mb-3" id="ingredient-1">
-                            <input type="text" id="ingredient-name-1" name="ingredient-name-1" class="form-control" placeholder="Ingredient Name">
-                            <input type="number" id="ingredient-quantity-1" name="ingredient-quantity-1" class="form-control" placeholder="Quantity">
+                            <input type="text" id="ingredient-name-1" name="ingredient-name-1" class="form-control" placeholder="Ingredient Name" required>
+                            <input type="number" id="ingredient-quantity-1" name="ingredient-quantity-1" class="form-control" placeholder="Quantity" required>
                             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-1">Ounces</button>
                             <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-1">
                                 <li><a class="dropdown-item" href="#" onclick="setUnit(1, 'Ounces')">Ounces</a></li>
@@ -33,7 +33,7 @@
                                 <li><a class="dropdown-item" href="#" onclick="setUnit(1, 'Dashes')">Dashes</a></li>
                                 <li><a class="dropdown-item" href="#" onclick="setUnit(1, 'Teaspoons')">Teaspoons</a></li>
                             </ul>
-                            <input type="hidden" id="ingredient-unit-1" name="ingredient-unit-1" value="ounces">
+                            <input type="hidden" id="ingredient-unit-1" name="ingredient-unit-1" value="ounces" required>
                             <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-1')">×</button>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                         <button type="button" class="btn btn-outline-primary dilution-button" onclick="setDilution(18)" data-dilution="18">18% - Stirred Cocktails</button>
                         <button type="button" class="btn btn-outline-primary dilution-button" onclick="setDilution(25)" data-dilution="25">25% - Shaken Cocktails</button>
                         <input type="number" id="custom-dilution" name="custom-dilution" class="form-control" placeholder="Custom Dilution (%)">
-                        <input type="hidden" id="dilution" name="dilution" value="0">
+                        <input type="hidden" id="dilution" name="dilution" value="0" required>
                         <span id="dilution-error" class="text-danger"></span>
                     </div>
                 </form>
