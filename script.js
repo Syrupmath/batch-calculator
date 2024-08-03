@@ -19,6 +19,8 @@ function addIngredient() {
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Ounces')">Ounces</a>
                         <a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Milliliters')">Milliliters</a>
+                        <a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Dashes')">Dashes</a>
+                        <a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Teaspoons')">Teaspoons</a>
                     </div>
                 </div>
                 <input type="hidden" id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}" value="ounces">
@@ -145,7 +147,9 @@ function convertToMilliliters(quantity, unit) {
     const conversionRates = {
         ounces: 29.5735,
         milliliters: 1,
-        liters: 1000
+        liters: 1000,
+        dashes: 0.92, // assuming 1 dash = 0.92 milliliters
+        teaspoons: 4.92892 // assuming 1 teaspoon = 4.92892 milliliters
     };
     return quantity * conversionRates[unit];
 }
@@ -154,7 +158,9 @@ function convertFromMilliliters(quantity, unit) {
     const conversionRates = {
         ounces: 1 / 29.5735,
         milliliters: 1,
-        liters: 1 / 1000
+        liters: 1 / 1000,
+        dashes: 1 / 0.92,
+        teaspoons: 1 / 4.92892
     };
     return quantity * conversionRates[unit];
 }
