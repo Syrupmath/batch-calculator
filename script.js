@@ -4,7 +4,7 @@ function addIngredient() {
     ingredientCounter++;
     const ingredientsDiv = document.getElementById('ingredients');
     const newIngredient = document.createElement('div');
-    newIngredient.classList.add('form-row', 'align-items-center', 'mb-3');
+    newIngredient.classList.add('row', 'align-items-center', 'mb-3');
     newIngredient.id = `ingredient-${ingredientCounter}`;
     newIngredient.innerHTML = `
         <div class="col-md-6">
@@ -14,15 +14,13 @@ function addIngredient() {
         <div class="col-md-4">
             <div class="input-group">
                 <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" class="form-control" placeholder="Quantity">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="ingredient-unit-button-${ingredientCounter}">Ounces</button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Ounces')">Ounces</a>
-                        <a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Milliliters')">Milliliters</a>
-                        <a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Dashes')">Dashes</a>
-                        <a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Teaspoons')">Teaspoons</a>
-                    </div>
-                </div>
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-${ingredientCounter}">Ounces</button>
+                <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-${ingredientCounter}">
+                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Ounces')">Ounces</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Milliliters')">Milliliters</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Dashes')">Dashes</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Teaspoons')">Teaspoons</a></li>
+                </ul>
                 <input type="hidden" id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}" value="ounces">
             </div>
             <span class="text-danger ingredient-quantity-error"></span>
@@ -55,7 +53,7 @@ function calculateRecipe() {
     const dilution = parseFloat(document.getElementById('dilution').value) / 100;
 
     const ingredientsDiv = document.getElementById('ingredients');
-    const ingredients = ingredientsDiv.getElementsByClassName('form-row');
+    const ingredients = ingredientsDiv.getElementsByClassName('row');
 
     let totalIngredientVolume = 0;
     let ingredientVolumes = [];
