@@ -4,20 +4,23 @@ function addIngredient() {
     ingredientCounter++;
     const ingredientsDiv = document.getElementById('ingredients');
     const newIngredient = document.createElement('div');
-    newIngredient.classList.add('input-group', 'mb-3');
+    newIngredient.classList.add('mb-3');
     newIngredient.id = `ingredient-${ingredientCounter}`;
     newIngredient.innerHTML = `
-        <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" class="form-control" placeholder="Ingredient Name" required>
-        <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" class="form-control" placeholder="Quantity" required>
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-${ingredientCounter}">Ounces</button>
-        <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-${ingredientCounter}">
-            <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Ounces')">Ounces</a></li>
-            <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Milliliters')">Milliliters</a></li>
-            <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Dashes')">Dashes</a></li>
-            <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Teaspoons')">Teaspoons</a></li>
-        </ul>
-        <input type="hidden" id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}" value="ounces" required>
-        <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-${ingredientCounter}')">×</button>
+        <div class="input-group">
+            <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" class="form-control" placeholder="Ingredient Name" required>
+            <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" class="form-control" placeholder="Quantity" required>
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-${ingredientCounter}">Ounces</button>
+            <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-${ingredientCounter}">
+                <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Ounces')">Ounces</a></li>
+                <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Milliliters')">Milliliters</a></li>
+                <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Dashes')">Dashes</a></li>
+                <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Teaspoons')">Teaspoons</a></li>
+            </ul>
+            <input type="hidden" id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}" value="ounces">
+            <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-${ingredientCounter}')">×</button>
+        </div>
+        <div class="invalid-feedback">Please complete all ingredient fields.</div>
     `;
     ingredientsDiv.appendChild(newIngredient);
 }
@@ -48,8 +51,14 @@ function setDilution(dilution) {
     });
 }
 
-function calculateRecipe() {
-    clearErrorMessages();
+function calculateRecipe(event) {
+    event.preventDefault();
+
+    const form = document.getElementById('cocktail-form');
+    if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return;
+    }
 
     const recipeName = document.getElementById('recipe-name').value.trim();
     const numServings = parseFloat(document.getElementById('num-servings').value);
@@ -62,53 +71,16 @@ function calculateRecipe() {
         dilution = customDilution / 100;
     }
 
-    if (!recipeName) {
-        showError('recipe-name-error', 'Recipe name is required.');
-        return;
-    }
-
     const ingredients = Array.from(document.getElementsByClassName('input-group'));
-    let hasValidIngredient = false;
-    ingredients.forEach((ingredientDiv, index) => {
-        const name = ingredientDiv.querySelector(`[name="ingredient-name-${index + 1}"]`).value.trim();
-        const quantity = parseFloat(ingredientDiv.querySelector(`[name="ingredient-quantity-${index + 1}"]`).value);
-        const unit = ingredientDiv.querySelector(`[name="ingredient-unit-${index + 1}"]`).value;
-
-        if (name && !isNaN(quantity) && quantity > 0 && unit) {
-            hasValidIngredient = true;
-        }
-    });
-
-    if (!hasValidIngredient) {
-        showError('calculate-error', 'Please add at least one valid ingredient.');
-        return;
-    }
-
-    if (!numServings && !totalVolumeInput) {
-        showError('calculate-error', 'Please enter either the number of servings or the total volume.');
-        return;
-    }
-
     let totalIngredientVolume = 0;
     const ingredientVolumes = [];
     let originalRecipe = '<ul>';
     let inputUnit = '';
-    let hasError = false;
 
     ingredients.forEach((ingredientDiv, index) => {
         const name = ingredientDiv.querySelector(`[name="ingredient-name-${index + 1}"]`).value.trim();
         const quantity = parseFloat(ingredientDiv.querySelector(`[name="ingredient-quantity-${index + 1}"]`).value) || 0;
         const unit = ingredientDiv.querySelector(`[name="ingredient-unit-${index + 1}"]`).value;
-
-        if (!name) {
-            showError(`ingredient-name-${index + 1}-error`, 'Ingredient name is required.');
-            hasError = true;
-        }
-
-        if (quantity <= 0) {
-            showError(`ingredient-quantity-${index + 1}-error`, 'Quantity must be greater than zero.');
-            hasError = true;
-        }
 
         if (name && !isNaN(quantity) && quantity > 0 && unit) {
             originalRecipe += `<li>${name}: ${quantity} ${unit}</li>`;
@@ -123,8 +95,6 @@ function calculateRecipe() {
         }
     });
 
-    if (hasError) return;
-
     originalRecipe += '</ul>';
     document.getElementById('original-recipe').innerHTML = originalRecipe;
     document.getElementById('output-recipe-name').innerText = recipeName;
@@ -136,11 +106,6 @@ function calculateRecipe() {
         totalVolume = (totalIngredientVolume + waterVolume) * numServings;
     } else if (totalVolumeInput) {
         totalVolume = convertToMilliliters(totalVolumeInput, totalVolumeUnit);
-    }
-
-    if (totalVolume < totalIngredientVolume + waterVolume) {
-        showError('calculate-error', 'Total volume is less than the volume of ingredients plus dilution. Please increase the total volume.');
-        return;
     }
 
     const scalingFactor = totalVolume / (totalIngredientVolume + waterVolume);
@@ -187,11 +152,4 @@ function convertFromMilliliters(quantity, unit) {
     return quantity * (conversionRates[unit] || 1);
 }
 
-function clearErrorMessages() {
-    const errorMessages = document.querySelectorAll('.text-danger');
-    errorMessages.forEach(error => error.innerText = '');
-}
-
-function showError(elementId, message) {
-    document.getElementById(elementId).innerText = message;
-}
+document.getElementById('cocktail-form').addEventListener('submit', calculateRecipe);
