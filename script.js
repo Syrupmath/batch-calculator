@@ -4,30 +4,20 @@ function addIngredient() {
     ingredientCounter++;
     const ingredientsDiv = document.getElementById('ingredients');
     const newIngredient = document.createElement('div');
-    newIngredient.classList.add('row', 'align-items-center', 'mb-3');
+    newIngredient.classList.add('input-group', 'mb-3');
     newIngredient.id = `ingredient-${ingredientCounter}`;
     newIngredient.innerHTML = `
-        <div class="col-md-6">
-            <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" class="form-control" placeholder="Ingredient Name">
-            <span class="text-danger ingredient-name-error"></span>
-        </div>
-        <div class="col-md-4">
-            <div class="input-group">
-                <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" class="form-control" placeholder="Quantity">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-${ingredientCounter}">Ounces</button>
-                <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-${ingredientCounter}">
-                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Ounces')">Ounces</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Milliliters')">Milliliters</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Dashes')">Dashes</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Teaspoons')">Teaspoons</a></li>
-                </ul>
-                <input type="hidden" id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}" value="ounces">
-            </div>
-            <span class="text-danger ingredient-quantity-error"></span>
-        </div>
-        <div class="col-md-2">
-            <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-${ingredientCounter}')">×</button>
-        </div>
+        <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" class="form-control" placeholder="Ingredient Name">
+        <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" class="form-control" placeholder="Quantity">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-${ingredientCounter}">Ounces</button>
+        <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-${ingredientCounter}">
+            <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Ounces')">Ounces</a></li>
+            <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Milliliters')">Milliliters</a></li>
+            <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Dashes')">Dashes</a></li>
+            <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Teaspoons')">Teaspoons</a></li>
+        </ul>
+        <input type="hidden" id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}" value="ounces">
+        <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-${ingredientCounter}')">×</button>
     `;
     ingredientsDiv.appendChild(newIngredient);
 }
@@ -42,6 +32,28 @@ function setUnit(counter, unit) {
     document.getElementById(`ingredient-unit-${counter}`).value = unit.toLowerCase();
 }
 
+function setTotalVolumeUnit(unit) {
+    document.getElementById('total-volume-unit-button').innerText = unit;
+    document.getElementById('total-volume-unit').value = unit.toLowerCase();
+}
+
+function setDilution(dilution) {
+    document.getElementById('dilution').value = dilution;
+    document.getElementById('custom-dilution').value = '';
+
+    // Clear active state from all buttons
+    const dilutionButtons = document.querySelectorAll('.dilution-button');
+    dilutionButtons.forEach(button => {
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-outline-primary');
+    });
+
+    // Set active state on the selected button
+    const selectedButton = document.querySelector(`.dilution-button[data-dilution="${dilution}"]`);
+    selectedButton.classList.remove('btn-outline-primary');
+    selectedButton.classList.add('btn-primary');
+}
+
 function calculateRecipe() {
     // Clear previous error messages
     clearErrorMessages();
@@ -50,10 +62,15 @@ function calculateRecipe() {
     const numServings = parseFloat(document.getElementById('num-servings').value);
     const totalVolumeInput = parseFloat(document.getElementById('total-volume').value);
     const totalVolumeUnit = document.getElementById('total-volume-unit').value;
-    const dilution = parseFloat(document.getElementById('dilution').value) / 100;
+    let dilution = parseFloat(document.getElementById('dilution').value) / 100;
+    const customDilution = parseFloat(document.getElementById('custom-dilution').value);
+
+    if (!isNaN(customDilution)) {
+        dilution = customDilution / 100;
+    }
 
     const ingredientsDiv = document.getElementById('ingredients');
-    const ingredients = ingredientsDiv.getElementsByClassName('row');
+    const ingredients = ingredientsDiv.getElementsByClassName('input-group');
 
     let totalIngredientVolume = 0;
     let ingredientVolumes = [];
@@ -108,8 +125,12 @@ function calculateRecipe() {
     } else if (totalVolumeInput) {
         if (totalVolumeUnit === 'liters') {
             totalVolume = totalVolumeInput * 1000; // Convert liters to milliliters
+        } else if (totalVolumeUnit === 'quarts') {
+            totalVolume = totalVolumeInput * 946.353; // Convert quarts to milliliters
+        } else if (totalVolumeUnit === 'gallons') {
+            totalVolume = totalVolumeInput * 3785.41; // Convert gallons to milliliters
         } else {
-            totalVolume = totalVolumeInput;
+            totalVolume = totalVolumeInput * (totalVolumeUnit === 'ounces' ? 29.5735 : 1); // Convert ounces to milliliters
         }
     } else {
         document.getElementById('calculate-error').innerText = 'Please enter either the number of servings or the total volume.';
@@ -146,6 +167,8 @@ function convertToMilliliters(quantity, unit) {
         ounces: 29.5735,
         milliliters: 1,
         liters: 1000,
+        quarts: 946.353,
+        gallons: 3785.41,
         dashes: 0.92, // assuming 1 dash = 0.92 milliliters
         teaspoons: 4.92892 // assuming 1 teaspoon = 4.92892 milliliters
     };
@@ -157,6 +180,8 @@ function convertFromMilliliters(quantity, unit) {
         ounces: 1 / 29.5735,
         milliliters: 1,
         liters: 1 / 1000,
+        quarts: 1 / 946.353,
+        gallons: 1 / 3785.41,
         dashes: 1 / 0.92,
         teaspoons: 1 / 4.92892
     };
