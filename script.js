@@ -7,8 +7,8 @@ function addIngredient() {
     newIngredient.classList.add('input-group', 'mb-3');
     newIngredient.id = `ingredient-${ingredientCounter}`;
     newIngredient.innerHTML = `
-        <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" class="form-control" placeholder="Ingredient Name">
-        <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" class="form-control" placeholder="Quantity">
+        <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" class="form-control" placeholder="Ingredient Name" required>
+        <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" class="form-control" placeholder="Quantity" required>
         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-${ingredientCounter}">Ounces</button>
         <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-${ingredientCounter}">
             <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Ounces')">Ounces</a></li>
@@ -16,7 +16,7 @@ function addIngredient() {
             <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Dashes')">Dashes</a></li>
             <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Teaspoons')">Teaspoons</a></li>
         </ul>
-        <input type="hidden" id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}" value="ounces">
+        <input type="hidden" id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}" value="ounces" required>
         <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-${ingredientCounter}')">×</button>
     `;
     ingredientsDiv.appendChild(newIngredient);
@@ -68,8 +68,24 @@ function calculateRecipe() {
     }
 
     const ingredients = Array.from(document.getElementsByClassName('input-group'));
-    if (ingredients.length === 0) {
-        showError('calculate-error', 'Please add at least one ingredient.');
+    let hasValidIngredient = false;
+    ingredients.forEach((ingredientDiv, index) => {
+        const name = ingredientDiv.querySelector(`[name="ingredient-name-${index + 1}"]`).value.trim();
+        const quantity = parseFloat(ingredientDiv.querySelector(`[name="ingredient-quantity-${index + 1}"]`).value);
+        const unit = ingredientDiv.querySelector(`[name="ingredient-unit-${index + 1}"]`).value;
+
+        if (name && !isNaN(quantity) && quantity > 0 && unit) {
+            hasValidIngredient = true;
+        }
+    });
+
+    if (!hasValidIngredient) {
+        showError('calculate-error', 'Please add at least one valid ingredient.');
+        return;
+    }
+
+    if (!numServings && !totalVolumeInput) {
+        showError('calculate-error', 'Please enter either the number of servings or the total volume.');
         return;
     }
 
@@ -94,15 +110,17 @@ function calculateRecipe() {
             hasError = true;
         }
 
-        originalRecipe += `<li>${name}: ${quantity} ${unit}</li>`;
+        if (name && !isNaN(quantity) && quantity > 0 && unit) {
+            originalRecipe += `<li>${name}: ${quantity} ${unit}</li>`;
 
-        if (inputUnit === '') {
-            inputUnit = unit;
+            if (inputUnit === '') {
+                inputUnit = unit;
+            }
+
+            const volumeInMilliliters = convertToMilliliters(quantity, unit);
+            totalIngredientVolume += volumeInMilliliters;
+            ingredientVolumes.push({ name, volumeInMilliliters });
         }
-
-        const volumeInMilliliters = convertToMilliliters(quantity, unit);
-        totalIngredientVolume += volumeInMilliliters;
-        ingredientVolumes.push({ name, volumeInMilliliters });
     });
 
     if (hasError) return;
@@ -118,9 +136,6 @@ function calculateRecipe() {
         totalVolume = (totalIngredientVolume + waterVolume) * numServings;
     } else if (totalVolumeInput) {
         totalVolume = convertToMilliliters(totalVolumeInput, totalVolumeUnit);
-    } else {
-        showError('calculate-error', 'Please enter either the number of servings or the total volume.');
-        return;
     }
 
     if (totalVolume < totalIngredientVolume + waterVolume) {
