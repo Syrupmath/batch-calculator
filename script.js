@@ -147,12 +147,12 @@ function calculateRecipe() {
 
     ingredientVolumes.forEach(ingredient => {
         let scaledQuantity = ingredient.volumeInMilliliters * scalingFactor;
-        scaledRecipe += `<li>${ingredient.name}: ${convertFromMilliliters(scaledQuantity, inputUnit).toFixed(2)} ${inputUnit}</li>`;
+        scaledRecipe += `<li>${ingredient.name}: ${roundQuantity(convertFromMilliliters(scaledQuantity, inputUnit), inputUnit)} ${inputUnit}</li>`;
     });
 
     if (waterVolume > 0) {
         let scaledWaterVolume = waterVolume * scalingFactor;
-        scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, inputUnit).toFixed(2)} ${inputUnit}</li>`;
+        scaledRecipe += `<li>Water: ${roundQuantity(convertFromMilliliters(scaledWaterVolume, inputUnit), inputUnit)} ${inputUnit}</li>`;
     }
 
     scaledRecipe += '</ul>';
@@ -188,9 +188,18 @@ function convertFromMilliliters(quantity, unit) {
     return quantity * conversionRates[unit];
 }
 
+function roundQuantity(quantity, unit) {
+    if (unit === 'ounces') {
+        return (Math.round(quantity * 4) / 4).toFixed(2); // Round to nearest quarter ounce
+    } else if (unit === 'milliliters') {
+        return (Math.round(quantity / 5) * 5).toFixed(0); // Round to nearest 5 milliliters
+}
+return quantity.toFixed(2);
+}
+
 function clearErrorMessages() {
-    const errorMessages = document.querySelectorAll('.text-danger');
-    errorMessages.forEach(error => {
-        error.innerText = '';
-    });
+const errorMessages = document.querySelectorAll(’.text-danger’);
+errorMessages.forEach(error => {
+error.innerText = ‘’;
+});
 }
