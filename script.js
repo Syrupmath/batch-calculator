@@ -4,25 +4,30 @@ function addIngredient() {
     ingredientCounter++;
     const ingredientsDiv = document.getElementById('ingredients');
     const newIngredient = document.createElement('div');
-    newIngredient.classList.add('ingredient');
+    newIngredient.classList.add('form-row', 'align-items-center', 'mb-3');
     newIngredient.id = `ingredient-${ingredientCounter}`;
     newIngredient.innerHTML = `
-        <div class="input-group">
-            <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" placeholder="Ingredient Name">
-            <span class="error-message ingredient-name-error"></span>
+        <div class="col-md-6">
+            <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" class="form-control" placeholder="Ingredient Name">
+            <span class="text-danger ingredient-name-error"></span>
         </div>
-        <div class="input-group">
-            <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" placeholder="Quantity">
-            <span class="error-message ingredient-quantity-error"></span>
+        <div class="col-md-4">
+            <div class="input-group">
+                <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" class="form-control" placeholder="Quantity">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="ingredient-unit-button-${ingredientCounter}">Ounces</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Ounces')">Ounces</a>
+                        <a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Milliliters')">Milliliters</a>
+                    </div>
+                </div>
+                <input type="hidden" id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}" value="ounces">
+            </div>
+            <span class="text-danger ingredient-quantity-error"></span>
         </div>
-        <div class="input-group">
-            <select id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}">
-                <option value="ounces">Ounces</option>
-                <option value="milliliters">Milliliters</option>
-            </select>
-            <span class="error-message ingredient-unit-error"></span>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-${ingredientCounter}')">×</button>
         </div>
-        <button type="button" class="remove-ingredient" onclick="removeIngredient('ingredient-${ingredientCounter}')">×</button>
     `;
     ingredientsDiv.appendChild(newIngredient);
 }
@@ -30,6 +35,11 @@ function addIngredient() {
 function removeIngredient(id) {
     const ingredient = document.getElementById(id);
     ingredient.parentNode.removeChild(ingredient);
+}
+
+function setUnit(counter, unit) {
+    document.getElementById(`ingredient-unit-button-${counter}`).innerText = unit;
+    document.getElementById(`ingredient-unit-${counter}`).value = unit.toLowerCase();
 }
 
 function calculateRecipe() {
@@ -43,7 +53,7 @@ function calculateRecipe() {
     const dilution = parseFloat(document.getElementById('dilution').value) / 100;
 
     const ingredientsDiv = document.getElementById('ingredients');
-    const ingredients = ingredientsDiv.getElementsByClassName('ingredient');
+    const ingredients = ingredientsDiv.getElementsByClassName('form-row');
 
     let totalIngredientVolume = 0;
     let ingredientVolumes = [];
@@ -150,7 +160,7 @@ function convertFromMilliliters(quantity, unit) {
 }
 
 function clearErrorMessages() {
-    const errorMessages = document.querySelectorAll('.error-message');
+    const errorMessages = document.querySelectorAll('.text-danger');
     errorMessages.forEach(error => {
         error.innerText = '';
     });
