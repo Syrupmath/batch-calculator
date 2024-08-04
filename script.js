@@ -73,8 +73,34 @@ function setDilutionCustom() {
 function roundQuantity(quantity, unit) {
     if (unit === 'ounces') {
         return Math.round(quantity * 4) / 4;
+    } else if (unit === 'teaspoons') {
+        return Math.round(quantity * 4) / 4; // rounding to nearest 1/4 teaspoon
+    } else if (unit === 'dashes') {
+        return Math.round(quantity * 4) / 4; // rounding to nearest 1/4 dash
     } else if (unit === 'milliliters') {
         return Math.round(quantity / 5) * 5;
+    }
+    return quantity;
+}
+
+// Convert total volume to ounces
+function convertToOunces(volume, unit) {
+    if (unit === 'liters') {
+        return volume * 33.814;
+    } else if (unit === 'quarts') {
+        return volume * 32;
+    } else if (unit === 'gallons') {
+        return volume * 128;
+    }
+    return volume; // already in ounces
+}
+
+// Convert from ounces to original unit
+function convertFromOunces(quantity, unit) {
+    if (unit === 'teaspoons') {
+        return quantity * 6;
+    } else if (unit === 'dashes') {
+        return quantity * 32;
     }
     return quantity;
 }
@@ -87,47 +113,59 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     const ingredients = [];
     document.querySelectorAll('#ingredients .input-group').forEach((group, index) => {
         const name = group.querySelector('.ingredient-name').value;
-        const quantity = group.querySelector('.ingredient-quantity').value;
+        const quantity = parseFloat(group.querySelector('.ingredient-quantity').value);
         const unit = group.querySelector('.ingredient-unit').value;
         if (name && quantity && unit) {
-            ingredients.push({ name, quantity: parseFloat(quantity), unit });
+            ingredients.push({ name, quantity, unit });
         }
     });
 
-    let batchSize = 0;
-    let batchSizeUnit = '';
-
-    if (document.getElementById('option-servings').checked) {
-        batchSize = parseFloat(document.getElementById('num-servings').value);
-        batchSizeUnit = 'servings';
-    } else if (document.getElementById('option-volume').checked) {
-        batchSize = parseFloat(document.getElementById('total-volume').value);
-        batchSizeUnit = document.getElementById('total-volume-unit').value;
+    let totalBatchSizeOunces = 0;
+    if (document.getElementById('option-volume').checked) {
+        const totalVolume = parseFloat(document.getElementById('total-volume').value);
+        const totalVolumeUnit = document.getElementById('total-volume-unit').value;
+        totalBatchSizeOunces = convertToOunces(totalVolume, totalVolumeUnit);
     }
 
     const dilution = parseFloat(document.getElementById('dilution').value);
     const customDilution = parseFloat(document.getElementById('custom-dilution').value) || 0;
+    const actualDilution = dilution > 0 ? dilution : customDilution;
 
-    // Perform scaling calculations
+    // Calculate the amount of water to add based on the dilution percentage
+    const waterToAdd = totalBatchSizeOunces * (actualDilution / 100);
+
+    // Calculate total volume of ingredients
+    const totalVolumeOfIngredients = totalBatchSizeOunces - waterToAdd;
+
+    // Calculate total original volume in ounces
+    const totalOriginalVolumeOunces = ingredients.reduce((total, ingredient) => {
+        let quantityInOunces = ingredient.quantity;
+        if (ingredient.unit === 'teaspoons') {
+            quantityInOunces = quantityInOunces / 6;
+        } else if (ingredient.unit === 'dashes') {
+            quantityInOunces = quantityInOunces / 32;
+        }
+        return total + quantityInOunces;
+    }, 0);
+
+    // Calculate scaling factor based on total volume of ingredients
+    const scalingFactor = totalVolumeOfIngredients / totalOriginalVolumeOunces;
+
+    // Scale ingredients
     const scaledIngredients = ingredients.map(ingredient => {
-        let scaledQuantity;
-        if (batchSizeUnit === 'servings') {
-            scaledQuantity = ingredient.quantity * batchSize;
-        } else {
-            scaledQuantity = ingredient.quantity * (batchSize / ingredients.length);
-        }
-        if (dilution > 0) {
-            scaledQuantity = scaledQuantity * (1 + (dilution / 100));
-        } else if (customDilution > 0) {
-            scaledQuantity = scaledQuantity * (1 + (customDilution / 100));
-        }
-        scaledQuantity = roundQuantity(scaledQuantity, ingredient.unit);
+        let scaledQuantity = ingredient.quantity * scalingFactor;
         return { ...ingredient, quantity: scaledQuantity };
+    });
+
+    // Round quantities
+    const roundedIngredients = scaledIngredients.map(ingredient => {
+        return { ...ingredient, quantity: roundQuantity(ingredient.quantity, ingredient.unit) };
     });
 
     // Display results
     document.getElementById('output-recipe-name').textContent = recipeName;
     document.getElementById('original-recipe').innerHTML = ingredients.map(ingredient => `<p>${ingredient.quantity} ${ingredient.unit} ${ingredient.name}</p>`).join('');
-    document.getElementById('scaled-recipe').innerHTML = scaledIngredients.map(ingredient => `<p>${ingredient.quantity.toFixed(2)} ${ingredient.unit} ${ingredient.name}</p>`).join('');
+    document.getElementById('scaled-recipe').innerHTML = roundedIngredients.map(ingredient => `<p>${ingredient.quantity.toFixed(2)} ${ingredient.unit} ${ingredient.name}</p>`).join('');
+    document.getElementById('scaled-recipe').innerHTML += `<p>${roundQuantity(waterToAdd, 'ounces').toFixed(2)} ounces water</p>`;
     document.getElementById('output').style.display = 'block';
 });
