@@ -1,62 +1,39 @@
-let ingredientCounter = 1;
+// JavaScript for the Batched Cocktail Calculator
 
+// Add ingredient function
 function addIngredient() {
-    ingredientCounter++;
-    const ingredientsDiv = document.getElementById('ingredients');
-    const newIngredient = document.createElement('div');
-    newIngredient.classList.add('mb-3');
-    newIngredient.id = `ingredient-${ingredientCounter}`;
-    newIngredient.innerHTML = `
-        <div class="input-group">
-            <input type="text" id="ingredient-name-${ingredientCounter}" name="ingredient-name-${ingredientCounter}" class="form-control ingredient-name" placeholder="Ingredient Name">
-            <input type="number" id="ingredient-quantity-${ingredientCounter}" name="ingredient-quantity-${ingredientCounter}" class="form-control ingredient-quantity" placeholder="Quantity">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-${ingredientCounter}">Ounces</button>
-            <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-${ingredientCounter}">
-                <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Ounces')">Ounces</a></li>
-                <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Milliliters')">Milliliters</a></li>
-                <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Dashes')">Dashes</a></li>
-                <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCounter}, 'Teaspoons')">Teaspoons</a></li>
-            </ul>
-            <input type="hidden" id="ingredient-unit-${ingredientCounter}" name="ingredient-unit-${ingredientCounter}" class="ingredient-unit" value="ounces">
-            <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-${ingredientCounter}')">×</button>
+    const ingredientCount = document.querySelectorAll('#ingredients .input-group').length + 1;
+    const ingredientHtml = `
+        <div class="mb-3" id="ingredient-${ingredientCount}">
+            <div class="input-group">
+                <input type="text" id="ingredient-name-${ingredientCount}" name="ingredient-name-${ingredientCount}" class="form-control ingredient-name" placeholder="Ingredient Name">
+                <input type="number" id="ingredient-quantity-${ingredientCount}" name="ingredient-quantity-${ingredientCount}" class="form-control ingredient-quantity" placeholder="Quantity">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-${ingredientCount}">Ounces</button>
+                <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-${ingredientCount}">
+                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCount}, 'Ounces')">Ounces</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCount}, 'Teaspoons')">Teaspoons</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCount}, 'Dashes')">Dashes</a></li>
+                </ul>
+                <input type="hidden" id="ingredient-unit-${ingredientCount}" name="ingredient-unit-${ingredientCount}" class="ingredient-unit" value="ounces">
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-${ingredientCount}')">×</button>
+            </div>
         </div>
     `;
-    ingredientsDiv.appendChild(newIngredient);
+    document.getElementById('ingredients').insertAdjacentHTML('beforeend', ingredientHtml);
 }
 
+// Remove ingredient function
 function removeIngredient(id) {
-    const ingredient = document.getElementById(id);
-    ingredient.parentNode.removeChild(ingredient);
+    document.getElementById(id).remove();
 }
 
-function setUnit(counter, unit) {
-    document.getElementById(`ingredient-unit-button-${counter}`).innerText = unit;
-    document.getElementById(`ingredient-unit-${counter}`).value = unit.toLowerCase();
+// Set unit function
+function setUnit(index, unit) {
+    document.getElementById(`ingredient-unit-${index}`).value = unit.toLowerCase();
+    document.getElementById(`ingredient-unit-button-${index}`).textContent = unit;
 }
 
-function setTotalVolumeUnit(unit) {
-    document.getElementById('total-volume-unit-button').innerText = unit;
-    document.getElementById('total-volume-unit').value = unit.toLowerCase();
-}
-
-function setDilution(dilution) {
-    document.getElementById('dilution').value = dilution;
-    document.getElementById('custom-dilution').value = '';
-    document.getElementById('custom-dilution').disabled = true;
-
-    const dilutionButtons = document.querySelectorAll('.dilution-button');
-    dilutionButtons.forEach(button => {
-        button.classList.toggle('btn-primary', button.dataset.dilution === dilution.toString());
-        button.classList.toggle('btn-outline-primary', button.dataset.dilution !== dilution.toString());
-    });
-}
-
-function setDilutionCustom() {
-    document.getElementById('dilution').value = 0;
-    document.getElementById('custom-dilution').disabled = false;
-    document.getElementById('custom-dilution').focus();
-}
-
+// Toggle batch size fields function
 function toggleBatchSizeFields() {
     const optionServings = document.getElementById('option-servings');
     const optionVolume = document.getElementById('option-volume');
@@ -72,114 +49,108 @@ function toggleBatchSizeFields() {
         numServings.disabled = true;
         totalVolume.disabled = false;
         totalVolumeUnitButton.disabled = false;
-    } else {
-        numServings.disabled = true;
-        totalVolume.disabled = true;
-        totalVolumeUnitButton.disabled = true;
     }
 }
 
-function calculateRecipe(event) {
+// Set total volume unit function
+function setTotalVolumeUnit(unit) {
+    document.getElementById('total-volume-unit').value = unit.toLowerCase();
+    document.getElementById('total-volume-unit-button').textContent = unit;
+}
+
+// Set dilution function
+function setDilution(percent) {
+    document.getElementById('dilution').value = percent;
+    document.getElementById('custom-dilution').disabled = true;
+}
+
+// Set custom dilution function
+function setDilutionCustom() {
+    document.getElementById('custom-dilution').disabled = false;
+}
+
+// Round to nearest quarter ounce or 5 milliliters
+function roundQuantity(quantity, unit) {
+    if (unit === 'ounces') {
+        return Math.round(quantity * 4) / 4;
+    } else if (unit === 'milliliters') {
+        return Math.round(quantity / 5) * 5;
+    }
+    return quantity;
+}
+
+// Calculate function
+document.getElementById('cocktail-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const recipeNameInput = document.getElementById('recipe-name');
-    if (!recipeNameInput.value.trim()) {
-        recipeNameInput.value = 'Untitled';
-    }
-
-    const recipeName = recipeNameInput.value.trim();
-    const numServings = parseFloat(document.getElementById('num-servings').value);
-    const totalVolumeInput = parseFloat(document.getElementById('total-volume').value);
-    const totalVolumeUnit = document.getElementById('total-volume-unit').value;
-    let dilution = parseFloat(document.getElementById('dilution').value) / 100;
-    const customDilution = parseFloat(document.getElementById('custom-dilution').value);
-
-    if (!isNaN(customDilution)) {
-        dilution = customDilution / 100;
-    }
-
-    const ingredients = Array.from(document.getElementsByClassName('input-group'));
-    let totalIngredientVolume = 0;
-    const ingredientVolumes = [];
-    let originalRecipe = '<ul>';
-    let inputUnit = '';
-
-    ingredients.forEach((ingredientDiv, index) => {
-        const name = ingredientDiv.querySelector(`[name="ingredient-name-${index + 1}"]`).value.trim();
-        const quantity = parseFloat(ingredientDiv.querySelector(`[name="ingredient-quantity-${index + 1}"]`).value) || 0;
-        const unit = ingredientDiv.querySelector(`[name="ingredient-unit-${index + 1}"]`).value;
-
-        if (name && !isNaN(quantity) && quantity > 0 && unit) {
-            originalRecipe += `<li>${name}: ${quantity} ${unit}</li>`;
-
-            if (inputUnit === '') {
-                inputUnit = unit;
-            }
-
-            const volumeInMilliliters = convertToMilliliters(quantity, unit);
-            totalIngredientVolume += volumeInMilliliters;
-            ingredientVolumes.push({ name, volumeInMilliliters });
+    const recipeName = document.getElementById('recipe-name').value || 'Untitled';
+    const ingredients = [];
+    document.querySelectorAll('#ingredients .input-group').forEach((group, index) => {
+        const name = group.querySelector('.ingredient-name').value;
+        const quantity = group.querySelector('.ingredient-quantity').value;
+        const unit = group.querySelector('.ingredient-unit').value;
+        if (name && quantity && unit) {
+            ingredients.push({ name, quantity: parseFloat(quantity), unit });
         }
     });
 
-    originalRecipe += '</ul>';
-    document.getElementById('original-recipe').innerHTML = originalRecipe;
-    document.getElementById('output-recipe-name').innerText = recipeName;
+    let batchSize = 0;
+    let batchSizeUnit = '';
 
-    const waterVolume = totalIngredientVolume * dilution;
-    let totalVolume;
-
-    if (numServings) {
-        totalVolume = (totalIngredientVolume + waterVolume) * numServings;
-    } else if (totalVolumeInput) {
-        totalVolume = convertToMilliliters(totalVolumeInput, totalVolumeUnit);
+    if (document.getElementById('option-servings').checked) {
+        batchSize = parseFloat(document.getElementById('num-servings').value);
+        batchSizeUnit = 'servings';
+    } else if (document.getElementById('option-volume').checked) {
+        batchSize = parseFloat(document.getElementById('total-volume').value);
+        batchSizeUnit = document.getElementById('total-volume-unit').value;
     }
 
-    const scalingFactor = totalVolume / (totalIngredientVolume + waterVolume);
-    let scaledRecipe = '<ul>';
+    const dilution = parseFloat(document.getElementById('dilution').value);
+    const customDilution = parseFloat(document.getElementById('custom-dilution').value) || 0;
 
-    ingredientVolumes.forEach(ingredient => {
-        const scaledQuantity = ingredient.volumeInMilliliters * scalingFactor;
-        scaledRecipe += `<li>${ingredient.name}: ${convertFromMilliliters(scaledQuantity, inputUnit).toFixed(2)} ${inputUnit}</li>`;
+    // Perform scaling calculations
+    const scaledIngredients = ingredients.map(ingredient => {
+        let scaledQuantity;
+        if (batchSizeUnit === 'servings') {
+            scaledQuantity = ingredient.quantity * batchSize;
+        } else {
+            scaledQuantity = ingredient.quantity * (batchSize / ingredients.length);
+        }
+        if (dilution > 0) {
+            scaledQuantity = scaledQuantity * (1 + (dilution / 100));
+        } else if (customDilution > 0) {
+            scaledQuantity = scaledQuantity * (1 + (customDilution / 100));
+        }
+        scaledQuantity = roundQuantity(scaledQuantity, ingredient.unit);
+        return { ...ingredient, quantity: scaledQuantity };
     });
 
-    if (waterVolume > 0) {
-        const scaledWaterVolume = waterVolume * scalingFactor;
-        scaledRecipe += `<li>Water: ${convertFromMilliliters(scaledWaterVolume, inputUnit).toFixed(2)} ${inputUnit}</li>`;
-    }
-
-    scaledRecipe += '</ul>';
-    document.getElementById('scaled-recipe').innerHTML = scaledRecipe;
+    // Display results
+    document.getElementById('output-recipe-name').textContent = recipeName;
+    document.getElementById('original-recipe').innerHTML = ingredients.map(ingredient => `<p>${ingredient.quantity} ${ingredient.unit} ${ingredient.name}</p>`).join('');
+    document.getElementById('scaled-recipe').innerHTML = scaledIngredients.map(ingredient => `<p>${ingredient.quantity.toFixed(2)} ${ingredient.unit} ${ingredient.name}</p>`).join('');
     document.getElementById('output').style.display = 'block';
-}
+});
+    // Perform scaling calculations
+    const scaledIngredients = ingredients.map(ingredient => {
+        let scaledQuantity;
+        if (batchSizeUnit === 'servings') {
+            scaledQuantity = ingredient.quantity * batchSize;
+        } else {
+            scaledQuantity = ingredient.quantity * (batchSize / ingredients.length);
+        }
+        if (dilution > 0) {
+            scaledQuantity = scaledQuantity * (1 + (dilution / 100));
+        } else if (customDilution > 0) {
+            scaledQuantity = scaledQuantity * (1 + (customDilution / 100));
+        }
+        scaledQuantity = roundQuantity(scaledQuantity, ingredient.unit);
+        return { ...ingredient, quantity: scaledQuantity };
+    });
 
-function convertToMilliliters(quantity, unit) {
-    const conversionRates = {
-        ounces: 29.5735,
-        milliliters: 1,
-        liters: 1000,
-        quarts: 946.353,
-        gallons: 3785.41,
-        dashes: 0.92,
-        teaspoons: 4.92892
-    };
-    return quantity * (conversionRates[unit] || 1);
-}
-
-function convertFromMilliliters(quantity, unit) {
-    const conversionRates = {
-        ounces: 1 / 29.5735,
-        milliliters: 1,
-        liters: 1 / 1000,
-        quarts: 1 / 946.353,
-        gallons: 1 / 3785.41,
-        dashes: 1 / 0.92,
-        teaspoons: 1 / 4.92892
-    };
-    return quantity * (conversionRates[unit] || 1);
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('cocktail-form').addEventListener('submit', calculateRecipe);
-    toggleBatchSizeFields();
+    // Display results
+    document.getElementById('output-recipe-name').textContent = recipeName;
+    document.getElementById('original-recipe').innerHTML = ingredients.map(ingredient => `<p>${ingredient.quantity} ${ingredient.unit} ${ingredient.name}</p>`).join('');
+    document.getElementById('scaled-recipe').innerHTML = scaledIngredients.map(ingredient => `<p>${ingredient.quantity.toFixed(2)} ${ingredient.unit} ${ingredient.name}</p>`).join('');
+    document.getElementById('output').style.display = 'block';
 });
