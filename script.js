@@ -131,26 +131,3 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     document.getElementById('scaled-recipe').innerHTML = scaledIngredients.map(ingredient => `<p>${ingredient.quantity.toFixed(2)} ${ingredient.unit} ${ingredient.name}</p>`).join('');
     document.getElementById('output').style.display = 'block';
 });
-    // Perform scaling calculations
-    const scaledIngredients = ingredients.map(ingredient => {
-        let scaledQuantity;
-        if (batchSizeUnit === 'servings') {
-            scaledQuantity = ingredient.quantity * batchSize;
-        } else {
-            scaledQuantity = ingredient.quantity * (batchSize / ingredients.length);
-        }
-        if (dilution > 0) {
-            scaledQuantity = scaledQuantity * (1 + (dilution / 100));
-        } else if (customDilution > 0) {
-            scaledQuantity = scaledQuantity * (1 + (customDilution / 100));
-        }
-        scaledQuantity = roundQuantity(scaledQuantity, ingredient.unit);
-        return { ...ingredient, quantity: scaledQuantity };
-    });
-
-    // Display results
-    document.getElementById('output-recipe-name').textContent = recipeName;
-    document.getElementById('original-recipe').innerHTML = ingredients.map(ingredient => `<p>${ingredient.quantity} ${ingredient.unit} ${ingredient.name}</p>`).join('');
-    document.getElementById('scaled-recipe').innerHTML = scaledIngredients.map(ingredient => `<p>${ingredient.quantity.toFixed(2)} ${ingredient.unit} ${ingredient.name}</p>`).join('');
-    document.getElementById('output').style.display = 'block';
-});
