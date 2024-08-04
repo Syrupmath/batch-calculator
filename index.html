@@ -19,7 +19,7 @@
     <main>
         <div class="container mt-5">
             <header class="bg-primary bg-gradient text-white text-center py-3 rounded">
-                <h1>Morgenthaler Batched Cocktail Calculator</h1>
+                <h1> Batched Cocktail Calculator</h1>
             </header>
             <form id="cocktail-form" class="needs-validation" novalidate>
                 <section id="recipe-input" class="step mt-4">
@@ -93,15 +93,14 @@
                                         <input type="number" id="total-volume" name="total-volume" class="form-control batch-size-group" placeholder="Total Volume" disabled>
                                         <label for="total-volume">Total Volume</label>
                                     </div>
-                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="total-volume-unit-button" disabled>Milliliters</button>
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="total-volume-unit-button" disabled>Ounces</button>
                                     <ul class="dropdown-menu" aria-labelledby="total-volume-unit-button">
-                                        <li><a class="dropdown-item" href="#" onclick="setTotalVolumeUnit('Milliliters')">Milliliters</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="setTotalVolumeUnit('Liters')">Liters</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="setTotalVolumeUnit('Ounces')">Ounces</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="setTotalVolumeUnit('Liters')">Liters</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="setTotalVolumeUnit('Quarts')">Quarts</a></li>
                                         <li><a class="dropdown-item" href="#" onclick="setTotalVolumeUnit('Gallons')">Gallons</a></li>
                                     </ul>
-                                    <input type="hidden" id="total-volume-unit" name="total-volume-unit" value="milliliters">
+                                    <input type="hidden" id="total-volume-unit" name="total-volume-unit" value="ounces">
                                 </div>
                             </div>
                         </div>
