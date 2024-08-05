@@ -124,7 +124,7 @@
                                         <div class="input-group mb-3">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="dilution-option" id="option-custom" onclick="setDilutionCustom()">
-                            <!--             <label class="form-check-label" for="option-custom">Custom</label> -->
+                            <!-- <label class="form-check-label" for="option-custom">Custom</label> -->
                         </div>
                         <div class="form-floating ms-2">
                             <input type="number" id="custom-dilution" name="custom-dilution" class="form-control" placeholder="Custom Dilution (%)" disabled>
@@ -149,15 +149,23 @@
                     <h2 id="output-recipe-name"></h2>
                 </div>
                 <div id="original-recipe-container">
-                    <h2>Original Recipe</h2>
-                    <div id="original-recipe">
-                        <!-- Original recipe will be displayed here -->
+                    <div class="card">
+                        <div class="card-header">Original Recipe</div>
+                        <div class="card-body">
+                            <div id="original-recipe">
+                                <!-- Original recipe will be displayed here -->
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="scaled-recipe-container">
-                    <h2>Scaled Recipe</h2>
-                    <div id="scaled-recipe">
-                        <!-- Scaled recipe will be displayed here -->
+                    <div class="card">
+                        <div class="card-header">Scaled Recipe</div>
+                        <div class="card-body">
+                            <div id="scaled-recipe">
+                                <!-- Scaled recipe will be displayed here -->
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button type="button" id="print-recipe" class="btn btn-secondary" onclick="window.print()">Print Recipe</button>
