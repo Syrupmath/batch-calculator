@@ -16,3 +16,39 @@ body {
 #calculate-totals {
     padding-bottom: 50px; /* Add padding below the Calculate button */
 }
+
+.card {
+    margin-bottom: 20px; /* Add some spacing between the cards */
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.card-body p {
+    margin: 0;
+}
+
+/* Print CSS */
+@media print {
+    body * {
+        visibility: hidden; /* Hide all elements by default */
+    }
+    header, #output, #output * {
+        visibility: visible; /* Only show header and output */
+    }
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+    #output {
+        position: fixed;
+        top: 100px; /* Adjust based on header height */
+        width: 100%;
+    }
+    #output-recipe-name {
+        margin-top: 20px; /* Add some space below the header */
+    }
+}
