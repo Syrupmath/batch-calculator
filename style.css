@@ -39,16 +39,20 @@ body {
         visibility: visible; /* Only show header and output */
     }
     header {
-        position: fixed;
+        position: relative;
         top: 0;
         width: 100%;
     }
     #output {
-        position: fixed;
-        top: 100px; /* Adjust based on header height */
+        position: relative;
+        top: 50px; /* Adjust based on header height */
         width: 100%;
+        margin-top: 0; /* Remove extra margin */
     }
     #output-recipe-name {
         margin-top: 20px; /* Add some space below the header */
+    }
+    #calculate, .needs-validation, .step, #add-ingredient, .dropdown-menu, .input-group, #batch-size-input, #dilution-input, .form-check, .batch-size-group {
+        display: none; /* Hide all input elements and sections */
     }
 }
