@@ -7,6 +7,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
         event.preventDefault();
         calculateBatch();
     });
+
+    // Event listener for unit dropdown in total volume
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const unit = this.textContent;
+            const button = this.closest('.input-group').querySelector('.dropdown-toggle');
+            button.textContent = unit;
+            document.getElementById('total-volume-unit').value = unit.toLowerCase();
+        });
+    });
 });
 
 // Function to add new ingredient fields
