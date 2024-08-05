@@ -12,3 +12,7 @@
 body {
     padding-bottom: 100px; /* Add padding to the bottom of the page */
 }
+
+#calculate-totals {
+    padding-bottom: 50px; /* Add padding below the Calculate button */
+}
