@@ -120,42 +120,66 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
         }
     });
 
-    let totalBatchSizeOunces = 0;
-    if (document.getElementById('option-volume').checked) {
-        const totalVolume = parseFloat(document.getElementById('total-volume').value);
-        const totalVolumeUnit = document.getElementById('total-volume-unit').value;
-        totalBatchSizeOunces = convertToOunces(totalVolume, totalVolumeUnit);
-    }
-
     const dilution = parseFloat(document.getElementById('dilution').value);
     const customDilution = parseFloat(document.getElementById('custom-dilution').value) || 0;
     const actualDilution = dilution > 0 ? dilution : customDilution;
 
-    // Calculate the amount of water to add based on the dilution percentage
-    const waterToAdd = totalBatchSizeOunces * (actualDilution / 100);
+    let scaledIngredients;
+    let waterToAdd = 0;
 
-    // Calculate total volume of ingredients
-    const totalVolumeOfIngredients = totalBatchSizeOunces - waterToAdd;
+    if (document.getElementById('option-servings').checked) {
+        const numServings = parseFloat(document.getElementById('num-servings').value);
 
-    // Calculate total original volume in ounces
-    const totalOriginalVolumeOunces = ingredients.reduce((total, ingredient) => {
-        let quantityInOunces = ingredient.quantity;
-        if (ingredient.unit === 'teaspoons') {
-            quantityInOunces = quantityInOunces / 6;
-        } else if (ingredient.unit === 'dashes') {
-            quantityInOunces = quantityInOunces / 32;
-        }
-        return total + quantityInOunces;
-    }, 0);
+        // Scale ingredients based on number of servings
+        scaledIngredients = ingredients.map(ingredient => {
+            return { ...ingredient, quantity: ingredient.quantity * numServings };
+        });
 
-    // Calculate scaling factor based on total volume of ingredients
-    const scalingFactor = totalVolumeOfIngredients / totalOriginalVolumeOunces;
+        // Calculate total volume in ounces
+        const totalVolumeOunces = scaledIngredients.reduce((total, ingredient) => {
+            let quantityInOunces = ingredient.quantity;
+            if (ingredient.unit === 'teaspoons') {
+                quantityInOunces = quantityInOunces / 6;
+            } else if (ingredient.unit === 'dashes') {
+                quantityInOunces = quantityInOunces / 32;
+            }
+            return total + quantityInOunces;
+        }, 0);
 
-    // Scale ingredients
-    const scaledIngredients = ingredients.map(ingredient => {
-        let scaledQuantity = ingredient.quantity * scalingFactor;
-        return { ...ingredient, quantity: scaledQuantity };
-    });
+        // Calculate the amount of water to add based on the dilution percentage
+        waterToAdd = totalVolumeOunces * (actualDilution / 100);
+
+    } else if (document.getElementById('option-volume').checked) {
+        const totalVolume = parseFloat(document.getElementById('total-volume').value);
+        const totalVolumeUnit = document.getElementById('total-volume-unit').value;
+        const totalBatchSizeOunces = convertToOunces(totalVolume, totalVolumeUnit);
+
+        // Calculate the amount of water to add based on the dilution percentage
+        waterToAdd = totalBatchSizeOunces * (actualDilution / 100);
+
+        // Calculate total volume of ingredients
+        const totalVolumeOfIngredients = totalBatchSizeOunces - waterToAdd;
+
+        // Calculate total original volume in ounces
+        const totalOriginalVolumeOunces = ingredients.reduce((total, ingredient) => {
+            let quantityInOunces = ingredient.quantity;
+            if (ingredient.unit === 'teaspoons') {
+                quantityInOunces = quantityInOunces / 6;
+            } else if (ingredient.unit === 'dashes') {
+                quantityInOunces = quantityInOunces / 32;
+            }
+            return total + quantityInOunces;
+        }, 0);
+
+        // Calculate scaling factor based on total volume of ingredients
+        const scalingFactor = totalVolumeOfIngredients / totalOriginalVolumeOunces;
+
+        // Scale ingredients
+        scaledIngredients = ingredients.map(ingredient => {
+            let scaledQuantity = ingredient.quantity * scalingFactor;
+            return { ...ingredient, quantity: scaledQuantity };
+        });
+    }
 
     // Round quantities
     const roundedIngredients = scaledIngredients.map(ingredient => {
