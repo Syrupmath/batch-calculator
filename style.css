@@ -46,8 +46,11 @@ body {
     #output, #output * {
         visibility: visible; /* Ensure output and its contents are visible */
     }
-    #print-recipe {
-        display: none; /* Hide the print button */
+    .btn.btn-secondary {
+        display: none !important; /* Hide the print button */
+    }
+    h1, p.author {
+        visibility: visible !important; /* Ensure H1 and author paragraph are visible */
     }
     header {
         position: relative;
