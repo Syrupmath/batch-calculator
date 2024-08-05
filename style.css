@@ -40,14 +40,19 @@ body {
     body * {
         visibility: hidden; /* Hide all elements by default */
     }
-    header, #output, #output * {
-        visibility: visible; /* Only show header and output */
+    header, header * {
+        visibility: visible; /* Ensure header and its contents are visible */
+    }
+    #output, #output * {
+        visibility: visible; /* Ensure output and its contents are visible */
+    }
+    #print-recipe {
+        display: none; /* Hide the print button */
     }
     header {
         position: relative;
         top: 0;
         width: 100%;
-        visibility: visible;
     }
     #output {
         position: relative;
