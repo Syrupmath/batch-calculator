@@ -30,6 +30,11 @@ body {
     margin: 0;
 }
 
+.author a {
+    color: white;
+    text-decoration: underline;
+}
+
 /* Print CSS */
 @media print {
     body * {
