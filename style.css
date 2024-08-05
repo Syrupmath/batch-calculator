@@ -1,0 +1,14 @@
+/* style.css */
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.input-group .form-floating {
+    flex: 1;
+}
+
+body {
+    padding-bottom: 100px; /* Add padding to the bottom of the page */
+}
