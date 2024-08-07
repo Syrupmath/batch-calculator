@@ -87,12 +87,14 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
             default:
                 scaledQuantity = ingredient.quantity * scalingFactor;
         }
+        // Round to the nearest 1/4 ounce
+        scaledQuantity = Math.round(scaledQuantity * 4) / 4;
         return { ...ingredient, scaledQuantity, scaledUnit };
     });
 
     // Calculate water to add for dilution
     const totalScaledVolume = scaledIngredients.reduce((acc, ingredient) => acc + ingredient.scaledQuantity, 0);
-    const waterToAdd = totalScaledVolume * (dilution / 100);
+    const waterToAdd = Math.round((totalScaledVolume * (dilution / 100)) * 4) / 4;
 
     // Update the original recipe and scaled recipe sections
     document.getElementById('output-recipe-name').textContent = recipeName;
