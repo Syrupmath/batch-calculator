@@ -68,17 +68,26 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     const scalingFactor = batchSize / (totalIngredientsVolume * (1 + dilution / 100));
     const scaledIngredients = ingredients.map(ingredient => {
         let scaledQuantity;
+        let scaledUnit = ingredient.unit;
         switch (ingredient.unit) {
             case 'Teaspoons':
                 scaledQuantity = (ingredient.quantity / 6) * scalingFactor;
+                if (scaledQuantity >= 1.5) { // Convert to ounces if >= 1/4 ounce
+                    scaledQuantity = scaledQuantity / 6;
+                    scaledUnit = 'Ounces';
+                }
                 break;
             case 'Dashes':
                 scaledQuantity = (ingredient.quantity / 48) * scalingFactor;
+                if (scaledQuantity >= 12) { // Convert to ounces if >= 1/4 ounce
+                    scaledQuantity = scaledQuantity / 48;
+                    scaledUnit = 'Ounces';
+                }
                 break;
             default:
                 scaledQuantity = ingredient.quantity * scalingFactor;
         }
-        return { ...ingredient, scaledQuantity };
+        return { ...ingredient, scaledQuantity, scaledUnit };
     });
 
     // Calculate water to add for dilution
@@ -93,7 +102,7 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     `).join('');
     const scaledRecipeContainer = document.getElementById('scaled-recipe');
     scaledRecipeContainer.innerHTML = scaledIngredients.map(ingredient => `
-        <p>${ingredient.scaledQuantity.toFixed(2)} ${ingredient.unit} ${ingredient.name}</p>
+        <p>${ingredient.scaledQuantity.toFixed(2)} ${ingredient.scaledUnit} ${ingredient.name}</p>
     `).join('') + `
         <p>${waterToAdd.toFixed(2)} ounces Water</p>
     `;
