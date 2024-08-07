@@ -56,9 +56,9 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     // Calculate scaled ingredients
     const totalIngredientsVolume = ingredients.reduce((acc, ingredient) => {
         switch (ingredient.unit) {
-            case 'Teaspoons':
+            case 'teaspoons':
                 return acc + (ingredient.quantity / 6); // 1 oz = 6 tsp
-            case 'Dashes':
+            case 'dashes':
                 return acc + (ingredient.quantity / 48); // 1 oz = 48 dashes
             default:
                 return acc + ingredient.quantity;
@@ -70,18 +70,18 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
         let scaledQuantity;
         let scaledUnit = ingredient.unit;
         switch (ingredient.unit) {
-            case 'Teaspoons':
-                scaledQuantity = (ingredient.quantity / 6) * scalingFactor;
+            case 'teaspoons':
+                scaledQuantity = ingredient.quantity * scalingFactor;
                 if (scaledQuantity >= 1.5) { // Convert to ounces if >= 1/4 ounce
                     scaledQuantity = scaledQuantity / 6;
-                    scaledUnit = 'Ounces';
+                    scaledUnit = 'ounces';
                 }
                 break;
-            case 'Dashes':
-                scaledQuantity = (ingredient.quantity / 48) * scalingFactor;
+            case 'dashes':
+                scaledQuantity = ingredient.quantity * scalingFactor;
                 if (scaledQuantity >= 12) { // Convert to ounces if >= 1/4 ounce
                     scaledQuantity = scaledQuantity / 48;
-                    scaledUnit = 'Ounces';
+                    scaledUnit = 'ounces';
                 }
                 break;
             default:
