@@ -18,11 +18,17 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
             ingredients.push({ name, quantity, unit });
             validIngredients = true;
         } else {
-            if (!name) group.querySelector('.ingredient-name').classList.add('is-invalid');
-            if (!quantity || quantity <= 0) group.querySelector('.ingredient-quantity').classList.add('is-invalid');
-            if (!unit) group.querySelector('.ingredient-unit-button').classList.add('is-invalid');
+            if (!name && (quantity || unit)) group.querySelector('.ingredient-name').classList.add('is-invalid');
+            if ((!quantity || quantity <= 0) && (name || unit)) group.querySelector('.ingredient-quantity').classList.add('is-invalid');
+            if (!unit && (name || quantity)) group.querySelector('.ingredient-unit-button').classList.add('is-invalid');
         }
     });
+
+    // Ensure at least one complete ingredient is present
+    if (!validIngredients) {
+        alert('Please enter at least one complete ingredient.');
+        return;
+    }
 
     // Validate batch size
     const batchSizeOption = document.querySelector('input[name="batch-size-option"]:checked');
@@ -66,6 +72,8 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     if (batchSize <= originalRecipeVolume) {
         document.getElementById('num-servings').classList.add('is-invalid');
         document.getElementById('total-volume').classList.add('is-invalid');
+        alert('Batch size must be larger than the original recipe volume.');
+        return;
     }
 
     // Validate dilution
@@ -87,7 +95,7 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     }
 
     // Final validation check
-    if (!validIngredients || !batchSize || batchSize <= originalRecipeVolume || !dilution) {
+    if (!batchSize || batchSize <= originalRecipeVolume || !dilution) {
         return;
     }
 
