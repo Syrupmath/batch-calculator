@@ -37,7 +37,7 @@ body {
 
 /* Custom styles */
 body {
-    padding-top: 20px; /* Reduced from 40px */
+    padding-top: 10px; /* Reduced from 40px */
 }
 
 .container {
@@ -45,7 +45,7 @@ body {
 }
 
 header {
-    margin-bottom: 10px; /* Reduced from 20px */
+    margin-bottom: 5px; /* Reduced from 20px */
 }
 
 h1 {
