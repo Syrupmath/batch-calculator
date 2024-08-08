@@ -40,8 +40,21 @@ body {
     padding-top: 20px; /* Reduced from 40px */
 }
 
+.container {
+    padding-top: 10px; /* Adjust the top padding of the container */
+}
+
 header {
-    margin-bottom: 20px; /* Adjust if needed */
+    margin-bottom: 10px; /* Reduced from 20px */
+}
+
+h1 {
+    margin-bottom: 5px; /* Reduce spacing below the h1 header */
+}
+
+.author {
+    margin-top: 0; /* Remove any top margin on the author paragraph */
+    font-size: 0.9rem; /* Optional: Reduce font size for the author text */
 }
 
 .step {
@@ -51,7 +64,6 @@ header {
 #output {
     margin-top: 30px;
 }
-
 /* Print CSS */
 @media print {
     body * {
