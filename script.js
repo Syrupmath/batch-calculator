@@ -53,48 +53,42 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
         }
     }
 
-    // Calculate scaled ingredients
-    const totalIngredientsVolume = ingredients.reduce((acc, ingredient) => {
-        switch (ingredient.unit) {
-            case 'teaspoons':
-                return acc + (ingredient.quantity / 6); // 1 oz = 6 tsp
-            case 'dashes':
-                return acc + (ingredient.quantity / 48); // 1 oz = 48 dashes
-            default:
-                return acc + ingredient.quantity;
-        }
-    }, 0);
-
-    const scalingFactor = batchSize / (totalIngredientsVolume * (1 + dilution / 100));
+    // Calculate scaled ingredients based on number of servings
     const scaledIngredients = ingredients.map(ingredient => {
         let scaledQuantity;
         let scaledUnit = ingredient.unit;
+        if (batchSizeOption.id === 'option-servings') {
+            scaledQuantity = ingredient.quantity * batchSize;
+        } else {
+            const scalingFactor = batchSize / ingredients.reduce((acc, ing) => acc + ing.quantity, 0);
+            scaledQuantity = ingredient.quantity * scalingFactor;
+        }
+        // Handle conversion to ounces if necessary
         switch (ingredient.unit) {
             case 'teaspoons':
-                scaledQuantity = ingredient.quantity * scalingFactor;
                 if (scaledQuantity >= 1.5) { // Convert to ounces if >= 1/4 ounce
                     scaledQuantity = scaledQuantity / 6;
                     scaledUnit = 'ounces';
                 }
                 break;
             case 'dashes':
-                scaledQuantity = ingredient.quantity * scalingFactor;
                 if (scaledQuantity >= 12) { // Convert to ounces if >= 1/4 ounce
                     scaledQuantity = scaledQuantity / 48;
                     scaledUnit = 'ounces';
                 }
                 break;
-            default:
-                scaledQuantity = ingredient.quantity * scalingFactor;
         }
         // Round to the nearest 1/4 ounce
         scaledQuantity = Math.round(scaledQuantity * 4) / 4;
         return { ...ingredient, scaledQuantity, scaledUnit };
     });
 
-    // Calculate water to add for dilution
-    const totalScaledVolume = scaledIngredients.reduce((acc, ingredient) => acc + ingredient.scaledQuantity, 0);
-    const waterToAdd = Math.round((totalScaledVolume * (dilution / 100)) * 4) / 4;
+    // Calculate water to add for dilution if dilution is greater than 0
+    let waterToAdd = 0;
+    if (dilution > 0) {
+        const totalScaledVolume = scaledIngredients.reduce((acc, ingredient) => acc + ingredient.scaledQuantity, 0);
+        waterToAdd = Math.round((totalScaledVolume * (dilution / 100)) * 4) / 4;
+    }
 
     // Update the original recipe and scaled recipe sections
     document.getElementById('output-recipe-name').textContent = recipeName;
@@ -105,9 +99,13 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     const scaledRecipeContainer = document.getElementById('scaled-recipe');
     scaledRecipeContainer.innerHTML = scaledIngredients.map(ingredient => `
         <p>${ingredient.scaledQuantity.toFixed(2)} ${ingredient.scaledUnit} ${ingredient.name}</p>
-    `).join('') + `
-        <p>${waterToAdd.toFixed(2)} ounces Water</p>
-    `;
+    `).join('');
+    
+    if (waterToAdd > 0) {
+        scaledRecipeContainer.innerHTML += `
+            <p>${waterToAdd.toFixed(2)} ounces Water</p>
+        `;
+    }
 
     // Update the scaled recipe title
     updateScaledRecipeTitle();
@@ -115,7 +113,6 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     // Show the output section
     document.getElementById('output').style.display = 'block';
 });
-
 function setUnit(index, unit) {
     document.getElementById(`ingredient-unit-button-${index}`).textContent = unit;
     document.getElementById(`ingredient-unit-${index}`).value = unit.toLowerCase();
