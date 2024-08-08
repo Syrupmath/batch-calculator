@@ -25,7 +25,7 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     });
 
     // Ensure at least one complete ingredient is present
-    if (!validIngredients) {
+    if (ingredients.length === 0) {
         alert('Please enter at least one complete ingredient.');
         return;
     }
