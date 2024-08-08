@@ -37,11 +37,11 @@ body {
 
 /* Custom styles */
 body {
-    padding-top: 10px; /* Reduced from 40px */
+    padding-top: 5px; /* Reduced from 40px */
 }
 
 .container {
-    padding-top: 10px; /* Adjust the top padding of the container */
+    padding-top: 5px; /* Adjust the top padding of the container */
 }
 
 header {
