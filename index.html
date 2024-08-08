@@ -17,7 +17,7 @@
             <form id="cocktail-form" class="needs-validation" novalidate>
                 <section id="recipe-input" class="step mt-4">
                     <h2>Step 1: Enter Your Recipe</h2>
-                    <p>Enter the name of your cocktail below. Then, enter your base recipe in the ingredient field, adding any additional ingredients as needed.</p>
+                    <p>Start by naming your cocktail recipe. Next, input the base ingredients of your recipe, adding any additional ingredients as necessary.</p>
                     <div class="mb-4">
                         <label for="recipe-name" class="form-label">Recipe Name</label>
                         <input type="text" id="recipe-name" name="recipe-name" class="form-control" placeholder="E.g., Manhattan">
@@ -61,7 +61,7 @@
 
                 <section id="batch-size-input" class="step mt-4">
                     <h2>Step 2: Determine Your Batch Size</h2>
-                    <p>How big of a batch do you need? Choose a specific number of servings, or alternatively, enter the size of the container you're looking to fill.</p>
+                    <p>Specify the batch size. You can either enter the desired number of servings or the total volume of the container you plan to use.</p>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-check">
@@ -103,7 +103,7 @@
                 <hr>
                 <section id="dilution-input" class="step mt-4">
                     <h2>Step 3: Choose Dilution</h2>
-                    <p>Would you like to pre-dilute your batch? You can choose dilution for stirred cocktails (typically used for spirit-driven drinks) or shaken cocktails (typically drinks that contain juice or dairy). Alternatively, you can select zero dilution if you're going to shake or stir your drinks to order.</p>
+                    <p>Select your preferred dilution level. Choose the appropriate dilution for stirred cocktails (typically spirit-driven drinks) or shaken cocktails (drinks containing juice or dairy). Alternatively, select zero dilution if you plan to shake or stir the drinks to order.</p>
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="radio" name="dilution-option" id="option-no-dilution" onclick="setDilution(0)">
                         <label class="form-check-label" for="option-no-dilution">
@@ -139,7 +139,7 @@
 
                 <section id="calculate-totals" class="step mt-4">
                     <h2>Step 4: Calculate Totals</h2>
-                    <p>Click "Calculate" to determine your batched cocktail recipe. Note that the batched recipe will be displayed in the same system your original recipe used.</p>
+                    <p>Click “Calculate” to generate your batched cocktail recipe. The scaled recipe will be displayed using the same measurement system as your original recipe.</p>
                     <button type="submit" id="calculate" class="btn btn-success">Calculate</button>
                 </section>
             </form>
