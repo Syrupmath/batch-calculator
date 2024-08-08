@@ -15,42 +15,41 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
         }
     });
 
-    // Validate batch size
+    // Check batch size option and gather the value
     const batchSizeOption = document.querySelector('input[name="batch-size-option"]:checked');
     let batchSize = null;
     let batchSizeUnit = null;
-    let originalRecipeVolume = ingredients.reduce((acc, ingredient) => acc + ingredient.quantity, 0);
     if (batchSizeOption) {
         if (batchSizeOption.id === 'option-servings') {
             batchSize = parseInt(document.getElementById('num-servings').value, 10);
         } else if (batchSizeOption.id === 'option-volume') {
             batchSize = parseFloat(document.getElementById('total-volume').value);
             batchSizeUnit = document.getElementById('total-volume-unit').value;
-            if (batchSizeUnit) {
-                switch (batchSizeUnit) {
-                    case 'liters':
-                        batchSize = batchSize * 33.814;
-                        break;
-                    case 'quarts':
-                        batchSize = batchSize * 32;
-                        break;
-                    case 'gallons':
-                        batchSize = batchSize * 128;
-                        break;
-                    // Assume ounces by default
-                }
-            }
         }
     }
 
-    // Validate dilution
-    const dilutionOption = document.querySelector('input[name="dilution-option"]:checked');
-    let dilution = null;
-    if (dilutionOption) {
-        if (dilutionOption.id === 'option-custom') {
-            dilution = parseFloat(document.getElementById('custom-dilution').value);
-        } else {
-            dilution = parseFloat(dilutionOption.value);
+    // Gather dilution
+    const dilution = parseFloat(document.getElementById('dilution').value);
+
+    // Validate inputs
+    if (ingredients.length === 0 || !batchSize) {
+        alert('Please enter at least one ingredient and a batch size.');
+        return;
+    }
+
+    // Calculate total volume in ounces if using volume
+    if (batchSizeOption.id === 'option-volume') {
+        switch (batchSizeUnit) {
+            case 'liters':
+                batchSize = batchSize * 33.814;
+                break;
+            case 'quarts':
+                batchSize = batchSize * 32;
+                break;
+            case 'gallons':
+                batchSize = batchSize * 128;
+                break;
+            // Assume ounces by default
         }
     }
 
@@ -116,6 +115,7 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     // Show the output section
     document.getElementById('output').style.display = 'block';
 });
+
 function setUnit(index, unit) {
     document.getElementById(`ingredient-unit-button-${index}`).textContent = unit;
     document.getElementById(`ingredient-unit-${index}`).value = unit.toLowerCase();
