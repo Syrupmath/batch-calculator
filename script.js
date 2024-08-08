@@ -14,10 +14,13 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
         const name = group.querySelector('.ingredient-name').value;
         const quantity = parseFloat(group.querySelector('.ingredient-quantity').value);
         const unit = group.querySelector('.ingredient-unit').value;
+
+        // Check if the ingredient fields are fully filled
         if (name && quantity && unit) {
             ingredients.push({ name, quantity, unit });
             validIngredients = true;
         } else if (name || quantity || unit) {
+            // Only mark fields as invalid if they are partially filled
             if (!name) group.querySelector('.ingredient-name').classList.add('is-invalid');
             if (!quantity || quantity <= 0) group.querySelector('.ingredient-quantity').classList.add('is-invalid');
             if (!unit) group.querySelector('.ingredient-unit-button').classList.add('is-invalid');
@@ -25,7 +28,7 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     });
 
     // Ensure at least one complete ingredient is present
-    if (ingredients.length === 0) {
+    if (!validIngredients) {
         alert('Please enter at least one complete ingredient.');
         return;
     }
