@@ -35,6 +35,23 @@ body {
     text-decoration: underline;
 }
 
+/* Custom styles */
+body {
+    padding-top: 20px; /* Reduced from 40px */
+}
+
+header {
+    margin-bottom: 20px; /* Adjust if needed */
+}
+
+.step {
+    margin-bottom: 30px;
+}
+
+#output {
+    margin-top: 30px;
+}
+
 /* Print CSS */
 @media print {
     body * {
