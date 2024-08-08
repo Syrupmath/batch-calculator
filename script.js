@@ -17,10 +17,10 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
         if (name && quantity && unit) {
             ingredients.push({ name, quantity, unit });
             validIngredients = true;
-        } else {
-            if (!name && (quantity || unit)) group.querySelector('.ingredient-name').classList.add('is-invalid');
-            if ((!quantity || quantity <= 0) && (name || unit)) group.querySelector('.ingredient-quantity').classList.add('is-invalid');
-            if (!unit && (name || quantity)) group.querySelector('.ingredient-unit-button').classList.add('is-invalid');
+        } else if (name || quantity || unit) {
+            if (!name) group.querySelector('.ingredient-name').classList.add('is-invalid');
+            if (!quantity || quantity <= 0) group.querySelector('.ingredient-quantity').classList.add('is-invalid');
+            if (!unit) group.querySelector('.ingredient-unit-button').classList.add('is-invalid');
         }
     });
 
