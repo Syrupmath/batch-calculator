@@ -69,12 +69,16 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
                 if (scaledQuantity >= 1.5) { // Convert to ounces if >= 1/4 ounce
                     scaledQuantity = scaledQuantity / 6;
                     scaledUnit = 'ounces';
+                } else {
+                    scaledQuantity = Math.ceil(scaledQuantity); // Round up teaspoons to nearest whole number
                 }
                 break;
             case 'dashes':
                 if (scaledQuantity >= 12) { // Convert to ounces if >= 1/4 ounce
                     scaledQuantity = scaledQuantity / 48;
                     scaledUnit = 'ounces';
+                } else {
+                    scaledQuantity = Math.ceil(scaledQuantity); // Round up dashes to nearest whole number
                 }
                 break;
         }
@@ -113,6 +117,7 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     // Show the output section
     document.getElementById('output').style.display = 'block';
 });
+
 function setUnit(index, unit) {
     document.getElementById(`ingredient-unit-button-${index}`).textContent = unit;
     document.getElementById(`ingredient-unit-${index}`).value = unit.toLowerCase();
