@@ -52,18 +52,37 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
             // Assume ounces by default
         }
     }
-        // Function to format the quantity and unit
-    function formatQuantityAndUnit(quantity, unit) {
-        // Remove decimal point and fractional part if it's .00
-        let formattedQuantity = quantity % 1 === 0 ? quantity.toFixed(0) : quantity.toFixed(2);
+// Function to format the quantity and unit, with special handling for dashes
+function formatQuantityAndUnit(quantity, unit) {
+    let formattedQuantity = quantity % 1 === 0 ? quantity.toFixed(0) : quantity.toFixed(2);
 
-        // Make the unit singular if the quantity is 1
-        if (formattedQuantity == 1) {
-            unit = unit.slice(-1) === 's' ? unit.slice(0, -1) : unit; // Remove trailing 's' for singular
+    if (unit === 'dashes') {
+        const dashesPerOunce = 48; // 1 ounce = 48 dashes
+        let ounces = Math.floor(quantity / dashesPerOunce); // Whole ounces
+        let remainingDashes = Math.round(quantity % dashesPerOunce); // Remaining dashes
+
+        if (remainingDashes >= 12) { // Convert remaining dashes to the nearest quarter ounce if possible
+            ounces += Math.floor(remainingDashes / 12) * 0.25;
+            remainingDashes = remainingDashes % 12;
         }
 
-        return `${formattedQuantity} ${unit}`;
+        // Format the output
+        if (ounces > 0 && remainingDashes > 0) {
+            return `${ounces} ${ounces === 1 ? 'ounce' : 'ounces'} plus ${remainingDashes} ${remainingDashes === 1 ? 'dash' : 'dashes'}`;
+        } else if (ounces > 0) {
+            return `${ounces} ${ounces === 1 ? 'ounce' : 'ounces'}`;
+        } else {
+            return `${remainingDashes} ${remainingDashes === 1 ? 'dash' : 'dashes'}`;
+        }
     }
+
+    // Make the unit singular if the quantity is 1
+    if (formattedQuantity == 1) {
+        unit = unit.slice(-1) === 's' ? unit.slice(0, -1) : unit;
+    }
+
+    return `${formattedQuantity} ${unit}`;
+}
 
     // Calculate scaled ingredients based on number of servings
     const scaledIngredients = ingredients.map(ingredient => {
