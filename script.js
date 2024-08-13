@@ -52,19 +52,22 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
             // Assume ounces by default
         }
     }
+    
 // Function to format the quantity and unit, with special handling for dashes
 function formatQuantityAndUnit(quantity, unit) {
-    let formattedQuantity = quantity % 1 === 0 ? quantity.toFixed(0) : quantity.toFixed(2);
-
     if (unit === 'dashes') {
         const dashesPerOunce = 48; // 1 ounce = 48 dashes
         let ounces = Math.floor(quantity / dashesPerOunce); // Whole ounces
         let remainingDashes = Math.round(quantity % dashesPerOunce); // Remaining dashes
 
-        if (remainingDashes >= 12) { // Convert remaining dashes to the nearest quarter ounce if possible
-            ounces += Math.floor(remainingDashes / 12) * 0.25;
+        // Convert remaining dashes to the nearest quarter ounce if possible
+        let additionalOunces = 0;
+        if (remainingDashes >= 12) {
+            additionalOunces = Math.floor(remainingDashes / 12) * 0.25;
             remainingDashes = remainingDashes % 12;
         }
+
+        ounces += additionalOunces;
 
         // Format the output
         if (ounces > 0 && remainingDashes > 0) {
@@ -76,7 +79,8 @@ function formatQuantityAndUnit(quantity, unit) {
         }
     }
 
-    // Make the unit singular if the quantity is 1
+    // For other units, make the unit singular if the quantity is 1
+    let formattedQuantity = quantity % 1 === 0 ? quantity.toFixed(0) : quantity.toFixed(2);
     if (formattedQuantity == 1) {
         unit = unit.slice(-1) === 's' ? unit.slice(0, -1) : unit;
     }
