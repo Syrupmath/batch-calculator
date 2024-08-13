@@ -52,6 +52,18 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
             // Assume ounces by default
         }
     }
+        // Function to format the quantity and unit
+    function formatQuantityAndUnit(quantity, unit) {
+        // Remove decimal point and fractional part if it's .00
+        let formattedQuantity = quantity % 1 === 0 ? quantity.toFixed(0) : quantity.toFixed(2);
+
+        // Make the unit singular if the quantity is 1
+        if (formattedQuantity == 1) {
+            unit = unit.slice(-1) === 's' ? unit.slice(0, -1) : unit; // Remove trailing 's' for singular
+        }
+
+        return `${formattedQuantity} ${unit}`;
+    }
 
     // Calculate scaled ingredients based on number of servings
     const scaledIngredients = ingredients.map(ingredient => {
@@ -82,7 +94,7 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
                 }
                 break;
         }
-        // Round to the nearest 1/4 ounce
+                // Round to the nearest 1/4 ounce
         scaledQuantity = Math.round(scaledQuantity * 4) / 4;
         return { ...ingredient, scaledQuantity, scaledUnit };
     });
@@ -102,12 +114,12 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     `).join('');
     const scaledRecipeContainer = document.getElementById('scaled-recipe');
     scaledRecipeContainer.innerHTML = scaledIngredients.map(ingredient => `
-        <p>${ingredient.scaledQuantity.toFixed(2)} ${ingredient.scaledUnit} ${ingredient.name}</p>
+        <p>${formatQuantityAndUnit(ingredient.scaledQuantity, ingredient.scaledUnit)} ${ingredient.name}</p>
     `).join('');
     
     if (waterToAdd > 0) {
         scaledRecipeContainer.innerHTML += `
-            <p>${waterToAdd.toFixed(2)} ounces Water</p>
+            <p>${formatQuantityAndUnit(waterToAdd, 'ounces')} Water</p>
         `;
     }
 
@@ -117,7 +129,6 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
     // Show the output section
     document.getElementById('output').style.display = 'block';
 });
-
 function setUnit(index, unit) {
     document.getElementById(`ingredient-unit-button-${index}`).textContent = unit;
     document.getElementById(`ingredient-unit-${index}`).value = unit.toLowerCase();
