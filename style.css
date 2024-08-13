@@ -37,15 +37,15 @@ body {
 
 /* Custom styles */
 body {
-    padding-top: 5px; /* Reduced from 40px */
+    padding-top: 20px; /* Reduced from 40px */
 }
 
 .container {
-    padding-top: 5px; /* Adjust the top padding of the container */
+    padding-top: 10px; /* Adjust the top padding of the container */
 }
 
 header {
-    margin-bottom: 5px; /* Reduced from 20px */
+    margin-bottom: 10px; /* Reduced from 20px */
 }
 
 h1 {
@@ -59,6 +59,15 @@ h1 {
 
 .step {
     margin-bottom: 30px;
+}
+
+footer a {
+    color: #007bff; /* Bootstrap primary color */
+    text-decoration: underline;
+}
+
+footer a:hover {
+    color: #0056b3; /* Darker shade on hover */
 }
 
 #output {
