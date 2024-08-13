@@ -52,41 +52,6 @@ document.getElementById('cocktail-form').addEventListener('submit', function(eve
             // Assume ounces by default
         }
     }
-    
-// Function to format the quantity and unit, with special handling for dashes
-function formatQuantityAndUnit(quantity, unit) {
-    if (unit === 'dashes') {
-        const dashesPerOunce = 48; // 1 ounce = 48 dashes
-        let ounces = Math.floor(quantity / dashesPerOunce); // Whole ounces
-        let remainingDashes = Math.round(quantity % dashesPerOunce); // Remaining dashes
-
-        // Convert remaining dashes to the nearest quarter ounce if possible
-        let additionalOunces = 0;
-        if (remainingDashes >= 12) {
-            additionalOunces = Math.floor(remainingDashes / 12) * 0.25;
-            remainingDashes = remainingDashes % 12;
-        }
-
-        ounces += additionalOunces;
-
-        // Format the output
-        if (ounces > 0 && remainingDashes > 0) {
-            return `${ounces} ${ounces === 1 ? 'ounce' : 'ounces'} plus ${remainingDashes} ${remainingDashes === 1 ? 'dash' : 'dashes'}`;
-        } else if (ounces > 0) {
-            return `${ounces} ${ounces === 1 ? 'ounce' : 'ounces'}`;
-        } else {
-            return `${remainingDashes} ${remainingDashes === 1 ? 'dash' : 'dashes'}`;
-        }
-    }
-
-    // For other units, make the unit singular if the quantity is 1
-    let formattedQuantity = quantity % 1 === 0 ? quantity.toFixed(0) : quantity.toFixed(2);
-    if (formattedQuantity == 1) {
-        unit = unit.slice(-1) === 's' ? unit.slice(0, -1) : unit;
-    }
-
-    return `${formattedQuantity} ${unit}`;
-}
 
     // Calculate scaled ingredients based on number of servings
     const scaledIngredients = ingredients.map(ingredient => {
@@ -104,20 +69,16 @@ function formatQuantityAndUnit(quantity, unit) {
                 if (scaledQuantity >= 1.5) { // Convert to ounces if >= 1/4 ounce
                     scaledQuantity = scaledQuantity / 6;
                     scaledUnit = 'ounces';
-                } else {
-                    scaledQuantity = Math.ceil(scaledQuantity); // Round up teaspoons to nearest whole number
                 }
                 break;
             case 'dashes':
                 if (scaledQuantity >= 12) { // Convert to ounces if >= 1/4 ounce
                     scaledQuantity = scaledQuantity / 48;
                     scaledUnit = 'ounces';
-                } else {
-                    scaledQuantity = Math.ceil(scaledQuantity); // Round up dashes to nearest whole number
                 }
                 break;
         }
-                // Round to the nearest 1/4 ounce
+        // Round to the nearest 1/4 ounce
         scaledQuantity = Math.round(scaledQuantity * 4) / 4;
         return { ...ingredient, scaledQuantity, scaledUnit };
     });
@@ -137,34 +98,17 @@ function formatQuantityAndUnit(quantity, unit) {
     `).join('');
     const scaledRecipeContainer = document.getElementById('scaled-recipe');
     scaledRecipeContainer.innerHTML = scaledIngredients.map(ingredient => `
-        <p>${formatQuantityAndUnit(ingredient.scaledQuantity, ingredient.scaledUnit)} ${ingredient.name}</p>
+        <p>${ingredient.scaledQuantity.toFixed(2)} ${ingredient.scaledUnit} ${ingredient.name}</p>
     `).join('');
     
     if (waterToAdd > 0) {
         scaledRecipeContainer.innerHTML += `
-            <p>${formatQuantityAndUnit(waterToAdd, 'ounces')} Water</p>
+            <p>${waterToAdd.toFixed(2)} ounces Water</p>
         `;
     }
 
     // Update the scaled recipe title
     updateScaledRecipeTitle();
-
-    function updateScaledRecipeTitle() {
-    const batchSizeOption = document.querySelector('input[name="batch-size-option"]:checked');
-    const scaledRecipeHeader = document.querySelector('#scaled-recipe-container .card-header');
-    const dilutionValue = document.getElementById('dilution').value;
-
-    if (batchSizeOption) {
-        if (batchSizeOption.id === 'option-servings') {
-            const numServings = document.getElementById('num-servings').value;
-            scaledRecipeHeader.textContent = `Scaled Recipe - ${numServings} Servings (${dilutionValue}% Dilution)`;
-        } else if (batchSizeOption.id === 'option-volume') {
-            const totalVolume = document.getElementById('total-volume').value;
-            const totalVolumeUnit = document.getElementById('total-volume-unit').value;
-            scaledRecipeHeader.textContent = `Scaled Recipe - ${totalVolume} ${totalVolumeUnit.charAt(0).toUpperCase() + totalVolumeUnit.slice(1)} (${dilutionValue}% Dilution)`;
-        }
-    }
-}
 
     // Show the output section
     document.getElementById('output').style.display = 'block';
