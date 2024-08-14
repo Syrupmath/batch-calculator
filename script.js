@@ -162,15 +162,16 @@ function removeIngredient(id) {
 function updateScaledRecipeTitle() {
     const batchSizeOption = document.querySelector('input[name="batch-size-option"]:checked');
     const scaledRecipeHeader = document.querySelector('#scaled-recipe-container .card-header');
-    
+    const dilutionValue = document.getElementById('dilution').value;
+
     if (batchSizeOption) {
         if (batchSizeOption.id === 'option-servings') {
             const numServings = document.getElementById('num-servings').value;
-            scaledRecipeHeader.textContent = `Scaled Recipe - ${numServings} Servings`;
+            scaledRecipeHeader.textContent = `Scaled Recipe - ${numServings} Servings (${dilutionValue}% Dilution)`;
         } else if (batchSizeOption.id === 'option-volume') {
             const totalVolume = document.getElementById('total-volume').value;
             const totalVolumeUnit = document.getElementById('total-volume-unit').value;
-            scaledRecipeHeader.textContent = `Scaled Recipe - ${totalVolume} ${totalVolumeUnit.charAt(0).toUpperCase() + totalVolumeUnit.slice(1)}`;
+            scaledRecipeHeader.textContent = `Scaled Recipe - ${totalVolume} ${totalVolumeUnit.charAt(0).toUpperCase() + totalVolumeUnit.slice(1)} (${dilutionValue}% Dilution)`;
         }
     }
 }
