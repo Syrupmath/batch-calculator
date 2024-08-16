@@ -198,4 +198,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize with one ingredient input
     addIngredient();
+
+    // Fade-in effect for elements
+    const elements = document.querySelectorAll('.fade-in');
+    elements.forEach(element => {
+        element.classList.add('fade-in-visible');
+    });
 });
