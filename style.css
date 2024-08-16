@@ -27,14 +27,6 @@ p {
     color: #fff; /* Set text color to white */
 }
 
-@media print {
-    #results-drink-name {
-        display: block; /* Ensure the recipe name is displayed */
-        font-size: 1.25rem; /* Ensure it has a readable font size */
-        font-weight: bold; /* Make it stand out */
-        color: black; /* Make sure the color is visible */
-    }
-}
 
 /* Print-specific styling */
 @media print {
@@ -61,6 +53,14 @@ p {
     button {
         display: none;
     }
+    
+    #results-drink-name {
+    display: block; /* Ensure the recipe name is displayed */
+    font-size: 1.75rem; /* Ensure it has a readable font size */
+    font-weight: bold; /* Make it stand out */
+    color: black; /* Make sure the color is visible */
+}
+
 
     #results pre {
         border: none;
