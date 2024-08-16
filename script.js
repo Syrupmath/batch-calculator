@@ -1,184 +1,199 @@
-document.getElementById('cocktail-form').addEventListener('submit', function(event) {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+    const ingredientList = document.getElementById("ingredient-list");
+    const addIngredientButton = document.getElementById("add-ingredient");
+    const calculateButton = document.getElementById("calculate-batch");
+    const scalingOptionInputs = document.querySelectorAll("input[name='scaling-option']");
+    const volumeUnitSelect = document.getElementById("volume-unit");
+    const scalingValueInput = document.getElementById("scaling-value");
+    const dilutionOptionInputs = document.querySelectorAll("input[name='dilution-option']");
+    const customDilutionInput = document.getElementById("custom-dilution");
+    const originalRecipeDisplay = document.getElementById("original-recipe");
+    const scaledRecipeDisplay = document.getElementById("scaled-recipe");
+    const scaledRecipeHeader = document.getElementById("scaled-recipe-header");
+    const resultsSection = document.getElementById("results");
+    const resultsDrinkName = document.getElementById("results-drink-name");
+    const printRecipeButton = document.getElementById("print-recipe");
 
-    // Gather the recipe name
-    const recipeName = document.getElementById('recipe-name').value || 'Untitled';
+    let ingredientCount = 0;
 
-    // Gather the ingredients
-    const ingredients = [];
-    document.querySelectorAll('#ingredients .input-group').forEach((group, index) => {
-        const name = group.querySelector('.ingredient-name').value;
-        const quantity = parseFloat(group.querySelector('.ingredient-quantity').value);
-        const unit = group.querySelector('.ingredient-unit').value;
-        if (name && quantity && unit) {
-            ingredients.push({ name, quantity, unit });
-        }
-    });
-
-    // Check batch size option and gather the value
-    const batchSizeOption = document.querySelector('input[name="batch-size-option"]:checked');
-    let batchSize = null;
-    let batchSizeUnit = null;
-    if (batchSizeOption) {
-        if (batchSizeOption.id === 'option-servings') {
-            batchSize = parseInt(document.getElementById('num-servings').value, 10);
-        } else if (batchSizeOption.id === 'option-volume') {
-            batchSize = parseFloat(document.getElementById('total-volume').value);
-            batchSizeUnit = document.getElementById('total-volume-unit').value;
-        }
-    }
-
-    // Gather dilution
-    const dilution = parseFloat(document.getElementById('dilution').value);
-
-    // Validate inputs
-    if (ingredients.length === 0 || !batchSize) {
-        alert('Please enter at least one ingredient and a batch size.');
-        return;
-    }
-
-    // Calculate total volume in ounces if using volume
-    if (batchSizeOption.id === 'option-volume') {
-        switch (batchSizeUnit) {
-            case 'liters':
-                batchSize = batchSize * 33.814;
-                break;
-            case 'quarts':
-                batchSize = batchSize * 32;
-                break;
-            case 'gallons':
-                batchSize = batchSize * 128;
-                break;
-            // Assume ounces by default
-        }
-    }
-
-    // Calculate scaled ingredients based on number of servings
-    const scaledIngredients = ingredients.map(ingredient => {
-        let scaledQuantity;
-        let scaledUnit = ingredient.unit;
-        if (batchSizeOption.id === 'option-servings') {
-            scaledQuantity = ingredient.quantity * batchSize;
-        } else {
-            const scalingFactor = batchSize / ingredients.reduce((acc, ing) => acc + ing.quantity, 0);
-            scaledQuantity = ingredient.quantity * scalingFactor;
-        }
-        // Handle conversion to ounces if necessary
-        switch (ingredient.unit) {
-            case 'teaspoons':
-                if (scaledQuantity >= 1.5) { // Convert to ounces if >= 1/4 ounce
-                    scaledQuantity = scaledQuantity / 6;
-                    scaledUnit = 'ounces';
-                }
-                break;
-            case 'dashes':
-                if (scaledQuantity >= 12) { // Convert to ounces if >= 1/4 ounce
-                    scaledQuantity = scaledQuantity / 48;
-                    scaledUnit = 'ounces';
-                }
-                break;
-        }
-        // Round to the nearest 1/4 ounce
-        scaledQuantity = Math.round(scaledQuantity * 4) / 4;
-        return { ...ingredient, scaledQuantity, scaledUnit };
-    });
-
-    // Calculate water to add for dilution if dilution is greater than 0
-    let waterToAdd = 0;
-    if (dilution > 0) {
-        const totalScaledVolume = scaledIngredients.reduce((acc, ingredient) => acc + ingredient.scaledQuantity, 0);
-        waterToAdd = Math.round((totalScaledVolume * (dilution / 100)) * 4) / 4;
-    }
-
-    // Update the original recipe and scaled recipe sections
-    document.getElementById('output-recipe-name').textContent = recipeName;
-    const originalRecipeContainer = document.getElementById('original-recipe');
-    originalRecipeContainer.innerHTML = ingredients.map(ingredient => `
-        <p>${ingredient.quantity} ${ingredient.unit} ${ingredient.name}</p>
-    `).join('');
-    const scaledRecipeContainer = document.getElementById('scaled-recipe');
-    scaledRecipeContainer.innerHTML = scaledIngredients.map(ingredient => `
-        <p>${ingredient.scaledQuantity.toFixed(2)} ${ingredient.scaledUnit} ${ingredient.name}</p>
-    `).join('');
-    
-    if (waterToAdd > 0) {
-        scaledRecipeContainer.innerHTML += `
-            <p>${waterToAdd.toFixed(2)} ounces Water</p>
-        `;
-    }
-
-    // Update the scaled recipe title
-    updateScaledRecipeTitle();
-
-    // Show the output section
-    document.getElementById('output').style.display = 'block';
-});
-function setUnit(index, unit) {
-    document.getElementById(`ingredient-unit-button-${index}`).textContent = unit;
-    document.getElementById(`ingredient-unit-${index}`).value = unit.toLowerCase();
-}
-
-function setTotalVolumeUnit(unit) {
-    document.getElementById('total-volume-unit-button').textContent = unit;
-    document.getElementById('total-volume-unit').value = unit.toLowerCase();
-}
-
-function setDilution(dilution) {
-    document.getElementById('dilution').value = dilution;
-    document.getElementById('custom-dilution').disabled = true;
-}
-
-function setDilutionCustom() {
-    document.getElementById('dilution').value = document.getElementById('custom-dilution').value;
-    document.getElementById('custom-dilution').disabled = false;
-}
-
-function addIngredient() {
-    const ingredientCount = document.querySelectorAll('#ingredients .input-group').length + 1;
-    const ingredientTemplate = `
-        <div class="mb-3" id="ingredient-${ingredientCount}">
+    // Function to add a new ingredient to the list
+    function addIngredient(name = '', quantity = '', unit = 'oz') {
+        const li = document.createElement('li');
+        li.classList.add('mb-3');
+        li.innerHTML = `
             <div class="input-group">
-                <input type="text" id="ingredient-name-${ingredientCount}" name="ingredient-name-${ingredientCount}" class="form-control ingredient-name" placeholder="Ingredient Name">
-                <input type="number" id="ingredient-quantity-${ingredientCount}" name="ingredient-quantity-${ingredientCount}" class="form-control ingredient-quantity" placeholder="Quantity">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-${ingredientCount}">Ounces</button>
-                <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-${ingredientCount}">
-                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCount}, 'Ounces')">Ounces</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCount}, 'Teaspoons')">Teaspoons</a></li>
-                    <li><a class="dropdown-item" href="#" onclick="setUnit(${ingredientCount}, 'Dashes')">Dashes</a></li>
-                </ul>
-                <input type="hidden" id="ingredient-unit-${ingredientCount}" name="ingredient-unit-${ingredientCount}" class="ingredient-unit" value="ounces">
-                <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-${ingredientCount}')">×</button>
+                <input type="text" class="form-control ingredient-name" placeholder="Ingredient Name" value="${name}">
+                <input type="number" class="form-control ingredient-quantity" placeholder="Quantity" step="${unit === 'oz' || unit === 'tsp' ? '0.1' : '1'}" value="${quantity}">
+                <select class="form-select ingredient-unit">
+                    <option value="oz" ${unit === 'oz' ? 'selected' : ''}>Ounces</option>
+                    <option value="ml" ${unit === 'ml' ? 'selected' : ''}>Milliliters</option>
+                    <option value="tsp" ${unit === 'tsp' ? 'selected' : ''}>Teaspoons</option>
+                    <option value="dashes" ${unit === 'dashes' ? 'selected' : ''}>Dashes</option>
+                    <option value="drops" ${unit === 'drops' ? 'selected' : ''}>Drops</option>
+                </select>
+                <button class="btn btn-danger" type="button">&times;</button>
             </div>
-        </div>
-    `;
-    document.getElementById('ingredients').insertAdjacentHTML('beforeend', ingredientTemplate);
-}
+        `;
+        ingredientList.appendChild(li);
+        ingredientCount++;
+    }
 
-function removeIngredient(id) {
-    document.getElementById(id).remove();
-}
+    // Event delegation for removing ingredients
+    ingredientList.addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn-danger')) {
+            event.target.parentElement.parentElement.remove();
+            ingredientCount--;
+        }
+    });
 
-// Function to update the scaled recipe title
-function updateScaledRecipeTitle() {
-    const batchSizeOption = document.querySelector('input[name="batch-size-option"]:checked');
-    const scaledRecipeHeader = document.querySelector('#scaled-recipe-container .card-header');
-    const dilutionValue = document.getElementById('dilution').value;
+    // Handle adding an ingredient
+    addIngredientButton.onclick = () => addIngredient();
 
-    if (batchSizeOption) {
-        if (batchSizeOption.id === 'option-servings') {
-            const numServings = document.getElementById('num-servings').value;
-            scaledRecipeHeader.textContent = `Scaled Recipe - ${numServings} Servings (${dilutionValue}% Dilution)`;
-        } else if (batchSizeOption.id === 'option-volume') {
-            const totalVolume = document.getElementById('total-volume').value;
-            const totalVolumeUnit = document.getElementById('total-volume-unit').value;
-            scaledRecipeHeader.textContent = `Scaled Recipe - ${totalVolume} ${totalVolumeUnit.charAt(0).toUpperCase() + totalVolumeUnit.slice(1)} (${dilutionValue}% Dilution)`;
+    // Handle enabling/disabling custom dilution input
+    dilutionOptionInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            customDilutionInput.disabled = input.value !== 'custom';
+        });
+    });
+
+    // Handle enabling/disabling volume unit selection
+    scalingOptionInputs.forEach(input => {
+        input.addEventListener('change', () => {
+            volumeUnitSelect.disabled = input.value !== 'volume';
+        });
+    });
+
+    // Convert units to ounces for scaling calculations
+    function convertToOunces(quantity, unit) {
+        switch (unit) {
+            case 'oz':
+                return quantity;
+            case 'ml':
+                return quantity * 0.033814;
+            case 'l':
+                return quantity * 33.814;
+            case 'gal':
+                return quantity * 128;
+            case 'tsp':
+                return quantity * 0.166667;
+            case 'dashes':
+                return quantity * 0.020833;
+            case 'drops':
+                return quantity * 0.0026;
+            default:
+                return 0;
         }
     }
-}
 
-function toggleBatchSizeFields() {
-    const batchSizeOption = document.querySelector('input[name="batch-size-option"]:checked');
-    document.getElementById('num-servings').disabled = batchSizeOption.id !== 'option-servings';
-    document.getElementById('total-volume').disabled = batchSizeOption.id !== 'option-volume';
-    document.getElementById('total-volume-unit-button').disabled = batchSizeOption.id !== 'option-volume';
-}
+    // Validate if at least one ingredient is fully filled out
+    function isIngredientValid() {
+        const ingredients = document.querySelectorAll('#ingredient-list li');
+        for (let ingredient of ingredients) {
+            const name = ingredient.querySelector('.ingredient-name').value.trim();
+            const quantity = parseFloat(ingredient.querySelector('.ingredient-quantity').value);
+            const unit = ingredient.querySelector('.ingredient-unit').value;
+
+            if (name !== '' && !isNaN(quantity) && quantity > 0 && unit !== '') {
+                return true; // Found a valid ingredient
+            }
+        }
+        return false; // No valid ingredient found
+    }
+
+    // Handle the batch calculation logic
+    calculateButton.onclick = () => {
+        // Validation checks
+        if (!isIngredientValid()) {
+            alert("Please ensure at least one ingredient is fully filled out (name, quantity, and unit).");
+            return;
+        }
+
+        const scalingValue = parseFloat(scalingValueInput.value);
+        if (isNaN(scalingValue) || scalingValue <= 0) {
+            alert("Please enter a valid number for servings or total volume.");
+            return;
+        }
+
+        const recipeName = document.getElementById("recipe-name").value || "Unnamed Cocktail";
+        const scalingOption = document.querySelector("input[name='scaling-option']:checked").value;
+
+        // Display the original recipe without the drink name
+        let originalRecipe = '';
+        let totalVolume = 0;
+
+        const ingredients = document.querySelectorAll('#ingredient-list li');
+        ingredients.forEach(ingredient => {
+            const name = ingredient.querySelector('.ingredient-name').value.trim();
+            const quantity = parseFloat(ingredient.querySelector('.ingredient-quantity').value);
+            const unit = ingredient.querySelector('.ingredient-unit').value;
+
+            if (name !== '' && !isNaN(quantity) && quantity > 0 && unit !== '') {
+                const quantityInOunces = convertToOunces(quantity, unit);
+                totalVolume += quantityInOunces;
+                originalRecipe += `${quantity} ${unit} ${name}\n`;
+            }
+        });
+
+        let dilution;
+        const selectedDilutionOption = document.querySelector("input[name='dilution-option']:checked").value;
+
+        if (selectedDilutionOption === 'custom') {
+            dilution = parseFloat(customDilutionInput.value) || 0;
+        } else {
+            dilution = parseFloat(selectedDilutionOption);
+        }
+
+        const dilutionVolume = (dilution / 100) * totalVolume;
+        const finalTotalVolume = totalVolume + dilutionVolume;
+
+        let scalingFactor = 1;
+        let scalingInfo = '';
+
+        if (scalingOption === "servings") {
+            scalingFactor = scalingValue;
+            scalingInfo = `${scalingValue} Servings`;
+        } else if (scalingOption === "volume") {
+            const volumeUnit = volumeUnitSelect.value;
+            const targetVolume = convertToOunces(scalingValue, volumeUnit);
+            scalingFactor = targetVolume / finalTotalVolume;
+            scalingInfo = `${scalingValue} ${volumeUnit}`;
+        }
+
+        // Set the Scaled Recipe header with dynamic information
+        scaledRecipeHeader.textContent = `Scaled Recipe: ${scalingInfo} (${dilution}% Dilution)`;
+
+        // Display the scaled recipe without the drink name
+        let scaledRecipe = '';
+
+        ingredients.forEach(ingredient => {
+            const name = ingredient.querySelector('.ingredient-name').value.trim();
+            const quantity = parseFloat(ingredient.querySelector('.ingredient-quantity').value);
+            const unit = ingredient.querySelector('.ingredient-unit').value;
+
+            if (name !== '' && !isNaN(quantity) && quantity > 0 && unit !== '') {
+                const quantityInOunces = convertToOunces(quantity, unit);
+                const scaledQuantity = (quantityInOunces * scalingFactor).toFixed(2);
+                scaledRecipe += `${scaledQuantity} oz (${(scaledQuantity * 29.5735).toFixed(2)} ml) ${name}\n`;
+            }
+        });
+
+        if (dilution > 0) {
+            originalRecipe += `${dilutionVolume.toFixed(2)} oz Water (Dilution)\n`;
+            const scaledDilutionVolume = (dilutionVolume * scalingFactor).toFixed(2);
+            scaledRecipe += `${scaledDilutionVolume} oz (${(scaledDilutionVolume * 29.5735).toFixed(2)} ml) Water\n`;
+        }
+
+        // Display results and show the results section
+        originalRecipeDisplay.textContent = originalRecipe;
+        scaledRecipeDisplay.textContent = scaledRecipe;
+        resultsSection.style.display = 'block';
+    };
+
+    // Handle the print recipe functionality
+    printRecipeButton.onclick = () => {
+        window.print();
+    };
+
+    // Initialize with one ingredient input
+    addIngredient();
+});
