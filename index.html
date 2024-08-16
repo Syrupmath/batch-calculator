@@ -3,189 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batched Cocktail Calculator</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Link to the new stylesheet -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+    <title>Cocktail Batch Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <main>
-        <div class="container mt-3"> <!-- Ensure this div has the container class -->
-            <header class="bg-primary bg-gradient text-white text-center py-3 rounded">
-                <h1>Batched Cocktail Calculator</h1>
-                <p class="author">by <a href="https://jeffreymorgenthaler.com/" target="_blank" aria-label="Link to my website, opens in a new window">Jeffrey Morgenthaler</a></p>
-            </header>
-            <form id="cocktail-form" class="needs-validation" novalidate>
-                <section id="recipe-input" class="step mt-4">
-                    <h2>Step 1: Enter Your Recipe</h2>
-                    <p>Start by naming your cocktail recipe. Next, input the base ingredients for a single serving of your cocktail, adding any additional ingredients as necessary.</p>
-                    <div class="mb-4">
-                        <label for="recipe-name" class="form-label">Recipe Name</label>
-                        <input type="text" id="recipe-name" name="recipe-name" class="form-control" placeholder="E.g., Manhattan">
-                    </div>
-                    
-                    <div id="ingredients">
-                        <div class="mb-3" id="ingredient-1">
-                            <div class="input-group">
-                                <input type="text" id="ingredient-name-1" name="ingredient-name-1" class="form-control ingredient-name" placeholder="Ingredient Name">
-                                <input type="number" id="ingredient-quantity-1" name="ingredient-quantity-1" class="form-control ingredient-quantity" placeholder="Quantity">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-1">Ounces</button>
-                                <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-1">
-                                    <li><a class="dropdown-item" href="#" onclick="setUnit(1, 'Ounces')">Ounces</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="setUnit(1, 'Teaspoons')">Teaspoons</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="setUnit(1, 'Dashes')">Dashes</a></li>
-                                </ul>
-                                <input type="hidden" id="ingredient-unit-1" name="ingredient-unit-1" class="ingredient-unit" value="ounces">
-                                <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-1')" disabled>×</button>
-                            </div>
-                        </div>
-                        <div class="mb-3" id="ingredient-2">
-                            <div class="input-group">
-                                <input type="text" id="ingredient-name-2" name="ingredient-name-2" class="form-control ingredient-name" placeholder="Ingredient Name">
-                                <input type="number" id="ingredient-quantity-2" name="ingredient-quantity-2" class="form-control ingredient-quantity" placeholder="Quantity">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="ingredient-unit-button-2">Ounces</button>
-                                <ul class="dropdown-menu" aria-labelledby="ingredient-unit-button-2">
-                                    <li><a class="dropdown-item" href="#" onclick="setUnit(2, 'Ounces')">Ounces</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="setUnit(2, 'Teaspoons')">Teaspoons</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="setUnit(2, 'Dashes')">Dashes</a></li>
-                                </ul>
-                                <input type="hidden" id="ingredient-unit-2" name="ingredient-unit-2" class="ingredient-unit" value="ounces">
-                                <button type="button" class="btn btn-danger btn-sm" onclick="removeIngredient('ingredient-2')">×</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <button type="button" id="add-ingredient" class="btn btn-primary mt-3" onclick="addIngredient()">Add Ingredient</button>
-                </section>
+<body class="container">
 
-                <hr>
+    <!-- Header Section -->
+<header class="text-center py-2 bg-light shadow-sm mb-5">
+    <h1 class="display-4 text-primary">Batched Cocktail Calculator</h1>
+    <p class="author text-muted fs-5">by 
+        <a href="https://jeffreymorgenthaler.com/" target="_blank" aria-label="Link to my website, opens in a new window" class="text-decoration-none text-secondary fw-bold">Jeffrey Morgenthaler</a>
+    </p>
+</header>
 
-                <section id="batch-size-input" class="step mt-4">
-                    <h2>Step 2: Determine Your Batch Size</h2>
-                    <p>Specify the batch size. You can either enter the desired number of servings or the total volume of the container you plan to use.</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="batch-size-option" id="option-servings" onclick="toggleBatchSizeFields()">
-                                <label class="form-check-label" for="option-servings">
-                                    Number of Servings
-                                </label>
-                                <div class="form-floating mt-2">
-                                    <input type="number" id="num-servings" name="num-servings" class="form-control batch-size-group" placeholder="# of Servings" disabled>
-                                    <label for="num-servings">Number of Servings</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="batch-size-option" id="option-volume" onclick="toggleBatchSizeFields()">
-                                <label class="form-check-label" for="option-volume">
-                                    Total Volume
-                                </label>
-                                <div class="input-group mt-2">
-                                    <div class="form-floating">
-                                        <input type="number" id="total-volume" name="total-volume" class="form-control batch-size-group" placeholder="Total Volume" disabled>
-                                        <label for="total-volume">Total Volume</label>
-                                    </div>
-                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="total-volume-unit-button" disabled>Ounces</button>
-                                    <ul class="dropdown-menu" aria-labelledby="total-volume-unit-button">
-                                        <li><a class="dropdown-item" href="#" onclick="setTotalVolumeUnit('Ounces')">Ounces</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="setTotalVolumeUnit('Liters')">Liters</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="setTotalVolumeUnit('Quarts')">Quarts</a></li>
-                                        <li><a class="dropdown-item" href="#" onclick="setTotalVolumeUnit('Gallons')">Gallons</a></li>
-                                    </ul>
-                                    <input type="hidden" id="total-volume-unit" name="total-volume-unit" value="ounces">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <hr>
-                <section id="dilution-input" class="step mt-4">
-                    <h2>Step 3: Choose Dilution</h2>
-                    <p>Select your preferred dilution level. Choose the appropriate dilution for stirred cocktails (typically spirit-driven drinks) or shaken cocktails (drinks containing juice or dairy). Alternatively, select zero dilution if you plan to shake or stir the drinks to order.</p>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="dilution-option" id="option-no-dilution" onclick="setDilution(0)">
-                        <label class="form-check-label" for="option-no-dilution">
-                            0% - No Dilution
-                        </label>
-                    </div>
-                                        <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="dilution-option" id="option-stirred" onclick="setDilution(18)">
-                        <label class="form-check-label" for="option-stirred">
-                            18% - Best for Replicating the Dilution Found in Spirit-Driven Cocktails
-                        </label>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="dilution-option" id="option-shaken" onclick="setDilution(25)">
-                        <label class="form-check-label" for="option-shaken">
-                            25% - Best for Replicating the Dilution Found in Shaken Cocktails
-                        </label>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="dilution-option" id="option-custom" onclick="setDilutionCustom()">
-                        </div>
-                        <div class="form-floating ms-2">
-                            <input type="number" id="custom-dilution" name="custom-dilution" class="form-control" placeholder="Custom Dilution (%)" disabled>
-                            <label for="custom-dilution">Custom Dilution</label>
-                        </div>
-                        <span class="input-group-text">%</span>
-                    </div>
-                    <input type="hidden" id="dilution" name="dilution" value="0">
-                </section>
-
-                <hr>
-
-                <section id="calculate-totals" class="step mt-4">
-                    <h2>Step 4: Calculate Totals</h2>
-                    <p>Click “Calculate” to generate your batched cocktail recipe. The scaled recipe will be displayed using the same measurement system as your original recipe.</p>
-                    <button type="submit" id="calculate" class="btn btn-success">Calculate</button>
-                </section>
-            </form>
-              <section id="output" style="display: none;" class="mt-4">
-                <div id="recipe-name-container">
-                    <h2 id="output-recipe-name"></h2>
-                </div>
-                <div id="original-recipe-container">
-                    <div class="card">
-                        <div class="card-header">Original Recipe</div>
-                        <div class="card-body">
-                            <div id="original-recipe">
-                                <!-- Original recipe will be displayed here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="scaled-recipe-container">
-                    <div class="card">
-                        <div class="card-header">Scaled Recipe</div> <!-- Ensure the class is 'card-header' -->
-                        <div class="card-body">
-                            <div id="scaled-recipe">
-                                <!-- Scaled recipe will be displayed here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button type="button" id="print-recipe" class="btn btn-secondary" onclick="window.print()">Print Recipe</button>
-            </section>
-        </div>
-    </main>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
-    <footer class="text-center mt-5">
-    <div class="container">
-        <p>If you'd like to support the site, consider <a href="https://jeffreymorgenthaler.com/book/" target="_blank">buying a signed copy</a> of one of my books on cocktails and bartending. There's tons more helpful advice for making drinks in there!</p>
+    <!-- Recipe Name Input -->
+    <div id="recipe-name-section" class="mb-4">
+        <h2>Step 1: Enter Recipe Name</h2>
+        <p>Please enter the name of your cocktail recipe.</p>
+        <label for="recipe-name" class="form-label">Recipe Name:</label>
+        <input type="text" id="recipe-name" class="form-control" placeholder="Unnamed Cocktail">
     </div>
-</footer>
+
+    <!-- Ingredient List Section -->
+    <div id="ingredient-section" class="mb-4">
+        <h2>Step 2: Add Ingredients</h2>
+        <p>Add all of the ingredients for your cocktail, specifying the ingredient name, volume quantity, and unit. Click "Add Ingredient" to include more ingredients. You can also remove ingredients using the "Remove" button.</p>
+        <ul id="ingredient-list" class="list-unstyled">
+            <!-- Ingredients will be dynamically added here -->
+        </ul>
+        <button id="add-ingredient" class="btn btn-primary">Add Ingredient</button>
+    </div>
+
+    <!-- Batch Scaling Options -->
+    <div id="scaling-section" class="mb-4">
+        <h2>Step 3: Scale Recipe</h2>
+        <p>Select whether you'd like to scale by the number of servings or by total volume, and enter the quantity. If scaling by volume, select the desired unit.</p>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="scaling-option" value="servings" id="scaling-servings" checked>
+            <label class="form-check-label" for="scaling-servings">
+                Scale by Number of Servings
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="scaling-option" value="volume" id="scaling-volume">
+            <label class="form-check-label" for="scaling-volume">
+                Scale by Total Volume
+            </label>
+        </div>
+        <input type="number" id="scaling-value" class="form-control my-2" placeholder="Enter number or volume">
+        <select id="volume-unit" class="form-select" disabled>
+            <option value="oz">Ounces</option>
+            <option value="ml">Milliliters</option>
+            <option value="l">Liters</option>
+            <option value="gal">Gallons</option>
+        </select>
+    </div>
+
+    <!-- Dilution Options -->
+    <div id="dilution-section" class="mb-4">
+        <h2>Step 4: Add Dilution</h2>
+        <p>Select a dilution percentage to match your preference. You can also enter a custom dilution percentage.</p>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="dilution-option" value="0" id="dilution-none" checked>
+            <label class="form-check-label" for="dilution-none">
+                0% (No Dilution)
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="dilution-option" value="18" id="dilution-18">
+            <label class="form-check-label" for="dilution-18">
+                18% (Best for Spirit-Driven Cocktails)
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="dilution-option" value="25" id="dilution-25">
+            <label class="form-check-label" for="dilution-25">
+                25% (Best for Shaken Cocktails)
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="dilution-option" value="custom" id="dilution-custom">
+            <label class="form-check-label" for="dilution-custom">
+                Custom:
+            </label>
+            <input type="number" id="custom-dilution" class="form-control d-inline-block w-auto" disabled placeholder="%">
+        </div>
+    </div>
+
+    <!-- Calculate Button -->
+    <button id="calculate-batch" class="btn btn-success">Calculate Batch</button>
+
+    <div id="results" class="mt-4" style="display:none;">
+        <h2 id="results-drink-name"></h2>
+        <h3>Original Recipe</h3>
+        <pre id="original-recipe" class="p-3 bg-light border"></pre>
+        <h3 id="scaled-recipe-header"></h3>
+        <pre id="scaled-recipe" class="p-3 bg-light border"></pre>
+        <button id="print-recipe" class="btn btn-secondary">Print Recipe</button>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="mt-5 text-center">
+        <p>If you'd like to support this site, consider <a href="https://jeffreymorgenthaler.com/book/" target="_blank">buying a signed copy</a> of one of my books on cocktails and bartending. There's tons more helpful advice for making drinks in there!</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
