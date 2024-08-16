@@ -3,8 +3,12 @@
 header {
     background-image: url('header.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: bottom; /* Align the background image to the bottom */
+    padding-top: 3rem; /* Increase padding to make the header taller */
+    padding-bottom: 3rem; /* Increase padding to make the header taller */
 }
+
+
 
 /* Styling for the Step Titles */
 .step-title {
