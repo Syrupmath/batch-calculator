@@ -115,6 +115,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const recipeName = document.getElementById("recipe-name").value || "Unnamed Cocktail";
+        resultsDrinkName.textContent = recipeName; // Display Recipe Name in results section
+
         const scalingOption = document.querySelector("input[name='scaling-option']:checked").value;
 
         // Display the original recipe without the drink name
