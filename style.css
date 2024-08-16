@@ -1,7 +1,7 @@
 /* Custom styles overriding Bootstrap (if necessary) */
 
 header {
-    background-image: url('your-image-url.jpg');
+    background-image: url('header.jpg');
     background-size: cover;
     background-position: center;
 }
