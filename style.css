@@ -6,6 +6,27 @@ header {
     background-position: center;
 }
 
+/* Styling for the Step Titles */
+.step-title {
+    font-size: 1.5rem; /* Slightly smaller than the default */
+    margin-bottom: 0.75rem; /* Reduce space below the title */
+    font-weight: 500; /* Medium font weight for a modern look */
+    color: #333; /* A slightly softer black/gray color */
+    letter-spacing: 0.5px; /* Add slight letter spacing for a modern feel */
+}
+
+/* Global paragraph styling */
+p {
+    font-size: 0.95rem; /* Slightly smaller font size */
+    line-height: 1.5; /* Maintain good readability */
+    color: #555; /* Softer color to match the modern design */
+    margin-bottom: 1rem; /* Adjust margin for spacing */
+}
+
+.author {
+    color: #fff; /* Set text color to white */
+}
+
 /* Print-specific styling */
 @media print {
     /* Print styles here, e.g., hiding specific sections, adjusting text size, etc. */
