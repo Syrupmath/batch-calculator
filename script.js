@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         li.innerHTML = `
             <div class="input-group">
                 <input type="text" class="form-control ingredient-name" placeholder="Ingredient Name" value="${name}">
-                <input type="number" class="form-control ingredient-quantity" placeholder="Quantity" step="${unit === 'oz' || unit === 'tsp' ? '0.1' : '1'}" value="${quantity}">
+                <input type="number" class="form-control ingredient-quantity" placeholder="Qty." step="${unit === 'oz' || unit === 'tsp' ? '0.1' : '1'}" value="${quantity}">
                 <select class="form-select ingredient-unit">
                     <option value="oz" ${unit === 'oz' ? 'selected' : ''}>Ounces</option>
                     <option value="ml" ${unit === 'ml' ? 'selected' : ''}>Milliliters</option>
