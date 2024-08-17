@@ -1,11 +1,11 @@
 {
-  "name": "Batch Calculator",
+  "name": "Batched Cocktail Calculator",
   "short_name": "BatchCalc",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
-  "description": "Calculator for batching cocktails.",
+  "description": "A calculator that determines batch recipes based on a single serving.",
   "icons": [
     {
       "src": "icons/icon-192x192.png",
