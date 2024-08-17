@@ -186,6 +186,334 @@ p {
         padding-top: 1rem; /* Adjust this value as needed */
     }
 
+
+    .step-title {
+        font-size: 1.25rem; /* Adjust step titles for readability */
+        margin-bottom: 0.5rem;
+    }
+
+    /* Buttons */
+    .btn-primary, .btn-success {
+        width: 100%; /* Full-width buttons for easier tapping */
+        padding: 1rem; /* Increase padding for touch devices */
+        font-size: 1rem; /* Adjust font size */
+    }
+
+	.input-group .ingredient-unit {
+	    flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
+	    width: 10ch; /* Width of the Units field */
+	}
+
+    /* Adjust margins and padding to prevent horizontal scrolling */
+    body {
+        margin: 0;
+        padding: 0;
+		padding-top: 1rem; /* Adjust this value as needed */
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+}
+
+
+
+
+    /* Print styles are here */
+    
+@media print {
+    body {
+        background-color: white;
+    }
+    
+        /* Make the form container full page width and height */
+    .form-container {
+        width: 100%; /* Full width */
+        height: auto; /* Auto height to accommodate content */
+        box-shadow: none !important; /* Remove shadow */
+        border: none !important; /* Remove border */
+        background: none !important; /* Remove background color */
+        margin: 0; /* Remove margin */
+        padding: 0; /* Remove padding */
+    }
+
+    header, #results, footer {
+        display: block !important; /* Show only header, results, and footer */
+    }
+    
+    /* Remove shadows from all elements */
+    * {
+        box-shadow: none !important; /* Remove box shadows */
+        text-shadow: none !important; /* Remove text shadows */
+    }
+    
+        a {
+        text-decoration: none !important; /* Remove underline */
+        color: inherit !important; /* Inherit the text color from the surrounding text */
+    }
+
+    /* Remove shadows specifically from cards and buttons, if needed */
+    .card, .btn {
+        box-shadow: none !important;
+    }
+    
+	header {
+	background: none; /* Remove background image */
+	padding: 1rem 0; /* Adjust padding for print */
+	text-align: center; /* Center-align the text */
+	border-bottom: 1px solid #ccc; /* Add a subtle bottom border */
+	}
+	
+	header h1 {
+	font-family: 'Arial', sans-serif; /* Use a clean, sans-serif font */
+	font-size: 1.75rem; /* Adjust font size for print */
+	font-weight: 700; /* Ensure the title is bold */
+	margin: 0; /* Remove extra margin */
+	color: #000; /* Use black for print */
+	}
+	
+	header p {
+	font-family: 'Arial', sans-serif; /* Keep the same font family for consistency */
+	font-size: .75rem; /* Adjust the font size for the subtitle */
+	font-weight: 400; /* Normal weight for the byline */
+	margin: 0.25rem 0 0; /* Slight margin between title and byline */
+	color: #000; /* Use black for print */
+	}
+
+    /* Hide specific elements */
+    #recipe-name-section,
+    #ingredient-section,
+    #scaling-section,
+    #dilution-section,
+    #calculate-section,
+    #add-ingredient,
+    #calculate-batch,
+    #print-recipe,
+    .container.text-center.mb-5,
+    .text-muted.text-center,
+    button {
+        display: none;
+    }
+    
+    #results-drink-name {
+    display: block; /* Ensure the recipe name is displayed */
+    font-size: 1.5rem; /* Ensure it has a readable font size */
+    font-weight: bold; /* Make it stand out */
+    color: black; /* Make sure the color is visible */
+}
+
+    #results pre {
+        border: none;
+        background-color: white;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: nowrap; /* Prevent the cards from stacking on top of each other */
+        justify-content: center; /* Ensure there’s space between the cards */
+    }
+
+    .col-md-6 {
+        width: 70%; /* Adjust the width of each card to fit side-by-side */
+        padding-right: 1%; /* Optional: Add a little space between the cards */
+        padding-left: 1%;
+    }
+
+    .card {
+        box-shadow: none; /* Remove shadows for a cleaner print */
+        border: 1px solid #ccc; /* Keep a subtle border to differentiate the cards */
+        background-color: #fff; /* Ensure the cards have a white background */
+    }
+
+    footer {
+        font-size: 0.75rem;
+        color: #555;
+    }
+}/* Custom styles overriding Bootstrap (if necessary) */
+
+/* Gradient background for the entire form section */
+body {
+    background: linear-gradient(135deg, #FFEED5, #FFF); /* Example gradient */
+    min-height: 100vh; /* Ensure the gradient covers the full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* White container for the form content */
+.form-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+    max-width: 700px; /* Limit the maximum width */
+    width: 100%;
+}
+
+/* Apply to both screen and print versions */
+pre {
+    white-space: pre-wrap; /* Wraps text to the next line */
+    word-wrap: break-word; /* Breaks long words if necessary */
+    overflow-wrap: break-word; /* Ensures long words are wrapped */
+    overflow: hidden; /* Prevents overflowing content */
+}
+
+header {
+    padding: 1.5rem 0 .75rem/* Keep some padding for spacing */
+    background-position: right;
+	background-repeat: no-repeat;
+	background-size: cover;
+    text-align: center;
+}
+
+header h1 {
+    font-family: 'Pacifico', cursive; /* Apply the Pacifico font */
+    font-size: 3rem; /* Adjust the size as needed */
+    font-weight: 400; /* Bold text for emphasis */
+    color: #000; /* Set the text color to black */
+    line-height: 1;
+}
+
+header p {
+    font-family: Arial, sans-serif; /* Keep the same font family */
+    font-size: .75rem; /* Slightly smaller font for the byline */
+    font-weight: 400; /* Normal weight for the byline */
+    color: #000; /* Set the text color to black */
+    margin-top: 0.5rem; /* Adjust spacing between title and byline */
+}
+
+footer p {
+    font-size: .75rem; /* Slightly smaller font for the byline */
+}
+
+
+
+/* Style the input group within the ingredient list */
+.input-group {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent the inputs from wrapping */
+    width: 100%; /* Ensure the input group takes up the full width */
+}
+
+.input-group .ingredient-quantity {
+    flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
+    width: 8ch; /* Width of the Quantity field */
+}
+
+.input-group .ingredient-unit {
+    flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
+    width: 15ch; /* Width of the Units field */
+}
+
+.input-group .ingredient-name {
+    flex: 1 1 auto; /* Allow the name field to take up the remaining width */
+}
+
+.input-group .btn-danger {
+    flex: 0 0 auto; /* Keep the remove button at a fixed width */
+}
+
+
+
+.btn-primary {
+    background-color: #007bff; /* Ensure a bright, modern blue */
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
+p, label, input, button {
+    font-weight: 400;
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.6s ease-in;
+}
+
+.fade-in-visible {
+    opacity: 1;
+}
+
+.form-control {
+    border-radius: 5px;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#original-recipe, #scaled-recipe {
+    font-family: 'Roboto', sans-serif;
+    font-size: .8rem;
+    line-height: 1;
+    color: #333;
+}
+
+.card {
+    border-radius: 10px;
+    border: none;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* Styling for the Step Titles */
+.step-title {
+    font-size: 1.3rem; /* Slightly smaller than the default */
+    margin-bottom: 0.75rem; /* Reduce space below the title */
+    font-weight: 500; /* Medium font weight for a modern look */
+    color: #333; /* A slightly softer black/gray color */
+    letter-spacing: 0.5px; /* Add slight letter spacing for a modern feel */
+}
+
+/* Global paragraph styling */
+p {
+    font-size: 0.9rem; /* Slightly smaller font size */
+    line-height: 1.5; /* Maintain good readability */
+    color: #555; /* Softer color to match the modern design */
+    margin-bottom: 1rem; /* Adjust margin for spacing */
+}
+
+
+
+/* General Mobile Styles */
+@media (max-width: 767px) {
+    .form-container {
+        width: 95%; /* Make the container almost full width on mobile */
+        padding: 1rem; /* Reduce padding for smaller screens */
+        margin: 0 auto; /* Center the container */
+    }
+
+    body {
+        padding-top: 1rem; /* Adjust this value as needed */
+    }
+
 /* header h1 {
         font-size: 1.75rem; /* Smaller font size for the header */
     } */
