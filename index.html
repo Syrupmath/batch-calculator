@@ -18,17 +18,17 @@
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
 </head>
-<body class="container">
+<body>
+        <div class="form-container container p-4 shadow-lg">
 
     <!-- Header Section -->
-<header class="text-center py-5 mb-4 text-white shadow-sm rounded">
-    <h1 class="h2 mb-1">Batched Cocktail Calculator</h1>
-    <p class="author fs-6 text-white mb-0">by 
-        <a href="https://jeffreymorgenthaler.com/" target="_blank" aria-label="Link to my website, opens in a new window" class="text-decoration-none text-white fw-bold">
-            Jeffrey Morgenthaler
-        </a>
-    </p>
-</header>
+	<header>
+	    <h1>Batched Cocktail Calculator</h1>
+	    <p>by <a href="https://jeffreymorgenthaler.com/" target="_blank" aria-label="Link to my website, opens in a new window">Jeffrey Morgenthaler</a></p>
+	    <p> This simple tool converts your single-serving cocktail recipe into a larger batch of any size, either for a dedicated number of servings, or exactly enough to fill a specific-sized container.
+	</header>
+	
+	<hr />
 
     <!-- Recipe Name Input -->
 	<div id="recipe-name-section" class="mb-4">
@@ -38,6 +38,7 @@
 	    <input type="text" id="recipe-name" class="form-control" placeholder="e.g. &quot;Bourbon Renewal&quot;">
 	</div>
 
+<hr />
 
     <!-- Ingredient List Section -->
     <div id="ingredient-section" class="mb-4">
@@ -50,6 +51,8 @@
     <i class="fas fa-plus"></i> Add Ingredient
 </button>
     </div>
+    
+    <hr />
 
     <!-- Batch Scaling Options -->
 <div id="scaling-section" class="mb-4">
@@ -80,7 +83,7 @@
 
     <!-- Volume Unit Select (Only enabled when "Scale by Volume" is selected) -->
     <div class="form-group mt-2">
-        <label for="volume-unit" class="form-label">Select Volume Unit:</label>
+        <label for="volume-unit" class="form-label">Select Total Volume Unit if Applicable:</label>
         <select id="volume-unit" class="form-select" disabled>
             <option value="oz">Ounces</option>
             <option value="ml">Milliliters</option>
@@ -90,10 +93,11 @@
     </div>
 </div>
 
+<hr />
 
     <!-- Dilution Options -->
 <div id="dilution-section" class="mb-4">
-    <h2 class="step-title">Step 4: Add Dilution</h2>
+    <h2 class="step-title">Step 4: Add Dilution (Optional)</h2>
     <p>Choose a dilution percentage that suits your cocktail. If none of the presets fit, you can enter a custom dilution percentage.</p>
 
     <!-- Predefined Dilution Options -->
@@ -134,8 +138,13 @@
     <!-- Calculate Button -->
     <button id="calculate-batch" class="btn btn-success">Calculate Batch</button>
 
-   <div id="results" class="container mt-5" style="display:none;">
-    <h2 id="results-drink-name" class="mb-4 text-center">Recipe Name</h2>
+
+
+
+<div id="results" class="container mt-5" style="display:none;">
+    <h2 id="results-drink-name" class="mb-2 text-center">Recipe Name</h2>
+    <p id="batch-info" class="text-center mb-4"></p> <!-- New element for batch size and dilution -->
+
     <div class="row">
         <!-- Original Recipe Card -->
         <div class="col-md-6 mb-4">
@@ -157,6 +166,7 @@
             </div>
         </div>
     </div>
+
     <div class="text-center mt-4">
         <button id="print-recipe" class="btn btn-primary">Print Recipe</button>
     </div>
@@ -181,5 +191,6 @@
 	    });
 	  }
 	</script>
+	</div>
 </body>
 </html>
