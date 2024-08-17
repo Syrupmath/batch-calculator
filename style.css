@@ -145,6 +145,40 @@ p {
     header, #results, footer {
         display: block;
     }
+    
+    /* Remove shadows from all elements */
+    * {
+        box-shadow: none !important; /* Remove box shadows */
+        text-shadow: none !important; /* Remove text shadows */
+    }
+
+    /* Remove shadows specifically from cards and buttons, if needed */
+    .card, .btn {
+        box-shadow: none !important;
+    }
+    
+	header {
+	background: none; /* Remove background image */
+	padding: 1rem 0; /* Adjust padding for print */
+	text-align: center; /* Center-align the text */
+	border-bottom: 1px solid #ccc; /* Add a subtle bottom border */
+	}
+	
+	header h1 {
+	font-family: 'Arial', sans-serif; /* Use a clean, sans-serif font */
+	font-size: 1.75rem; /* Adjust font size for print */
+	font-weight: 700; /* Ensure the title is bold */
+	margin: 0; /* Remove extra margin */
+	color: #000; /* Use black for print */
+	}
+	
+	header p {
+	font-family: 'Arial', sans-serif; /* Keep the same font family for consistency */
+	font-size: 1rem; /* Adjust the font size for the subtitle */
+	font-weight: 400; /* Normal weight for the byline */
+	margin: 0.25rem 0 0; /* Slight margin between title and byline */
+	color: #000; /* Use black for print */
+	}
 
     /* Hide specific elements */
     #recipe-name-section,
