@@ -103,8 +103,8 @@ p, label, input, button {
 
 #original-recipe, #scaled-recipe {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: .8rem;
+    line-height: 1;
     color: #333;
 }
 
