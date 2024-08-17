@@ -68,7 +68,7 @@ header p {
 
 .input-group .ingredient-unit {
     flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
-    width: 11ch; /* Width of the Units field */
+    width: 15ch; /* Width of the Units field */
 }
 
 .input-group .ingredient-name {
@@ -194,7 +194,6 @@ p {
         font-size: 1.25rem; /* Adjust step titles for readability */
         margin-bottom: 0.5rem;
     }
-
 
     /* Buttons */
     .btn-primary, .btn-success {
