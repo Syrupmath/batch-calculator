@@ -1,5 +1,8 @@
 /* Custom styles overriding Bootstrap (if necessary) */
 
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap');
+
+
 /* Gradient background for the entire form section */
 body {
     background: linear-gradient(135deg, #FFEED5, #FFF); /* Example gradient */
@@ -49,7 +52,8 @@ header p {
     font-size: .75rem; /* Slightly smaller font for the byline */
     font-weight: 400; /* Normal weight for the byline */
     color: #000; /* Set the text color to black */
-    margin-top: 0.5rem; /* Adjust spacing between title and byline */
+    margin-top: .5rem; /* Adjust spacing between title and byline */
+    margin-bottom: 0; /* Adjust spacing between title and byline */
 }
 
 footer p {
@@ -157,9 +161,10 @@ p, label, input, button {
 
 /* Styling for the Step Titles */
 .step-title {
+    font-family: 'Raleway', sans-serif;
     font-size: 1.3rem; /* Slightly smaller than the default */
     margin-bottom: 0.75rem; /* Reduce space below the title */
-    font-weight: 500; /* Medium font weight for a modern look */
+    font-weight: 800; /* Heavy font weight for a modern look */
     color: #333; /* A slightly softer black/gray color */
     letter-spacing: 0.5px; /* Add slight letter spacing for a modern feel */
 }
