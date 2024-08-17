@@ -134,14 +134,33 @@
     <!-- Calculate Button -->
     <button id="calculate-batch" class="btn btn-success">Calculate Batch</button>
 
-    <div id="results" class="mt-4" style="display:none;">
-        <h2 id="results-drink-name"></h2>
-        <h3>Original Recipe</h3>
-        <pre id="original-recipe" class="p-3 bg-light border"></pre>
-        <h3 id="scaled-recipe-header"></h3>
-        <pre id="scaled-recipe" class="p-3 bg-light border"></pre>
-        <button id="print-recipe" class="btn btn-secondary">Print Recipe</button>
+   <div id="results" class="container mt-5" style="display:none;">
+    <h2 id="results-drink-name" class="mb-4 text-center">Recipe Name</h2>
+    <div class="row">
+        <!-- Original Recipe Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Original Recipe</h5>
+                    <pre id="original-recipe" class="p-3 bg-light border rounded"></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scaled Recipe Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 id="scaled-recipe-header" class="card-title text-center">Scaled Recipe</h5>
+                    <pre id="scaled-recipe" class="p-3 bg-light border rounded"></pre>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="text-center mt-4">
+        <button id="print-recipe" class="btn btn-primary">Print Recipe</button>
+    </div>
+</div>
 
     <!-- Footer Section -->
     <footer class="mt-5 text-center">
