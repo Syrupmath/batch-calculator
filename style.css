@@ -52,6 +52,35 @@ header p {
     margin-top: 0.5rem; /* Adjust spacing between title and byline */
 }
 
+
+
+/* Style the input group within the ingredient list */
+.input-group {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent the inputs from wrapping */
+    width: 100%; /* Ensure the input group takes up the full width */
+}
+
+.input-group .ingredient-quantity {
+    flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
+    width: 80px; /* Width of the Quantity field */
+}
+
+.input-group .ingredient-unit {
+    flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
+    width: 120px; /* Width of the Units field */
+}
+
+.input-group .ingredient-name {
+    flex: 1 1 auto; /* Allow the name field to take up the remaining width */
+}
+
+.input-group .btn-danger {
+    flex: 0 0 auto; /* Keep the remove button at a fixed width */
+}
+
+
+
 .btn-primary {
     background-color: #007bff; /* Ensure a bright, modern blue */
     border: none;
