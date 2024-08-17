@@ -68,7 +68,7 @@ header p {
 
 .input-group .ingredient-unit {
     flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
-    width: 120px; /* Width of the Units field */
+    width: 12ch; /* Width of the Units field */
 }
 
 .input-group .ingredient-name {
@@ -174,7 +174,7 @@ p {
 @media (max-width: 767px) {
     .form-container {
         width: 95%; /* Make the container almost full width on mobile */
-        padding: 1rem; /* Reduce padding for smaller screens */
+        padding: .7rem; /* Reduce padding for smaller screens */
         margin: 0 auto; /* Center the container */
     }
 
