@@ -46,7 +46,7 @@ header h1 {
 
 header p {
     font-family: Arial, sans-serif; /* Keep the same font family */
-    font-size: .8rem; /* Slightly smaller font for the byline */
+    font-size: .75rem; /* Slightly smaller font for the byline */
     font-weight: 400; /* Normal weight for the byline */
     color: #000; /* Set the text color to black */
     margin-top: 0.5rem; /* Adjust spacing between title and byline */
@@ -179,7 +179,7 @@ p {
     }
 
     body {
-        padding-top: 1.5rem; /* Adjust this value as needed */
+        padding-top: 1rem; /* Adjust this value as needed */
     }
 
     header h1 {
