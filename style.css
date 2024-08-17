@@ -52,6 +52,10 @@ header p {
     margin-top: 0.5rem; /* Adjust spacing between title and byline */
 }
 
+footer p {
+    font-size: .75rem; /* Slightly smaller font for the byline */
+}
+
 
 
 /* Style the input group within the ingredient list */
