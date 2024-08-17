@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Batched Cocktail Calculator",
+    "short_name": "Batch Calc",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
