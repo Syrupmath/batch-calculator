@@ -1,6 +1,6 @@
 {
   "name": "Batched Cocktail Calculator",
-  "short_name": "BatchCalc",
+  "short_name": "Batch Calc",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
