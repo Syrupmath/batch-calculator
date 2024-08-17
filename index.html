@@ -57,17 +57,19 @@
     <p>Select whether you'd like to scale by the number of servings or by total volume. Enter the quantity and, if scaling by volume, select the desired unit.</p>
     
     <!-- Scaling Option Radio Buttons -->
-    <div class="form-check">
+    <div class="form-check mb-2">
         <input class="form-check-input" type="radio" name="scaling-option" value="servings" id="scaling-servings" checked>
         <label class="form-check-label" for="scaling-servings">
             Scale by Number of Servings
         </label>
+        <small class="text-muted d-block">Choose this option if you know how many servings you need.</small>
     </div>
-    <div class="form-check">
+    <div class="form-check mb-3">
         <input class="form-check-input" type="radio" name="scaling-option" value="volume" id="scaling-volume">
         <label class="form-check-label" for="scaling-volume">
             Scale by Total Volume
         </label>
+        <small class="text-muted d-block">Ideal for filling a specific container or batch size.</small>
     </div>
 
     <!-- Scaling Value Input -->
