@@ -33,13 +33,13 @@ header {
     background-position: right;
 	background-repeat: no-repeat;
 	background-size: cover;
-    text-align: left;
+    text-align: center;
 }
 
 header h1 {
-    font-family: Arial, sans-serif; /* Use a simple, clean font */
-    font-size: 2rem; /* Adjust the size as needed */
-    font-weight: 700; /* Bold text for emphasis */
+    font-family: 'Pacifico', cursive; /* Apply the Pacifico font */
+    font-size: 3rem; /* Adjust the size as needed */
+    font-weight: 400; /* Bold text for emphasis */
     color: #000; /* Set the text color to black */
     line-height: 1;
 }
