@@ -63,7 +63,7 @@ header p {
 
 .input-group .ingredient-quantity {
     flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
-    width: 80px; /* Width of the Quantity field */
+    width: 8ch; /* Width of the Quantity field */
 }
 
 .input-group .ingredient-unit {
