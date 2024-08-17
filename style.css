@@ -29,7 +29,6 @@ pre {
 }
 
 header {
-    background: url('header2.jpg'); /* Remove any background */
     padding: 1.5rem 0; /* Keep some padding for spacing */
     background-position: right;
 	background-repeat: no-repeat;
