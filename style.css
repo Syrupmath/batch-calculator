@@ -2,10 +2,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@800&display=swap');
 
-
-/* Gradient background for the entire form section */
 body {
-    background: linear-gradient(135deg, #FFEED5, #FFF); /* Example gradient */
+	background: url('background.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
     min-height: 100vh; /* Ensure the gradient covers the full viewport height */
     display: flex;
     justify-content: center;
