@@ -68,7 +68,7 @@ header p {
 
 .input-group .ingredient-unit {
     flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
-    width: 12ch; /* Width of the Units field */
+    width: 11ch; /* Width of the Units field */
 }
 
 .input-group .ingredient-name {
