@@ -174,8 +174,12 @@ p {
 @media (max-width: 767px) {
     .form-container {
         width: 95%; /* Make the container almost full width on mobile */
-        padding: .7rem; /* Reduce padding for smaller screens */
+        padding: 1rem; /* Reduce padding for smaller screens */
         margin: 0 auto; /* Center the container */
+    }
+
+    body {
+        padding-top: 1.5rem; /* Adjust this value as needed */
     }
 
     header h1 {
