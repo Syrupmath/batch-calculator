@@ -200,7 +200,7 @@ p {
 
 	.input-group .ingredient-unit {
 	    flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
-	    width: 6ch; /* Width of the Units field */
+	    width: 10ch; /* Width of the Units field */
 	}
 
     /* Adjust margins and padding to prevent horizontal scrolling */
