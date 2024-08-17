@@ -1,7 +1,6 @@
 /* Custom styles overriding Bootstrap (if necessary) */
 
 /* Gradient background for the entire form section */
-/* Gradient background for the entire form section */
 body {
     background: linear-gradient(135deg, #FFEED5, #FFF); /* Example gradient */
     min-height: 100vh; /* Ensure the gradient covers the full viewport height */
@@ -21,7 +20,7 @@ body {
 }
 
 header {
-    background: url('header.jpg');
+    background: url('header2.jpg'); /* Remove any background */
     padding: 1.5rem 0; /* Keep some padding for spacing */
     background-position: right;
 	background-repeat: no-repeat;
@@ -248,7 +247,7 @@ p {
     }
 
     footer {
-        font-size: 0.9em;
+        font-size: 0.5em;
         color: #555;
     }
 }
