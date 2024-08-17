@@ -198,6 +198,11 @@ p {
         font-size: 1rem; /* Adjust font size */
     }
 
+	.input-group .ingredient-unit {
+	    flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
+	    width: 8ch; /* Width of the Units field */
+	}
+
     /* Adjust margins and padding to prevent horizontal scrolling */
     body {
         margin: 0;
