@@ -21,7 +21,7 @@ body {
 }
 
 header {
-    background: url('header.jpg'); /* Remove any background */
+    background: url('header.jpg');
     padding: 1.5rem 0; /* Keep some padding for spacing */
     background-position: right;
 	background-repeat: no-repeat;
