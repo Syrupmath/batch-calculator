@@ -1,27 +1,3 @@
-// sw.js
-self.addEventListener('install', function(event) {
-  event.waitUntil(
-    caches.open('app-cache').then(function(cache) {
-      return cache.addAll([
-        '/',
-        '/index.html',
-        '/styles.css',
-        '/script.js',
-        '/icons/icon-192x192.png',
-        '/icons/icon-512x512.png'
-      ]);
-    })
-  );
-});
-
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request).then(function(response) {
-      return response || fetch(event.request);
-    })
-  );
-});
-
 document.addEventListener("DOMContentLoaded", function () {
     const ingredientList = document.getElementById("ingredient-list");
     const addIngredientButton = document.getElementById("add-ingredient");
@@ -36,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const scaledRecipeHeader = document.getElementById("scaled-recipe-header");
     const resultsSection = document.getElementById("results");
     const resultsDrinkName = document.getElementById("results-drink-name");
+    const batchInfo = document.getElementById("batch-info");
     const printRecipeButton = document.getElementById("print-recipe");
 
     let ingredientCount = 0;
@@ -123,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         return false; // No valid ingredient found
     }
-
     // Handle the batch calculation logic
     calculateButton.onclick = () => {
         // Validation checks
@@ -175,6 +151,14 @@ document.addEventListener("DOMContentLoaded", function () {
         let scalingFactor = 1;
         let scalingInfo = '';
 
+        // Map volume units to full names
+        const volumeUnits = {
+            'oz': 'Ounces',
+            'ml': 'Milliliters',
+            'l': 'Liters',
+            'gal': 'Gallons'
+        };
+
         if (scalingOption === "servings") {
             scalingFactor = scalingValue;
             scalingInfo = `${scalingValue} Servings`;
@@ -182,11 +166,15 @@ document.addEventListener("DOMContentLoaded", function () {
             const volumeUnit = volumeUnitSelect.value;
             const targetVolume = convertToOunces(scalingValue, volumeUnit);
             scalingFactor = targetVolume / finalTotalVolume;
-            scalingInfo = `${scalingValue} ${volumeUnit}`;
+            const fullUnitName = volumeUnits[volumeUnit] || volumeUnit;
+            scalingInfo = `${scalingValue} ${fullUnitName}`;
         }
 
+        // Update the batch info with dynamic information
+        batchInfo.textContent = `Batch Size: ${scalingInfo} (${dilution}% Dilution)`;
+
         // Set the Scaled Recipe header with dynamic information
-        scaledRecipeHeader.textContent = `Scaled Recipe: ${scalingInfo} (${dilution}% Dilution)`;
+        scaledRecipeHeader.textContent = `Scaled Recipe`;
 
         // Display the scaled recipe without the drink name
         let scaledRecipe = '';
@@ -217,15 +205,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Handle the print recipe functionality
     printRecipeButton.onclick = () => {
+        window.print    };
+
+    // Handle the print recipe functionality
+    printRecipeButton.onclick = () => {
         window.print();
     };
 
     // Initialize with one ingredient input
     addIngredient();
-
-    // Fade-in effect for elements
-    const elements = document.querySelectorAll('.fade-in');
-    elements.forEach(element => {
-        element.classList.add('fade-in-visible');
-    });
 });
