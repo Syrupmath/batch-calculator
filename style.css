@@ -65,6 +65,23 @@ p, label, input, button {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+#original-recipe, #scaled-recipe {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+}
+
+.card {
+    border-radius: 10px;
+    border: none;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
 /* Styling for the Step Titles */
 .step-title {
     font-size: 1.5rem; /* Slightly smaller than the default */
