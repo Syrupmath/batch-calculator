@@ -219,23 +219,6 @@ p {
 		padding-top: .7rem; /* Adjust this value as needed */
         overflow-x: hidden; /* Prevent horizontal scrolling */
     }
-    
-    /* Custom style for placeholder text */
-	::placeholder {
-	    font-size: 0.875rem; /* Adjust the font size as needed */
-	    color: #6c757d; /* Optional: Match Bootstrap's text-muted color */
-	}
-	
-	/* For older browser compatibility */
-	:-ms-input-placeholder { /* Internet Explorer 10+ */
-	    font-size: 0.875rem;
-	    color: #6c757d;
-	}
-	
-	::-ms-input-placeholder { /* Microsoft Edge */
-	    font-size: 0.875rem;
-	    color: #6c757d;
-	}
 }
 
 
