@@ -8,6 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 2rem;
+    font-family: 'Roboto', sans-serif;
 }
 
 /* White container for the form content */
@@ -17,6 +18,14 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
     max-width: 700px; /* Limit the maximum width */
     width: 100%;
+}
+
+/* Apply to both screen and print versions */
+pre {
+    white-space: pre-wrap; /* Wraps text to the next line */
+    word-wrap: break-word; /* Breaks long words if necessary */
+    overflow-wrap: break-word; /* Ensures long words are wrapped */
+    overflow: hidden; /* Prevents overflowing content */
 }
 
 header {
@@ -30,7 +39,7 @@ header {
 
 header h1 {
     font-family: Arial, sans-serif; /* Use a simple, clean font */
-    font-size: 2.5rem; /* Adjust the size as needed */
+    font-size: 2rem; /* Adjust the size as needed */
     font-weight: 700; /* Bold text for emphasis */
     color: #000; /* Set the text color to black */
     line-height: 1;
@@ -38,7 +47,7 @@ header h1 {
 
 header p {
     font-family: Arial, sans-serif; /* Keep the same font family */
-    font-size: .9rem; /* Slightly smaller font for the byline */
+    font-size: .8rem; /* Slightly smaller font for the byline */
     font-weight: 400; /* Normal weight for the byline */
     color: #000; /* Set the text color to black */
     margin-top: 0.5rem; /* Adjust spacing between title and byline */
@@ -66,10 +75,6 @@ header p {
 .btn-success:hover {
     background-color: #218838;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-body {
-    font-family: 'Roboto', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -102,7 +107,7 @@ p, label, input, button {
 }
 
 #original-recipe, #scaled-recipe {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Roboto', sans-serif;
     font-size: .8rem;
     line-height: 1;
     color: #333;
@@ -120,7 +125,7 @@ p, label, input, button {
 
 /* Styling for the Step Titles */
 .step-title {
-    font-size: 1.5rem; /* Slightly smaller than the default */
+    font-size: 1.3rem; /* Slightly smaller than the default */
     margin-bottom: 0.75rem; /* Reduce space below the title */
     font-weight: 500; /* Medium font weight for a modern look */
     color: #333; /* A slightly softer black/gray color */
@@ -129,14 +134,55 @@ p, label, input, button {
 
 /* Global paragraph styling */
 p {
-    font-size: 0.95rem; /* Slightly smaller font size */
+    font-size: 0.9rem; /* Slightly smaller font size */
     line-height: 1.5; /* Maintain good readability */
     color: #555; /* Softer color to match the modern design */
     margin-bottom: 1rem; /* Adjust margin for spacing */
 }
 
 
-    /* Print styles here, e.g., hiding specific sections, adjusting text size, etc. */
+
+/* General Mobile Styles */
+@media (max-width: 767px) {
+    .form-container {
+        width: 95%; /* Make the container almost full width on mobile */
+        padding: 1rem; /* Reduce padding for smaller screens */
+        margin: 0 auto; /* Center the container */
+    }
+
+    header h1 {
+        font-size: 1.75rem; /* Smaller font size for the header */
+    }
+
+    header p {
+        font-size: 1rem; /* Smaller font size for the subtitle */
+    }
+
+    .step-title {
+        font-size: 1.25rem; /* Adjust step titles for readability */
+        margin-bottom: 0.5rem;
+    }
+
+
+    /* Buttons */
+    .btn-primary, .btn-success {
+        width: 100%; /* Full-width buttons for easier tapping */
+        padding: 1rem; /* Increase padding for touch devices */
+        font-size: 1rem; /* Adjust font size */
+    }
+
+    /* Adjust margins and padding to prevent horizontal scrolling */
+    body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+}
+
+
+
+
+    /* Print styles are here */
     
 @media print {
     body {
@@ -156,10 +202,6 @@ p {
 
     header, #results, footer {
         display: block !important; /* Show only header, results, and footer */
-    }
-
-    header, #results, footer {
-        display: block;
     }
     
     /* Remove shadows from all elements */
@@ -195,7 +237,7 @@ p {
 	
 	header p {
 	font-family: 'Arial', sans-serif; /* Keep the same font family for consistency */
-	font-size: 1rem; /* Adjust the font size for the subtitle */
+	font-size: .75rem; /* Adjust the font size for the subtitle */
 	font-weight: 400; /* Normal weight for the byline */
 	margin: 0.25rem 0 0; /* Slight margin between title and byline */
 	color: #000; /* Use black for print */
@@ -218,7 +260,7 @@ p {
     
     #results-drink-name {
     display: block; /* Ensure the recipe name is displayed */
-    font-size: 1.75rem; /* Ensure it has a readable font size */
+    font-size: 1.5rem; /* Ensure it has a readable font size */
     font-weight: bold; /* Make it stand out */
     color: black; /* Make sure the color is visible */
 }
@@ -231,11 +273,11 @@ p {
     .row {
         display: flex;
         flex-wrap: nowrap; /* Prevent the cards from stacking on top of each other */
-        justify-content: space-between; /* Ensure there’s space between the cards */
+        justify-content: center; /* Ensure there’s space between the cards */
     }
 
     .col-md-6 {
-        width: 48%; /* Adjust the width of each card to fit side-by-side */
+        width: 70%; /* Adjust the width of each card to fit side-by-side */
         padding-right: 1%; /* Optional: Add a little space between the cards */
         padding-left: 1%;
     }
@@ -247,7 +289,7 @@ p {
     }
 
     footer {
-        font-size: 0.5em;
+        font-size: 0.75rem;
         color: #555;
     }
 }
