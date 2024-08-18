@@ -187,6 +187,7 @@ p {
         width: 95%; /* Make the container almost full width on mobile */
         padding: .5rem; /* Reduce padding for smaller screens */
         margin: 0 auto; /* Center the container */
+        margin-bottom: 1rem; /* Adjust this value as needed */
     }
 
     body {
