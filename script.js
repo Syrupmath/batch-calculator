@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
             case 'dashes':
                 return quantity * 0.020833;
             case 'drops':
-                return quantity * 0.0026;
+                return quantity * 0.0016907;
             default:
                 return 0;
         }
