@@ -1,7 +1,5 @@
 /* Custom styles overriding Bootstrap (if necessary) */
 
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
-
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
@@ -36,7 +34,7 @@ pre {
 }
 
 header {
-    padding: 1.5rem 0 .75rem/* Keep some padding for spacing */
+    padding: .5rem 0 .5rem; /* Keep some padding for spacing */
     background-position: right;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -197,10 +195,6 @@ p {
         margin-bottom: 1rem; /* Adjust this value as needed */
     }
 
-    body {
-        padding-top: .5rem; /* Adjust this value as needed */
-    }
-
     header h1 {
         font-size: 2.5rem; /* Smaller font size for the header */
     }
@@ -234,23 +228,46 @@ p {
 
 
 
-    /* Print styles are here */
-    
-@media print {
+
+
+/* PRINT STYLES */ @media print {
+
+    html, body {
+        height: 100%; /* Ensure the body takes up the full height of the page */
+        margin: 0;
+        padding: 0;
+        }
+
     body {
         background-color: white;
-    }
+        display: block; /* Reset Flexbox behavior */
+        justify-content: unset; /* Remove any centering */
+        align-items: unset; /* Remove any centering */
+        padding-top: 0; /* Ensure there's no extra top padding */
+    	}
     
-        /* Make the form container full page width and height */
     .form-container {
         width: 100%; /* Full width */
         height: auto; /* Auto height to accommodate content */
         box-shadow: none !important; /* Remove shadow */
         border: none !important; /* Remove border */
         background: none !important; /* Remove background color */
-        margin: 0; /* Remove margin */
+        margin: 0 auto; /* Remove margin */
         padding: 0; /* Remove padding */
-    }
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Make container take full page height */
+ 		}
+ 		
+    header, #results {
+        flex: 0 1 auto; /* Ensure these sections do not expand to fill space */
+        margin-top: 0; /* Ensure there's no extra margin at the top */
+	    }
+ 		
+    #results {
+        flex: 1 0 auto; /* Allow results section to take up remaining space */
+         margin-bottom: auto; /* Allow the results section to grow, pushing the footer to the bottom */
+   		}
 
     header, #results, footer {
         display: block !important; /* Show only header, results, and footer */
@@ -320,5 +337,8 @@ p {
     footer {
         font-size: 0.75rem;
         color: #555;
+        flex-shrink: 0; /* Prevent footer from shrinking */
+        margin-top: auto; /* Push the footer to the bottom */
+                margin-bottom: 0; /* Ensure no extra margin at the bottom */
     }
 }
