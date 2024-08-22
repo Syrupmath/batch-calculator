@@ -32,6 +32,10 @@ pre {
     overflow: hidden; /* Prevents overflowing content */
 }
 
+#results pre {
+    line-height: 1.5; /* Adjust line height for better readability */
+    }
+
 header {
     padding: .5rem 0 .5rem; /* Keep some padding for spacing */
     background-position: right;
@@ -230,6 +234,21 @@ body {
 
 /* PRINT STYLES */ @media print {
 
+/* Hide specific elements */
+#recipe-name-section,
+#ingredient-section,
+#scaling-section,
+#dilution-section,
+#calculate-section,
+#add-ingredient,
+#calculate-batch,
+#print-recipe,
+.container.text-center.mb-5,
+.text-muted.text-center,
+button {
+    display: none;
+}
+
 html, body {
     height: 100%; /* Ensure the body takes up the full height of the page */
     margin: 0;
@@ -245,7 +264,8 @@ body {
 	}
 
 .form-container {
-    width: 100%; /* Full width */
+    width: 95%;
+    max-width: 100%; /* Ensure it uses the full width */
     height: auto; /* Auto height to accommodate content */
     box-shadow: none !important; /* Remove shadow */
     border: none !important; /* Remove border */
@@ -275,44 +295,51 @@ header, #results, footer {
 * {
     box-shadow: none !important; /* Remove box shadows */
     text-shadow: none !important; /* Remove text shadows */
-}
+	}
 
     a {
     text-decoration: none !important; /* Remove underline */
     color: inherit !important; /* Inherit the text color from the surrounding text */
-}
+	}
 
 /* Remove shadows specifically from cards and buttons, if needed */
 .card, .btn {
     box-shadow: none !important;
-}
+	}
+	
+header h1 {
+    font-size: 4rem; /* Increase the size of the main header */
+    font-weight: bold; /* Ensure it stands out */
+    margin-bottom: 1rem; /* Space out the header from the content below */
+    }
 
-/* Hide specific elements */
-#recipe-name-section,
-#ingredient-section,
-#scaling-section,
-#dilution-section,
-#calculate-section,
-#add-ingredient,
-#calculate-batch,
-#print-recipe,
-.container.text-center.mb-5,
-.text-muted.text-center,
-button {
-    display: none;
-}
+header p {
+    font-size: 1.25rem; /* Increase the size of the subtitle/byline */
+    font-weight: 500; /* Slightly increase the weight for better readability */
+    }
 
 #results-drink-name {
 	display: block; /* Ensure the recipe name is displayed */
-	font-size: 1.5rem; /* Ensure it has a readable font size */
+	font-size: 2.75rem; /* Ensure it has a readable font size */
 	font-weight: bold; /* Make it stand out */
 	color: black; /* Make sure the color is visible */
 }
 
+#batch-info {
+    font-size: 1.5rem; /* Increase the font size */
+    font-weight: 600; /* Ensure the text is bold */
+    text-align: center; /* Center the text */
+    margin-bottom: 1rem; /* Adjust space below the batch info */
+    }
+
 #results pre {
+    font-size: 1.5rem; /* Increase the font size of the recipes */
+    line-height: 1.5; /* Adjust line height for better readability */
     border: none;
     background-color: white;
-}
+    margin: 0; /* Ensure no extra margins */
+    padding: 0; /* Adjust padding as needed */
+    }
 
 .row {
     display: flex;
@@ -321,10 +348,16 @@ button {
 }
 
 .col-md-6 {
-    width: 70%; /* Adjust the width of each card to fit side-by-side */
+    width: 100%; /* Adjust the width of each card to fit side-by-side */
     padding-right: 1%; /* Optional: Add a little space between the cards */
     padding-left: 1%;
 }
+
+.card-title {
+    font-size: 1.75rem; /* Increase the font size */
+    font-weight: 700; /* Ensure the text is bold */
+    margin-bottom: 0.5rem; /* Adjust spacing below the header */
+    }
 
 .card {
     box-shadow: none; /* Remove shadows for a cleaner print */
@@ -337,6 +370,11 @@ footer {
     color: #555;
     flex-shrink: 0; /* Prevent footer from shrinking */
     margin-top: auto; /* Push the footer to the bottom */
-        margin-bottom: 0; /* Ensure no extra margin at the bottom */
+    margin-bottom: 0; /* Ensure no extra margin at the bottom */
+    }
+    
+footer p {
+	font-size: 1.25rem; /* Increase the footer font size */
+	font-weight: 500; /* Ensure it’s easily readable */
     }
 }
