@@ -310,26 +310,26 @@ header, #results, footer {
 	}
 	
 header h1 {
-    font-size: 4rem; /* Increase the size of the main header */
+    font-size: 2.5rem; /* Increase the size of the main header */
     font-weight: bold; /* Ensure it stands out */
     margin-bottom: 1rem; /* Space out the header from the content below */
     }
 
 header p {
-    font-size: 1.25rem; /* Increase the size of the subtitle/byline */
+    font-size: .75rem; /* Increase the size of the subtitle/byline */
     font-weight: 500; /* Slightly increase the weight for better readability */
     }
 
 #results-drink-name {
     font-family: 'Raleway', sans-serif;
 	display: block; /* Ensure the recipe name is displayed */
-	font-size: 2.75rem; /* Ensure it has a readable font size */
+	font-size: 2rem; /* Ensure it has a readable font size */
 	font-weight: bold; /* Make it stand out */
 	color: #262626; /* Make sure the color is visible */
 }
 
 #batch-info {
-    font-size: 1.5rem; /* Increase the font size */
+    font-size: 1.2rem; /* Increase the font size */
     font-weight: 600; /* Ensure the text is bold */
     text-align: center; /* Center the text */
     margin-bottom: 1rem; /* Adjust space below the batch info */
@@ -337,8 +337,8 @@ header p {
 
 #results pre {
     font-family: 'Roboto Condensed', sans-serif; /* Apply the narrow font */
-    font-size: 1.6rem; /* Increase the font size of the recipes */
-    line-height: 1.5; /* Adjust line height for better readability */
+    font-size: 1rem; /* Increase the font size of the recipes */
+    line-height: 1.25; /* Adjust line height for better readability */
     border: none;
     background-color: white;
     margin: 0; /* Ensure no extra margins */
@@ -352,13 +352,13 @@ header p {
 }
 
 .col-md-6 {
-    width: 100%; /* Adjust the width of each card to fit side-by-side */
+    width: 70%; /* Adjust the width of each card to fit side-by-side */
     padding-right: 1%; /* Optional: Add a little space between the cards */
     padding-left: 1%;
 }
 
 .card-title {
-    font-size: 1.75rem; /* Increase the font size */
+    font-size: 1.5rem; /* Increase the font size */
     font-weight: 700; /* Ensure the text is bold */
     margin-bottom: 0.5rem; /* Adjust spacing below the header */
     }
@@ -378,7 +378,7 @@ footer {
     }
     
 footer p {
-	font-size: 1.25rem; /* Increase the footer font size */
+	font-size: .75rem; /* Increase the footer font size */
 	font-weight: 500; /* Ensure it’s easily readable */
     }
     
