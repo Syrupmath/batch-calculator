@@ -323,7 +323,7 @@ header p {
 #results-drink-name {
     font-family: 'Raleway', sans-serif;
 	display: block; /* Ensure the recipe name is displayed */
-	font-size: 2rem; /* Ensure it has a readable font size */
+	font-size: 1.75rem; /* Ensure it has a readable font size */
 	font-weight: bold; /* Make it stand out */
 	color: #262626; /* Make sure the color is visible */
 }
