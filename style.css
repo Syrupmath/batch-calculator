@@ -349,7 +349,7 @@ html, body {
     max-width: 100%; /* Ensure it uses the full width */
     height: auto; /* Auto height to accommodate content */
     border: none !important; /* Remove border */
-    background: none !important; /* Remove background color */
+    background-color: white; /* Remove background color */
     margin: 0; /* Remove margin */
     padding: 0; /* Remove padding */
     display: flex;
