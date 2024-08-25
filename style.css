@@ -335,9 +335,9 @@ button {
 
 html, body {
     background-color: white;
-    background-image: none;
     display: block; /* Reset Flexbox behavior */
     justify-content: unset; /* Remove any centering */
+    background: none !important; /* Remove background color */
     align-items: unset; /* Remove any centering */
     padding: 0;
     margin: 0;
@@ -349,7 +349,7 @@ html, body {
     max-width: 100%; /* Ensure it uses the full width */
     height: auto; /* Auto height to accommodate content */
     border: none !important; /* Remove border */
-    background-color: white; /* Remove background color */
+    background: none !important; /* Remove background color */
     margin: 0; /* Remove margin */
     padding: 0; /* Remove padding */
     display: flex;
