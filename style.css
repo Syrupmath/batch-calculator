@@ -240,6 +240,10 @@ p {
     letter-spacing: 0.5px; /* Add slight letter spacing for a modern feel */
 }
 
+.recipe-notes {
+	margin-top: 1rem;
+	}
+
 #results {
 	padding-top: 3em;
 	}
