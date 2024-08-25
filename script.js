@@ -205,7 +205,7 @@ calculateButton.onclick = () => {
 const instructions = document.getElementById("recipe-instructions").value.trim();
 
 if (instructions !== '') {
-    scaledRecipe += `<h5>Recipe Notes</h5><p id="instructions">${instructions}</p>`;
+    scaledRecipe += `<h5 class="recipe-notes">Recipe Notes</h5><p id="instructions">${instructions}</p>`;
 }
 
     // Display results and show the results section
