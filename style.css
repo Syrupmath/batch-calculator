@@ -422,10 +422,6 @@ header p {
     margin-top: 0;
     padding-bottom: 1.5rem;
     }
-    
-#results {
-    flex: 1; /* Allow results section to grow and take up available space */
-}
 
 #results pre {
     font-size: .85rem; /* Increase the font size of the recipes */
