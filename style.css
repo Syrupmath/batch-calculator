@@ -1,8 +1,12 @@
+/* div { outline: 1px solid red; }
+
 /* Custom styles overriding Bootstrap (if necessary) */
 
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@600&display=swap');
 
 body {
 	background: url('background.jpg');
@@ -10,7 +14,6 @@ body {
 	background-size: cover;
 	background-attachment: fixed;
 	background-position: center;
-    min-height: 100vh; /* Ensure the gradient covers the full viewport height */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,12 +24,40 @@ body {
 .form-container {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
     max-width: 700px; /* Limit the maximum width */
     width: 100%;
+    padding: 0 2rem;
+    margin: 0 2rem;
 }
 
 /* Apply to both screen and print versions */
+
+
+/* h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
+
+p, label, input, button {
+    font-weight: 400;
+} */
+
+
+.col-md-6 {
+    width: 50%; /* Adjust the width of each card to fit side-by-side */
+    padding-right: 1%; /* Add a little space between the cards */
+    padding-left: 1%;
+}
+
+    .col-md-6:nth-child(1) {
+        width: 40%; /* Original Recipe column width */
+    }
+
+    .col-md-6:nth-child(2) {
+        width: 60%; /* Scaled Recipe column width */
+    }
+    
+    
+
 pre {
     white-space: pre-wrap; /* Wraps text to the next line */
     word-wrap: break-word; /* Breaks long words if necessary */
@@ -34,8 +65,19 @@ pre {
     overflow: hidden; /* Prevents overflowing content */
 }
 
-#results pre {
-    line-height: 1.5; /* Adjust line height for better readability */
+ul {
+    list-style-type: none; /* Remove the bullets */
+    padding: 0; /* Remove the left padding/indent */
+    margin: 0; /* Remove any left margin */
+    
+}
+
+#original-recipe li,
+#scaled-recipe li {    
+	text-indent: -20px; /* Indent the first line negatively */
+    padding-left: 20px; /* Add padding to the left for all lines */
+    line-height: 1.75; /* Adjust line height for better readability */
+    margin-bottom: 7px;
     }
 
 header {
@@ -59,17 +101,23 @@ header p {
     font-size: .75rem; /* Slightly smaller font for the byline */
     font-weight: 400; /* Normal weight for the byline */
     color: #000; /* Set the text color to black */
-    margin-top: .5rem; /* Adjust spacing between title and byline */
-    margin-bottom: 0; /* Adjust spacing between title and byline */
+    margin: 0; /* Adjust spacing between title and byline */
 }
 
+#author {
+	padding-bottom: .5rem;
+	}
+
+#urlinfo {
+	display: none;
+	}
+
 hr {
-    margin-top: 2rem;  /* Adjust this value as needed */
-    margin-bottom: 2rem; /* Adjust this value as needed */
+    margin: 2rem 0;
 }
 
 footer p {
-    font-size: .75rem; /* Slightly smaller font for the byline */
+    font-size: .75rem; /* Slightly smaller font for the footer */
 }
 
 p {
@@ -79,7 +127,16 @@ p {
     margin-bottom: 1rem; /* Adjust margin for spacing */
 }
 
-/* INGREDIENT STYLES */
+#recipe-instructions {
+    width: 100%; /* Ensures the textarea takes the full width of the container */
+    padding: 1rem; /* Adds padding for better readability */
+    font-family: Arial, sans-serif; /* Use a readable font */
+    font-size: 1rem; /* Adjust the font size */
+    border-radius: 5px; /* Optional: add rounded corners */
+    border: 1px solid #ccc; /* Add a subtle border */
+}
+
+/* INGREDIENT AND BUTTON STYLES */
 
 .input-group {
     display: flex;
@@ -105,6 +162,9 @@ p {
     flex: 0 0 auto; /* Keep the remove button at a fixed width */
 }
 
+#calculate-batch {
+	margin-top: 2rem;
+	}
 
 
 .btn-primary {
@@ -131,22 +191,9 @@ p {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
-}
-
-p, label, input, button {
-    font-weight: 400;
-}
-
-.fade-in {
-    opacity: 0;
-    transition: opacity 0.6s ease-in;
-}
-
-.fade-in-visible {
-    opacity: 1;
-}
+.form-check {
+	padding-top: 1rem;
+	}
 
 .form-control {
     border-radius: 5px;
@@ -154,6 +201,10 @@ p, label, input, button {
     border: 1px solid #ced4da;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+.form-group {
+	padding-top: 1.2rem;
+	}
 
 .form-control:focus {
     border-color: #007bff;
@@ -165,11 +216,14 @@ p, label, input, button {
     font-size: .8rem;
     line-height: 1;
     color: #333;
+	margin-bottom: 0;
+	padding-bottom: 0;
 }
 
 .card {
     border-radius: 10px;
-    border: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
 }
 
 .card-title {
@@ -177,7 +231,6 @@ p, label, input, button {
     font-weight: 600;
 }
 
-/* Styling for the Step Titles */
 .step-title {
     font-family: 'Raleway', sans-serif;
     font-size: 1.3rem; /* Slightly smaller than the default */
@@ -187,48 +240,73 @@ p, label, input, button {
     letter-spacing: 0.5px; /* Add slight letter spacing for a modern feel */
 }
 
+#results {
+	padding-top: 3em;
+	}
+	
+footer {
+	padding-top: 2rem;
+	text-align: center;
+	}
+	
+	
+	
 
 
-/* MOBILE STYLES */
-
+/* MOBILE STYLES */ 
 @media (max-width: 767px) {
-.form-container {
-    width: 95%; /* Make the container almost full width on mobile */
-    padding: .5rem; /* Reduce padding for smaller screens */
-    margin: 0 auto; /* Center the container */
-    margin-bottom: 1rem; /* Adjust this value as needed */
-	}
 
-header h1 {
-    font-size: 2.5rem; /* Smaller font size for the header */
-	}
+    .form-container {
+        width: 95%; /* Make the container almost full width on mobile */
+        padding: 1.5rem; /* Reduce padding for smaller screens */
+        margin: 0 auto; /* Center the container */
+        margin-bottom: 1rem; /* Adjust this value as needed */
+    }
 
-.step-title {
-    font-size: 1.25rem; /* Adjust step titles for readability */
-    margin-bottom: 0.5rem;
-	}
+    header h1 {
+        font-size: 2.5rem; /* Smaller font size for the header */
+    }
 
-/* Buttons */
-.btn-primary, .btn-success {
-    width: 100%; /* Full-width buttons for easier tapping */
-    padding: 1rem; /* Increase padding for touch devices */
-    font-size: 1rem; /* Adjust font size */
-	}
+    .step-title {
+        font-size: 1.25rem; /* Adjust step titles for readability */
+        margin-bottom: 0.5rem;
+    }
 
-.input-group .ingredient-unit {
-    flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
-    width: 12ch; /* Width of the Units field */
-	}
+    .btn-primary, .btn-success {
+        width: 100%; /* Full-width buttons for easier tapping */
+        padding: 1rem; /* Increase padding for touch devices */
+        font-size: 1rem; /* Adjust font size */
+    }
 
-/* Adjust margins and padding to prevent horizontal scrolling */
-body {
-    margin: 0;
-    padding: 0;
-	padding-top: .7rem; /* Adjust this value as needed */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
-	}
+    .input-group .ingredient-unit {
+        flex: 0 0 auto; /* Prevents flex-grow, keeps the width fixed */
+        width: 12ch; /* Width of the Units field */
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        padding-top: .5rem; /* Adjust this value as needed */
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+
+    .col-md-6 {
+        width: 100%; /* Make each card take full width on mobile */
+        margin-bottom: 1rem; /* Add some space between the stacked cards */
+    }
+    
+        .col-md-6:nth-child(1) {
+        width: 100%; /* Original Recipe column width */
+    }
+
+    .col-md-6:nth-child(2) {
+        width: 100%; /* Scaled Recipe column width */
+    }
+
+    .row {
+        display: block; /* Ensure the cards stack vertically */
+    }
 }
-
 
 
 
@@ -252,42 +330,35 @@ button {
 }
 
 html, body {
-    height: 100%; /* Ensure the body takes up the full height of the page */
-    margin: 0;
-    padding: 0;
-    }
-
-body {
     background-color: white;
     display: block; /* Reset Flexbox behavior */
     justify-content: unset; /* Remove any centering */
     align-items: unset; /* Remove any centering */
-    padding-top: 0; /* Ensure there's no extra top padding */
+    padding: 0;
+    margin: 0;
+    height: 100%; /* Ensure the body takes up the full height of the page */
 	}
 
 .form-container {
-    width: 95%;
+    width: 100%;
     max-width: 100%; /* Ensure it uses the full width */
     height: auto; /* Auto height to accommodate content */
-    box-shadow: none !important; /* Remove shadow */
     border: none !important; /* Remove border */
     background: none !important; /* Remove background color */
-    margin: 0 auto; /* Remove margin */
+    margin: 0; /* Remove margin */
     padding: 0; /* Remove padding */
     display: flex;
+    border-radius: 0;
     flex-direction: column;
     min-height: 100vh; /* Make container take full page height */
-		}
+	}
 		
 header, #results {
     flex: 0 1 auto; /* Ensure these sections do not expand to fill space */
     margin-top: 0; /* Ensure there's no extra margin at the top */
+    padding-top: 0;
     }
-		
-#results {
-    flex: 1 0 auto; /* Allow results section to take up remaining space */
-    margin-top: 0; /* Allow the results section to grow, pushing the footer to the bottom */
-		}
+
 
 header, #results, footer {
     display: block !important; /* Show only header, results, and footer */
@@ -296,54 +367,76 @@ header, #results, footer {
 /* Remove shadows from all elements */
 * {
     box-shadow: none !important; /* Remove box shadows */
-    text-shadow: none !important; /* Remove text shadows */
 	}
 
-    a {
+a {
     text-decoration: none !important; /* Remove underline */
-    color: inherit !important; /* Inherit the text color from the surrounding text */
-	}
-
-/* Remove shadows specifically from cards and buttons, if needed */
-.card, .btn {
-    box-shadow: none !important;
-	}
+    color: inherit !important;
+  	}
 	
 header h1 {
-    font-size: 2.5rem; /* Increase the size of the main header */
-    font-weight: bold; /* Ensure it stands out */
-    margin-bottom: 1rem; /* Space out the header from the content below */
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    padding: 0;
+    margin-bottom: .5rem;
+    width: 25%;
+	text-align: left;
     }
 
 header p {
-    font-size: .75rem; /* Increase the size of the subtitle/byline */
     font-weight: 500; /* Slightly increase the weight for better readability */
+    padding: 0;
+    margin: 0;
+	text-align: left;
     }
+    
+#urlinfo {
+	display: inline;
+	}
+
+#author {
+	font-weight: bold;
+	}
 
 #results-drink-name {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Lora', sans-serif;
 	display: block; /* Ensure the recipe name is displayed */
-	font-size: 1.75rem; /* Ensure it has a readable font size */
-	font-weight: bold; /* Make it stand out */
-	color: #262626; /* Make sure the color is visible */
+	font-size: 2rem; /* Ensure it has a readable font size */
+	color: black;
+	padding-top: 1.5rem;
+	padding-bottom: 0;
+	margin-bottom: 0;
 }
 
 #batch-info {
-    font-size: 1.2rem; /* Increase the font size */
+    font-size: .85rem;
     font-weight: 600; /* Ensure the text is bold */
-    text-align: center; /* Center the text */
     margin-bottom: 1rem; /* Adjust space below the batch info */
+    color: black;
+    padding-left: .25rem;
+    padding-top: 0;
+    margin-top: 0;
+    padding-bottom: 1.5rem;
     }
 
 #results pre {
-    font-family: 'Roboto Condensed', sans-serif; /* Apply the narrow font */
-    font-size: 1rem; /* Increase the font size of the recipes */
-    line-height: 1.25; /* Adjust line height for better readability */
+    font-size: .85rem; /* Increase the font size of the recipes */
+    line-height: 1rem;
     border: none;
     background-color: white;
     margin: 0; /* Ensure no extra margins */
     padding: 0; /* Adjust padding as needed */
     }
+    
+#original-recipe li {
+	font-size: .75rem;
+	line-height: 1.25;
+	margin-bottom: 3px;
+	}
+    
+#scaled-recipe {
+	font-weight: bold;
+	}
 
 .row {
     display: flex;
@@ -351,11 +444,29 @@ header p {
     justify-content: center; /* Ensure there’s space between the cards */
 }
 
+h5 {
+	padding-bottom: 5px;
+	border-bottom: 5px solid black;
+	margin-bottom: 1rem;
+	}
+	
+#instructions {
+	font-weight: normal;
+	}
+
 .col-md-6 {
-    width: 70%; /* Adjust the width of each card to fit side-by-side */
-    padding-right: 1%; /* Optional: Add a little space between the cards */
-    padding-left: 1%;
+    width: 50%; /* Adjust the width of each card to fit side-by-side */
 }
+
+    .col-md-6:nth-child(1) {
+        width: 30%; /* Original Recipe column width */
+    	padding: 0;
+    }
+
+    .col-md-6:nth-child(2) {
+        width: 70%; /* Scaled Recipe column width */
+		padding: 0;
+    }
 
 .card-title {
     font-size: 1.5rem; /* Increase the font size */
@@ -364,9 +475,9 @@ header p {
     }
 
 .card {
-    box-shadow: none; /* Remove shadows for a cleaner print */
-    border: 1px solid #ccc; /* Keep a subtle border to differentiate the cards */
-    background-color: #fff; /* Ensure the cards have a white background */
+	padding: 0;
+    border: none; /* Remove borders from the card */
+    margin: 0;
 }
 
 footer {
@@ -375,18 +486,15 @@ footer {
     flex-shrink: 0; /* Prevent footer from shrinking */
     margin-top: auto; /* Push the footer to the bottom */
     margin-bottom: 0; /* Ensure no extra margin at the bottom */
+    padding-bottom: 0;
     }
     
 footer p {
-	font-size: .75rem; /* Increase the footer font size */
 	font-weight: 500; /* Ensure it’s easily readable */
+	margin-bottom: 0; /* Ensure no extra margin at the bottom */
+    padding-bottom: 0;
     }
     
-    
-    header {
-        margin-bottom: 0.5rem; /* Add a small margin below the header */
-        padding-bottom: 0 !important;
-    }
 
     /* Target potential invisible elements or extra spacing */
     header + * {
@@ -394,10 +502,6 @@ footer p {
         padding-top: 0 !important;
     }
 
-    #results {
-        margin-top: 0.5rem; /* Add a small margin above the results */
-        padding-top: 0 !important;
-    }
 
     .form-container > *:not(header):not(#results):not(footer) {
         display: none; /* Hide any potential unwanted elements */
