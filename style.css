@@ -335,6 +335,7 @@ button {
 
 html, body {
     background-color: white;
+    background-image: none;
     display: block; /* Reset Flexbox behavior */
     justify-content: unset; /* Remove any centering */
     align-items: unset; /* Remove any centering */
