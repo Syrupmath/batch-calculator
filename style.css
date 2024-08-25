@@ -489,7 +489,6 @@ footer {
     font-size: 0.75rem;
     color: #555;
     flex-shrink: 0; /* Prevent footer from shrinking */
-    align-self: flex-end; /* Push the footer to the bottom */
     margin-top: auto; /* Push the footer to the bottom */
     margin-bottom: 0;
     padding-bottom: 0;
