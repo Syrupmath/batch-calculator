@@ -21,30 +21,30 @@
 <meta name="theme-color" content="#ffffff">
 </head>
 <body>
-        <div class="form-container container p-4 shadow-lg">
+        <div class="form-container">
 
-    <!-- Header Section -->
+<!-- HEADER SECTION -->
 	<header>
-		<p>The</p>
-	    <h1>Batch Cocktail Calculator</h1>
-	    <p>by <a href="https://jeffreymorgenthaler.com/the-batch-cocktail-calculator/" target="_blank" aria-label="Link to my website, opens in a new window">Jeffrey Morgenthaler</a></p>
-	    <p>This simple tool converts your single-serving cocktail recipe into a larger batch of any size, either for a dedicated number of servings, or exactly enough to fill a specific-sized container.</p>
+	<p>The</p>
+	<h1>Batch Cocktail Calculator</h1>
+	<p id="author">by <a href="https://jeffreymorgenthaler.com/the-batch-cocktail-calculator/" target="_blank" aria-label="Link to my website, opens in a new window">Jeffrey Morgenthaler</a></p>
+	<p>This simple tool converts your single-serving cocktail recipe into a larger batch of any size, either for a dedicated number of servings, or exactly enough to fill a specific-sized container. <span id="urlinfo">Find it at www.batchcalc.com</span></p>
 	</header>
 	
-	<hr />
+<!-- SECTION DIVIDER --><hr />
 
-    <!-- Recipe Name Input -->
-	<div id="recipe-name-section" class="mb-4">
+<!-- RECIPE NAME IMPUT SECTION -->
+	<div id="recipe-name-section">
 	    <h2 class="step-title">Step 1: Enter Recipe Name</h2>
 	    <p>Please enter the name of your cocktail recipe.</p>
 	    <label for="recipe-name" class="form-label">Recipe Name:</label>
 	    <input type="text" id="recipe-name" class="form-control" placeholder="e.g. &quot;Bourbon Renewal&quot;">
 	</div>
 
-<hr />
+<!-- SECTION DIVIDER --><hr />
 
-    <!-- Ingredient List Section -->
-    <div id="ingredient-section" class="mb-4">
+<!-- INGREDIENT INPUT SECTION -->
+    <div id="ingredient-section">
         <h2 class="step-title">Step 2: Add Ingredients</h2>
         <p>Add all of the ingredients for your cocktail, specifying the ingredient name, volume quantity, and unit. Click "Add Ingredient" to include more ingredients. You can also remove ingredients using the "Remove" button.</p>
         <ul id="ingredient-list" class="list-unstyled">
@@ -55,22 +55,22 @@
 </button>
     </div>
     
-    <hr />
+<!-- SECTION DIVIDER --><hr />
 
-    <!-- Batch Scaling Options -->
-<div id="scaling-section" class="mb-4">
+<!-- BATCH SCALING SECTION -->
+<div id="scaling-section">
     <h2 class="step-title">Step 3: Scale Recipe</h2>
     <p>Select whether you'd like to scale by the number of servings or by total volume. Enter the quantity and, if scaling by volume, select the desired unit.</p>
     
     <!-- Scaling Option Radio Buttons -->
-    <div class="form-check mb-2">
+    <div class="form-check">
         <input class="form-check-input" type="radio" name="scaling-option" value="servings" id="scaling-servings" checked>
         <label class="form-check-label" for="scaling-servings">
             Scale by Number of Servings
         </label>
         <small class="text-muted d-block">Choose this option if you know how many servings you need.</small>
     </div>
-    <div class="form-check mb-3">
+    <div class="form-check">
         <input class="form-check-input" type="radio" name="scaling-option" value="volume" id="scaling-volume">
         <label class="form-check-label" for="scaling-volume">
             Scale by Total Volume
@@ -79,13 +79,13 @@
     </div>
 
     <!-- Scaling Value Input -->
-    <div class="form-group mt-3">
+    <div class="form-group">
         <label for="scaling-value" class="form-label">Enter Quantity:</label>
         <input type="number" id="scaling-value" class="form-control" placeholder="Number of servings or total volume">
     </div>
 
     <!-- Volume Unit Select (Only enabled when "Scale by Volume" is selected) -->
-    <div class="form-group mt-2">
+    <div class="form-group">
         <label for="volume-unit" class="form-label">Select Total Volume Unit (if Applicable):</label>
         <select id="volume-unit" class="form-select" disabled>
             <option value="oz">Ounces</option>
@@ -96,15 +96,14 @@
     </div>
 </div>
 
-<hr />
+<!-- SECTION DIVIDER --><hr />
 
-    <!-- Dilution Options -->
-<div id="dilution-section" class="mb-4">
+<!-- DILUTION SECTION -->
+<div id="dilution-section">
     <h2 class="step-title">Step 4: Add Dilution (Optional)</h2>
     <p>Choose a dilution percentage that suits your cocktail. If none of the presets fit, you can enter a custom dilution percentage.</p>
 
-    <!-- Predefined Dilution Options -->
-    <div class="form-check mb-2">
+    <div class="form-check">
         <input class="form-check-input" type="radio" name="dilution-option" id="dilution-none" value="0" checked>
         <label class="form-check-label" for="dilution-none">
             0% (No Dilution)
@@ -112,14 +111,14 @@
 	<small class="text-muted d-block">Best if you plan to shake or stir your drinks to order.</small>
 
     </div>
-    <div class="form-check mb-2">
+    <div class="form-check">
         <input class="form-check-input" type="radio" name="dilution-option" id="dilution-18" value="18">
         <label class="form-check-label" for="dilution-18">
             18% (Spirit-Driven Cocktails)
         </label>
         <small class="text-muted d-block">Best for strong drinks containing mainly spirits.</small>
     </div>
-    <div class="form-check mb-2">
+    <div class="form-check">
         <input class="form-check-input" type="radio" name="dilution-option" id="dilution-25" value="25">
         <label class="form-check-label" for="dilution-25">
             25% (Shaken Cocktails)
@@ -127,12 +126,13 @@
         <small class="text-muted d-block">Ideal for cocktails containing fruit juices, dairy, or eggs.</small>
     </div>
 
-    <!-- Custom Dilution Option -->
     <div class="form-check">
         <input class="form-check-input" type="radio" name="dilution-option" id="dilution-custom" value="custom">
         <label class="form-check-label" for="dilution-custom">
             Custom:
         </label>
+        <small class="text-muted d-block">Enter your own desired dilution.</small>
+
         <div class="input-group mt-2" style="max-width: 200px;">
             <input type="number" id="custom-dilution" class="form-control" placeholder="Dilution" disabled>
             <span class="input-group-text">%</span>
@@ -140,66 +140,81 @@
     </div>
 </div>
 
-    <!-- Calculate Button -->
-    <button id="calculate-batch" class="btn btn-success">Calculate Batch</button>
+<!-- SECTION DIVIDER --><hr />
 
 
+<!-- INSTRUCTIONS SECTION -->
+<div id="instructions-section">
+    <h2 class="step-title">Step 5: Add Recipe Notes (Optional)</h2>
+    <p>Add any notes you would like to include with your results.</p>
+    <textarea id="recipe-instructions" class="form-control" rows="7" placeholder="Enter any recipe notes here" maxlength="500"></textarea>
+    <small id="char-count" class="form-text text-muted">500 characters remaining</small>
+</div>
+
+<!-- CALCULATE BUTTON -->
+<button id="calculate-batch" class="btn btn-success">Calculate Batch</button>
 
 
-<div id="results" class="container mt-5" style="display:none;">
-    <h2 id="results-drink-name" class="mb-2 text-center">Recipe Name</h2>
-    <p id="batch-info" class="text-center mb-4"></p> <!-- New element for batch size and dilution -->
+<!-- RESULTS SECTION -->
+
+<div id="results" style="display:none;">
+    <h2 id="results-drink-name">Recipe Name</h2>
+    <p id="batch-info"></p>
 
     <div class="row">
         <!-- Original Recipe Card -->
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow-sm">
+        <div class="col-md-6">
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Original Recipe</h5>
+                    <h5 id="original-recipe-header">Original Recipe</h5>
                     <pre id="original-recipe"></pre>
                 </div>
             </div>
         </div>
 
         <!-- Scaled Recipe Card -->
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow-sm">
+        <div class="col-md-6">
+            <div class="card">
                 <div class="card-body">
-                    <h5 id="scaled-recipe-header" class="card-title text-center">Scaled Recipe</h5>
+                    <h5 id="scaled-recipe-header">Batch Recipe</h5>
                     <pre id="scaled-recipe"></pre>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="text-center mt-4">
+    <div class="mt-4">
         <button id="print-recipe" class="btn btn-primary">Print Recipe</button>
     </div>
 </div>
 
-    <!-- Footer Section -->
-    <footer class="mt-5 text-center">
-        <p>If you found this tool useful and would like to support more tools like this, consider visiting<a href="https://jeffreymorgenthaler.com/book/" target="_blank"> jeffreymorgenthaler.com</a> and buying a personalized, signed copy of one of my books on cocktails and bartending. There's lots more helpful advice for making drinks in there!</p>
-    </footer>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+<!-- FOOTER SECTION -->
+	<footer>
+	<p>&copy 2024 by Jeffrey Morgenthaler. If you found this tool useful and would like to support more tools like this, consider visiting<a href="https://jeffreymorgenthaler.com/book/" target="_blank"> jeffreymorgenthaler.com</a> and buying a personalized, signed copy of one of my books on cocktails and bartending. There's lots more helpful advice for making drinks in there!</p>
+	</footer>
     
-    <script>
-	  if ('serviceWorker' in navigator) {
-	    navigator.serviceWorker.register('/sw.js').then(function(registration) {
-	      console.log('Service Worker registered with scope:', registration.scope);
-	    }).catch(function(error) {
-	      console.log('Service Worker registration failed:', error);
-	    });
-	  }
+    
+
+<!-- BOOTSTRAP JS AND DEPENDENCIES -->
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+	<script src="script.js"></script>
+	
+	<script>
+	if ('serviceWorker' in navigator) {
+	navigator.serviceWorker.register('/sw.js').then(function(registration) {
+	console.log('Service Worker registered with scope:', registration.scope);
+	}).catch(function(error) {
+	console.log('Service Worker registration failed:', error);
+	});
+	}
 	</script>
 
-		<!-- 100% privacy-first analytics -->
-		<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-		<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
-	</div>
+<!-- 100% PRIVACY-FIRST ANALYTICS -->
+	<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+	<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade" /></noscript>
+
+</div>
 </body>
 </html>
