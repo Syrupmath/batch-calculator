@@ -244,6 +244,13 @@ p {
 	margin-top: 2rem;
 	}
 
+.yield-line {
+    margin-top: 1.25rem;
+    margin-bottom: 0;
+    font-size: .8rem;
+    color: #333;
+}
+
 #results {
 	padding-top: 3em;
 	}
@@ -323,6 +330,7 @@ footer {
 #ingredient-section,
 #scaling-section,
 #dilution-section,
+#container-section,
 #calculate-section,
 #add-ingredient,
 #calculate-batch,
