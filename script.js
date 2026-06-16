@@ -77,6 +77,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 return quantity * 0.020833;
             case 'drops':
                 return quantity * 0.0016907;
+            case 'pint':
+                return quantity * 16;
+            case 'quart':
+                return quantity * 32;
             default:
                 return 0;
         }
@@ -169,7 +173,28 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Update the batch info with dynamic information
-        batchInfo.textContent = `Batch Size: ${scalingInfo} (${dilution}% Dilution)`;
+        const containerValue = parseFloat(document.getElementById("container-value").value);
+        const containerUnit = document.getElementById("container-unit").value;
+
+        let batchInfoHTML = `<strong>Batch Size:</strong> ${scalingInfo} (${dilution}% Dilution)`;
+
+        if (!isNaN(containerValue) && containerValue > 0) {
+            const containerOz = convertToOunces(containerValue, containerUnit);
+            const totalBatchOz = finalTotalVolume * scalingFactor;
+            const containerCount = (totalBatchOz / containerOz).toFixed(1);
+            const containerUnitLabels = {
+                'oz': 'oz',
+                'ml': 'ml',
+                'l': 'liter',
+                'pint': 'pint',
+                'quart': 'quart',
+                'gal': 'gallon'
+            };
+            const containerLabel = containerUnitLabels[containerUnit] || containerUnit;
+            batchInfoHTML += ` &mdash; <strong>Yield:</strong> ${containerCount} &times; ${containerValue} ${containerLabel} containers`;
+        }
+
+        batchInfo.innerHTML = batchInfoHTML;
 
         scaledRecipeHeader.textContent = `Scaled Recipe`;
 
