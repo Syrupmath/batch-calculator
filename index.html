@@ -145,9 +145,31 @@
 <!-- SECTION DIVIDER --><hr />
 
 
+<!-- CONTAINER SECTION -->
+<div id="container-section">
+    <h2 class="step-title">Step 5: Calculate Container Yield (Optional)</h2>
+    <p>Enter the size of container you're using to calculate how many containers your batch will fill - useful for pre-batching into bottles, pitchers, or kegs.</p>
+    <div class="form-group">
+        <label for="container-value" class="form-label">Container Size:</label>
+        <div class="input-group">
+            <input type="number" id="container-value" class="form-control" placeholder="e.g. 750">
+            <select id="container-unit" class="form-select">
+                <option value="oz">Ounces</option>
+                <option value="ml">Milliliters</option>
+                <option value="l">Liters</option>
+                <option value="pint">Pints</option>
+                <option value="quart">Quarts</option>
+                <option value="gal">Gallons</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- SECTION DIVIDER --><hr />
+
 <!-- INSTRUCTIONS SECTION -->
 <div id="instructions-section">
-    <h2 class="step-title">Step 5: Add Recipe Notes (Optional)</h2>
+    <h2 class="step-title">Step 6: Add Recipe Notes (Optional)</h2>
     <p>Add any notes you would like to include with your results.</p>
     <textarea id="recipe-instructions" class="form-control" rows="7" placeholder="Enter any recipe notes here" maxlength="500"></textarea>
     <small id="char-count" class="form-text text-muted">500 characters remaining</small>
